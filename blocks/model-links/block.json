@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/model-links",
+  "title": "OSA · Model Links",
+  "category": "osa",
+  "icon": "screenoptions",
+  "description": "Links to the model landing pages (/firearms/*). Cards for the homepage strip, chips for shop/landing cross-links. Edit the list under Customize → OSA · Model Pages.",
+  "textdomain": "osa-arsenal",
+  "supports": {
+    "html": false,
+    "align": [ "wide", "full" ],
+    "spacing": { "margin": true, "padding": true }
+  },
+  "attributes": {
+    "variant": { "type": "string", "default": "chips", "enum": [ "cards", "chips" ] },
+    "heading": { "type": "string", "default": "" },
+    "linkTo": { "type": "string", "default": "landing", "enum": [ "landing", "filter" ] }
+  },
+  "render": "file:./render.php"
+}

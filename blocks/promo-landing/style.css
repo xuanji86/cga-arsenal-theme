@@ -1,0 +1,330 @@
+/* OSA · Independence Day Landing — page-scoped styles.
+   Mirrors editable/Independence Day.dc.html in the Claude Design project;
+   tokens come from the :root --osa-* bridge in osa-base.css. */
+
+.ind-hero {
+	position: relative;
+	overflow: hidden;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	padding: 60px 48px 58px 88px;
+}
+.ind-hero__stripes {
+	position: absolute;
+	inset: 0;
+	opacity: 0.06;
+	background: repeating-linear-gradient(180deg, var(--osa-paper) 0 13px, transparent 13px 26px);
+	pointer-events: none;
+}
+.ind-hero__inner {
+	position: relative;
+	max-width: 1200px;
+	margin-inline: auto;
+	display: grid;
+	grid-template-columns: 1.25fr 0.75fr;
+	gap: 56px;
+	align-items: center;
+}
+.ind-hero__stars {
+	display: flex;
+	gap: 12px;
+	font-size: 12px;
+	letter-spacing: 0.4em;
+	color: var(--osa-paper);
+	opacity: 0.85;
+	margin: 0 0 18px;
+}
+.ind-hero__eyebrow {
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+	margin: 0 0 14px;
+}
+.ind-hero__title {
+	font-family: var(--osa-f-display);
+	font-weight: 900;
+	font-size: clamp(52px, 7.2vw, 86px);
+	line-height: 0.9;
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+	margin: 0;
+	color: var(--osa-paper);
+}
+.ind-hero__kicker {
+	font-family: var(--osa-f-serif-d);
+	font-style: italic;
+	font-size: 26px;
+	line-height: 1.2;
+	color: var(--osa-paper-edge);
+	margin: 20px 0 0;
+}
+.ind-hero__lede {
+	font-family: var(--osa-f-serif);
+	font-size: 17px;
+	line-height: 1.5;
+	color: var(--osa-paper-edge);
+	margin: 22px 0 0;
+	max-width: 54ch;
+}
+.ind-hero__code {
+	font-family: var(--osa-f-mono);
+	letter-spacing: 0.05em;
+	color: var(--osa-paper);
+}
+.ind-hero__cta {
+	margin-top: 28px;
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+.ind-hero__ghost {
+	background: transparent;
+	color: var(--osa-paper);
+	border-color: var(--osa-paper);
+}
+.ind-hero__ghost:hover {
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+}
+
+.ind-event {
+	border: 1px solid var(--osa-steel-1);
+	padding: 24px 24px 26px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	background: rgba(255, 255, 255, 0.02);
+}
+.ind-event__label {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+}
+.ind-event__dates {
+	font-family: var(--osa-f-display);
+	font-weight: 900;
+	font-size: 26px;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	margin-top: 8px;
+}
+.ind-event__cdlabel {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+	margin: 0 0 12px;
+}
+.ind-countdown {
+	display: flex;
+	gap: 12px;
+}
+.ind-cd-unit {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 7px;
+	border: 1px solid var(--osa-ink-3);
+	padding: 12px 6px 10px;
+}
+.ind-cd-unit__num {
+	font-family: var(--osa-f-mono);
+	font-weight: 600;
+	font-size: 28px;
+	line-height: 1;
+	color: var(--osa-paper);
+	font-variant-numeric: tabular-nums;
+}
+.ind-cd-unit__lbl {
+	font-family: var(--osa-f-mono);
+	font-size: 9px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+}
+.ind-event__foot {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	line-height: 1.7;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	margin: 0;
+}
+
+.ind-coupon {
+	border: 1.5px dashed var(--osa-steel-1);
+	padding: 15px 16px 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+}
+.ind-coupon__off {
+	font-family: var(--osa-f-display);
+	font-weight: 900;
+	font-size: 22px;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	color: var(--osa-paper);
+}
+.ind-coupon__code {
+	font-family: var(--osa-f-mono);
+	font-weight: 600;
+	font-size: 15px;
+	letter-spacing: 0.26em;
+	color: var(--osa-paper);
+	border: 1px solid var(--osa-paper);
+	padding: 6px 8px 6px 14px;
+	margin-top: 9px;
+}
+.ind-coupon__hint {
+	font-family: var(--osa-f-mono);
+	font-size: 9px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+	margin-top: 10px;
+}
+
+.ind-collection {
+	padding: 56px 40px 8px;
+	max-width: 1440px;
+	margin-inline: auto;
+}
+.ind-collection__head {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 20px;
+	flex-wrap: wrap;
+	margin-bottom: 22px;
+}
+.ind-collection__titlewrap {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.ind-collection__eyebrow {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	margin: 0;
+}
+.ind-collection__title {
+	font-family: var(--osa-f-display);
+	font-weight: 900;
+	font-size: 30px;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	margin: 0;
+}
+.ind-collection__note {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	text-align: right;
+	line-height: 1.7;
+	margin: 0;
+}
+
+/* Every card is server-rendered; the clamp hides 9+ until Load More (view.js
+   reveals them; the noscript override in render.php unclamps without JS). */
+.ind-collection--clamped .ind-catalog-grid > a:nth-child(n+9) {
+	display: none;
+}
+.ind-loadmore {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	margin-top: 34px;
+}
+.ind-loadmore__count {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	margin: 0;
+}
+
+.ind-strip {
+	display: flex;
+	justify-content: center;
+	gap: 16px 40px;
+	flex-wrap: wrap;
+	align-items: center;
+	border-top: 1px solid var(--osa-ink);
+	border-bottom: 1px solid var(--osa-ink);
+	margin: 44px 40px 0;
+	padding: 16px 24px;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+.ind-strip__sep { opacity: 0.4; }
+
+.ind-statement {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	/* Full-bleed band; the max() insets cap the grid content at ~1300px and
+	   center it on wide viewports (design values apply at canvas widths). */
+	padding: 60px max(48px, calc(50% - 652px)) 60px max(88px, calc(50% - 652px));
+	margin-top: 56px;
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	gap: 40px;
+}
+.ind-statement__eyebrow {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+	padding-top: 10px;
+}
+.ind-statement__text {
+	margin: 0;
+	font-family: var(--osa-f-serif-d);
+	font-style: italic;
+	font-size: 28px;
+	line-height: 1.34;
+	max-width: 840px;
+}
+.ind-statement__attr {
+	margin: 18px 0 0;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+}
+
+@media (max-width: 1024px) {
+	.ind-hero { padding: 48px 28px; }
+	.ind-hero__inner { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+	.ind-catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.ind-statement { grid-template-columns: 1fr; gap: 14px; padding: 44px 28px; }
+}
+@media (max-width: 560px) {
+	.ind-collection__note { text-align: left; }
+	.ind-cd-unit__num { font-size: 22px; }
+}
+/* "INDEPENDENCE" is one unbreakable word — below ~515px the 52px clamp floor
+   no longer fits the padded hero column, so track the viewport instead
+   (width/font ratio of the word in Archivo Black is ~8.83). */
+@media (max-width: 520px) {
+	.ind-hero__title { font-size: clamp(28px, calc(11.3vw - 7px), 52px); }
+}

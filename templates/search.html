@@ -1,0 +1,41 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"40px","right":"24px","bottom":"56px","left":"24px"}}},"layout":{"type":"constrained","contentSize":"1440px"}} -->
+<main class="wp-block-group" style="padding-top:40px;padding-right:24px;padding-bottom:56px;padding-left:24px">
+
+	<!-- wp:paragraph {"className":"osa-mono-caps","style":{"typography":{"fontSize":"10px","letterSpacing":"0.22em","textTransform":"uppercase","color":"var:preset|color|steel-1"}}} -->
+	<p class="osa-mono-caps" style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--wp--preset--color--steel-1)">Search results for</p>
+	<!-- /wp:paragraph -->
+
+	<!-- wp:query-title {"type":"search","style":{"typography":{"fontSize":"54px","textTransform":"none","letterSpacing":"-0.005em","lineHeight":"1"}},"fontFamily":"display"} /-->
+
+	<!-- wp:query {"queryId":50,"query":{"perPage":24,"postType":"product","inherit":true,"order":"desc","orderBy":"date"},"align":"wide","style":{"spacing":{"margin":{"top":"32px"}}}} -->
+	<div class="wp-block-query alignwide" style="margin-top:32px">
+
+		<!-- wp:post-template {"layout":{"type":"grid","columnCount":4}} -->
+			<!-- wp:osa/product-card-compact {"ar":"4-3"} /-->
+		<!-- /wp:post-template -->
+
+		<!-- wp:query-pagination {"paginationArrow":"arrow","layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"40px"}}}} -->
+			<!-- wp:query-pagination-previous {"label":"Prev"} /-->
+			<!-- wp:query-pagination-numbers /-->
+			<!-- wp:query-pagination-next {"label":"Next"} /-->
+		<!-- /wp:query-pagination -->
+
+		<!-- wp:query-no-results -->
+			<!-- wp:group {"style":{"spacing":{"padding":{"top":"32px","bottom":"40px"}}}} -->
+			<div class="wp-block-group" style="padding-top:32px;padding-bottom:40px">
+				<!-- wp:paragraph {"style":{"typography":{"fontFamily":"var:preset|font-family|serif-display","fontStyle":"italic","fontSize":"22px"}}} -->
+				<p style="font-family:var(--wp--preset--font-family--serif-display);font-style:italic;font-size:22px">No lots match that search. Browse <a href="/shop/">the full catalog</a> or try a maker name (Colt, Winchester, Browning), a caliber (.45 LC, 9mm), or a category (rifles, handguns).</p>
+				<!-- /wp:paragraph -->
+			</div>
+			<!-- /wp:group -->
+		<!-- /wp:query-no-results -->
+
+	</div>
+	<!-- /wp:query -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

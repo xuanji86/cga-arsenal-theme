@@ -1,0 +1,56 @@
+/* OSA · Promo Teaser — Independence Day homepage strip.
+   Mirrors editable/Home.dc.html in the Claude Design project; tokens come
+   from the :root --osa-* bridge in osa-base.css. */
+
+.osa-idteaser {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 24px 44px;
+	align-items: center;
+	/* Borders run full-bleed; the max() inset caps content at the homepage's
+	   1440 section rhythm and centers it on wide viewports. */
+	padding: 30px max(40px, calc(50% - 680px));
+	border-top: 1px solid var(--osa-ink);
+	border-bottom: 1px solid var(--osa-ink);
+	background: var(--osa-paper);
+	text-decoration: none;
+	color: inherit;
+	transition: background 0.2s ease;
+}
+.osa-idteaser:hover { background: var(--osa-paper-tint); }
+.osa-idteaser__stars {
+	font-size: 11px;
+	letter-spacing: 0.5em;
+	color: var(--osa-ink);
+	margin: 0 0 10px;
+}
+.osa-idteaser__eyebrow {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	margin: 0 0 8px;
+}
+.osa-idteaser__title {
+	font-family: var(--osa-f-display);
+	font-weight: 900;
+	font-size: 26px;
+	line-height: 1.05;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	margin: 0;
+}
+.osa-idteaser__text {
+	font-family: var(--osa-f-serif);
+	font-size: 15px;
+	line-height: 1.45;
+	color: var(--osa-ink-2);
+	margin: 10px 0 0;
+	max-width: 64ch;
+}
+.osa-idteaser__cta { white-space: nowrap; }
+
+@media (max-width: 1024px) {
+	.osa-idteaser { grid-template-columns: 1fr; }
+}

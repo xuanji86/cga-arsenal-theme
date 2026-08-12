@@ -1,0 +1,83 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"14px","right":"24px","bottom":"56px","left":"24px"}}},"layout":{"type":"constrained","contentSize":"1440px"}} -->
+<main class="wp-block-group" style="padding-top:14px;padding-right:24px;padding-bottom:56px;padding-left:24px">
+
+	<!-- Breadcrumb: osa/seo-breadcrumb (ffl-core) — visible rail + schema. Styled by .osa-breadcrumb; this wrapper supplies the gap (block has no spacing support, theme blockGap is 0). See tests/test-single-product-breadcrumb.php. -->
+	<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"default"}} -->
+	<div class="wp-block-group" style="margin-bottom:10px">
+		<!-- wp:osa/seo-breadcrumb /-->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:columns {"verticalAlignment":"top","style":{"spacing":{"blockGap":{"left":"0"}},"border":{"top":{"color":"var:preset|color|ink","width":"1px"}}}} -->
+	<div class="wp-block-columns are-vertically-aligned-top" style="border-top-color:var(--wp--preset--color--ink);border-top-width:1px">
+
+		<!-- wp:column {"verticalAlignment":"top","width":"58.5%","className":"osa-product-gallery-col","style":{"border":{"right":{"color":"var:preset|color|ink","width":"1px"}}}} -->
+		<div class="wp-block-column is-vertically-aligned-top osa-product-gallery-col" style="border-right-color:var(--wp--preset--color--ink);border-right-width:1px;flex-basis:58.5%">
+			<!-- wp:woocommerce/product-sale-badge /-->
+			<!-- wp:woocommerce/product-image-gallery /-->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column {"verticalAlignment":"top","style":{"spacing":{"padding":{"top":"32px","right":"32px","bottom":"32px","left":"32px"}}}} -->
+		<div class="wp-block-column is-vertically-aligned-top" style="padding-top:32px;padding-right:32px;padding-bottom:32px;padding-left:32px">
+
+			<!-- wp:post-terms {"term":"pa_condition","className":"osa-mono-caps","style":{"typography":{"fontSize":"10px","letterSpacing":"0.22em","textTransform":"uppercase"}}} /-->
+
+			<!-- wp:post-title {"level":1,"style":{"typography":{"fontSize":"44px","lineHeight":"1.05","letterSpacing":"-0.005em"},"spacing":{"margin":{"top":"12px","bottom":"8px"}}},"fontFamily":"display"} /-->
+
+			<!-- wp:woocommerce/product-summary {"style":{"typography":{"fontFamily":"var:preset|font-family|serif-display","fontSize":"18px","fontStyle":"italic","lineHeight":"1.4"}}} /-->
+
+			<!-- wp:group {"style":{"spacing":{"padding":{"top":"16px","bottom":"16px"},"margin":{"top":"24px"}},"border":{"top":{"color":"var:preset|color|ink","width":"1px"},"bottom":{"color":"var:preset|color|ink","width":"1px"}}},"layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"center","flexWrap":"nowrap"}} -->
+			<div class="wp-block-group" style="border-top-color:var(--wp--preset--color--ink);border-top-width:1px;border-bottom-color:var(--wp--preset--color--ink);border-bottom-width:1px;margin-top:24px;padding-top:20px;padding-bottom:20px">
+				<!-- wp:woocommerce/product-price {"style":{"typography":{"fontFamily":"var:preset|font-family|mono","fontSize":"22px","fontWeight":"600","lineHeight":"1.2","letterSpacing":"-0.01em"},"color":{"text":"var:preset|color|ink"}}} /-->
+				<!-- wp:woocommerce/add-to-cart-form /-->
+			</div>
+			<!-- /wp:group -->
+
+			<!-- FAQ signpost — must stay a sibling AFTER the buy-row group, not a summary hook and not inside it; see tests/test-product-faq-hint.php for the measurements. -->
+			<!-- wp:paragraph {"className":"osa-faq-hint"} -->
+			<p class="osa-faq-hint">Questions about FFL transfers, shipping, or handpicking? <a href="/faq/">Read the FAQ →</a></p>
+			<!-- /wp:paragraph -->
+
+			<!-- Product → /firearms/ landing backlink. Self-suppressing: renders only
+			     when this product's pa_model term is claimed by a Customizer row, so
+			     models without a landing page (and non-firearm products) show nothing.
+			     See blocks/model-page-link/render.php and tests/test-model-page-link.php. -->
+			<!-- wp:osa/model-page-link /-->
+
+			<!-- wp:osa/condition-scale {"showFinishPct":true,"style":{"spacing":{"margin":{"top":"32px"}}}} /-->
+
+			<!-- Specs table is auto-rendered via woocommerce_single_product_summary hook (priority 27). -->
+
+		</div>
+		<!-- /wp:column -->
+
+	</div>
+	<!-- /wp:columns -->
+
+	<!-- wp:osa/catalog-grid {"related":true,"strip":true,"limit":6} /-->
+
+	<!-- wp:group {"style":{"spacing":{"padding":{"top":"48px","right":"32px","bottom":"32px","left":"32px"},"blockGap":"16px"},"border":{"top":{"color":"var:preset|color|ink","width":"1px"}}},"layout":{"type":"constrained","contentSize":"880px"}} -->
+	<div class="wp-block-group" style="border-top-color:var(--wp--preset--color--ink);border-top-width:1px;padding-top:48px;padding-right:32px;padding-bottom:32px;padding-left:32px">
+
+		<!-- wp:paragraph {"className":"osa-mono-caps","style":{"typography":{"fontSize":"10px","textTransform":"uppercase","letterSpacing":"0.22em","color":"var:preset|color|steel-1"},"spacing":{"margin":{"bottom":"0"}}}} -->
+		<p class="osa-mono-caps" style="font-size:10px;text-transform:uppercase;letter-spacing:0.22em;color:var(--wp--preset--color--steel-1);margin-bottom:0">Lot Notes</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:heading {"level":2,"className":"osa-same-floor","style":{"spacing":{"margin":{"top":"56px","bottom":"24px"}},"typography":{"fontSize":"22px","textTransform":"uppercase","letterSpacing":"0.04em"}},"fontFamily":"display"} -->
+	<h2 class="wp-block-heading osa-same-floor has-display-font-family" style="margin-top:56px;margin-bottom:24px;font-size:22px;text-transform:uppercase;letter-spacing:0.04em">From the Same Floor</h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:osa/catalog-grid {"cols":4,"limit":8,"related":true} /-->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

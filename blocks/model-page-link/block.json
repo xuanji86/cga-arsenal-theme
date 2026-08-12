@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/model-page-link",
+  "title": "OSA · Model Page Link",
+  "category": "osa",
+  "icon": "admin-links",
+  "description": "On a product page, a one-line link up to the matching /firearms/ model landing page. Resolves from the product's Model attribute against Customize → OSA · Model Pages; renders nothing when the model has no landing page.",
+  "textdomain": "osa-arsenal",
+  "supports": {
+    "html": false,
+    "spacing": { "margin": true }
+  },
+  "render": "file:./render.php"
+}

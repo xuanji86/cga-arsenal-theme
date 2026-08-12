@@ -1,0 +1,349 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "useRootPaddingAwareAlignments": true,
+    "layout": {
+      "contentSize": "1280px",
+      "wideSize": "1440px"
+    },
+    "color": {
+      "background": true,
+      "custom": true,
+      "customDuotone": false,
+      "customGradient": false,
+      "defaultGradients": false,
+      "defaultPalette": false,
+      "text": true,
+      "link": true,
+      "palette": [
+        { "slug": "ink",         "color": "#0A0A0A", "name": "Ink" },
+        { "slug": "ink-2",       "color": "#1A1A1A", "name": "Ink 2" },
+        { "slug": "ink-3",       "color": "#2A2A2A", "name": "Ink 3" },
+        { "slug": "steel-1",     "color": "#5A5A5A", "name": "Steel 1" },
+        { "slug": "steel-2",     "color": "#8A8A8A", "name": "Steel 2" },
+        { "slug": "paper-edge",  "color": "#D9D9D9", "name": "Paper Edge" },
+        { "slug": "paper-tint",  "color": "#EFEFEF", "name": "Paper Tint" },
+        { "slug": "paper",       "color": "#FFFFFF", "name": "Paper" }
+      ]
+    },
+    "typography": {
+      "customFontSize": true,
+      "dropCap": false,
+      "fluid": false,
+      "fontStyle": true,
+      "fontWeight": true,
+      "letterSpacing": true,
+      "lineHeight": true,
+      "textDecoration": true,
+      "textTransform": true,
+      "fontFamilies": [
+        {
+          "slug": "display",
+          "name": "Display (Archivo Black)",
+          "fontFamily": "'Archivo Black', 'Helvetica Neue', sans-serif",
+          "fontFace": [
+            {
+              "fontFamily": "Archivo Black",
+              "fontStyle": "normal",
+              "fontWeight": "900",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/archivo-black-400.woff2"]
+            }
+          ]
+        },
+        {
+          "slug": "sans",
+          "name": "Sans (Archivo)",
+          "fontFamily": "'Archivo', 'Helvetica Neue', sans-serif",
+          "fontFace": [
+            {
+              "fontFamily": "Archivo",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/archivo-400.woff2"]
+            },
+            {
+              "fontFamily": "Archivo",
+              "fontStyle": "normal",
+              "fontWeight": "500",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/archivo-500.woff2"]
+            },
+            {
+              "fontFamily": "Archivo",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/archivo-600.woff2"]
+            },
+            {
+              "fontFamily": "Archivo",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/archivo-700.woff2"]
+            },
+            {
+              "fontFamily": "Archivo",
+              "fontStyle": "normal",
+              "fontWeight": "800",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/archivo-800.woff2"]
+            }
+          ]
+        },
+        {
+          "slug": "mono",
+          "name": "Mono (IBM Plex Mono)",
+          "fontFamily": "'IBM Plex Mono', ui-monospace, 'Menlo', monospace",
+          "fontFace": [
+            {
+              "fontFamily": "IBM Plex Mono",
+              "fontStyle": "normal",
+              "fontWeight": "300",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/ibm-plex-mono-300.woff2"]
+            },
+            {
+              "fontFamily": "IBM Plex Mono",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/ibm-plex-mono-400.woff2"]
+            },
+            {
+              "fontFamily": "IBM Plex Mono",
+              "fontStyle": "normal",
+              "fontWeight": "500",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/ibm-plex-mono-500.woff2"]
+            },
+            {
+              "fontFamily": "IBM Plex Mono",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/ibm-plex-mono-600.woff2"]
+            }
+          ]
+        },
+        {
+          "slug": "serif",
+          "name": "Serif (Libre Caslon Text)",
+          "fontFamily": "'Libre Caslon Text', 'Times New Roman', serif",
+          "fontFace": [
+            {
+              "fontFamily": "Libre Caslon Text",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/libre-caslon-text-400.woff2"]
+            },
+            {
+              "fontFamily": "Libre Caslon Text",
+              "fontStyle": "italic",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/libre-caslon-text-400-italic.woff2"]
+            },
+            {
+              "fontFamily": "Libre Caslon Text",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/libre-caslon-text-700.woff2"]
+            }
+          ]
+        },
+        {
+          "slug": "serif-display",
+          "name": "Serif Display (Instrument Serif)",
+          "fontFamily": "'Instrument Serif', 'Libre Caslon Text', serif",
+          "fontFace": [
+            {
+              "fontFamily": "Instrument Serif",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/instrument-serif-400.woff2"]
+            },
+            {
+              "fontFamily": "Instrument Serif",
+              "fontStyle": "italic",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/instrument-serif-400-italic.woff2"]
+            }
+          ]
+        }
+      ],
+      "fontSizes": [
+        { "slug": "meta",   "size": "10px",   "name": "Meta" },
+        { "slug": "label",  "size": "11px",   "name": "Label" },
+        { "slug": "body",   "size": "15px",   "name": "Body" },
+        { "slug": "lead",   "size": "17px",   "name": "Lead" },
+        { "slug": "h4",     "size": "18px",   "name": "H4" },
+        { "slug": "h3",     "size": "22px",   "name": "H3" },
+        { "slug": "h2",     "size": "44px",   "name": "H2" },
+        { "slug": "h1",     "size": "64px",   "name": "H1" },
+        { "slug": "hero",   "size": "96px",   "name": "Hero" }
+      ]
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true,
+      "blockGap": true,
+      "units": ["px", "%", "em", "rem", "vh", "vw"],
+      "spacingScale": { "steps": 0 },
+      "spacingSizes": [
+        { "slug": "10", "size": "4px",  "name": "10 · Hair" },
+        { "slug": "20", "size": "8px",  "name": "20 · XS" },
+        { "slug": "30", "size": "12px", "name": "30 · S" },
+        { "slug": "40", "size": "16px", "name": "40 · M" },
+        { "slug": "50", "size": "24px", "name": "50 · L" },
+        { "slug": "60", "size": "32px", "name": "60 · XL" },
+        { "slug": "70", "size": "48px", "name": "70 · XXL" },
+        { "slug": "80", "size": "56px", "name": "80 · Section" },
+        { "slug": "90", "size": "72px", "name": "90 · Hero" }
+      ]
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "blocks": {
+      "core/button": {
+        "border": { "radius": true, "color": true, "style": true, "width": true }
+      }
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--paper)",
+      "text": "var(--wp--preset--color--ink)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--sans)",
+      "fontSize": "var(--wp--preset--font-size--body)",
+      "fontWeight": "500",
+      "lineHeight": "1.6"
+    },
+    "spacing": {
+      "padding": {
+        "top": "0",
+        "right": "0",
+        "bottom": "0",
+        "left": "0"
+      },
+      "blockGap": "0"
+    },
+    "elements": {
+      "link": {
+        "color": { "text": "var(--wp--preset--color--ink)" },
+        ":hover": { "color": { "text": "var(--wp--preset--color--steel-1)" } },
+        "typography": { "textDecoration": "underline" }
+      },
+      "h1": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontSize": "var(--wp--preset--font-size--h1)",
+          "lineHeight": "0.95",
+          "letterSpacing": "-0.01em",
+          "textTransform": "uppercase"
+        }
+      },
+      "h2": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontSize": "var(--wp--preset--font-size--h2)",
+          "lineHeight": "1.0",
+          "letterSpacing": "-0.005em"
+        }
+      },
+      "h3": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontSize": "var(--wp--preset--font-size--h3)",
+          "lineHeight": "1.1",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.04em"
+        }
+      },
+      "h4": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--sans)",
+          "fontSize": "var(--wp--preset--font-size--h4)",
+          "fontWeight": "700",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.08em"
+        }
+      },
+      "button": {
+        "color": {
+          "background": "var(--wp--preset--color--ink)",
+          "text": "var(--wp--preset--color--paper)"
+        },
+        "border": {
+          "radius": "0",
+          "width": "1.5px",
+          "style": "solid",
+          "color": "var(--wp--preset--color--ink)"
+        },
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--mono)",
+          "fontSize": "var(--wp--preset--font-size--label)",
+          "fontWeight": "600",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.18em"
+        },
+        "spacing": {
+          "padding": { "top": "12px", "right": "20px", "bottom": "12px", "left": "20px" }
+        },
+        ":hover": {
+          "color": {
+            "background": "var(--wp--preset--color--paper)",
+            "text": "var(--wp--preset--color--ink)"
+          }
+        }
+      }
+    },
+    "blocks": {
+      "core/paragraph": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--body)",
+          "fontWeight": "500",
+          "lineHeight": "1.7"
+        }
+      },
+      "core/post-title": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontSize": "var(--wp--preset--font-size--h1)",
+          "letterSpacing": "-0.01em",
+          "textTransform": "uppercase",
+          "lineHeight": "0.95"
+        }
+      }
+    }
+  },
+  "templateParts": [
+    { "name": "header",        "area": "header", "title": "Header (Retail)" },
+    { "name": "footer",        "area": "footer", "title": "Footer (Retail)" },
+    { "name": "header-dealer", "area": "header", "title": "Header (Dealer)" },
+    { "name": "footer-dealer", "area": "footer", "title": "Footer (Dealer)" }
+  ],
+  "customTemplates": [
+    { "name": "dealer-dashboard", "title": "Dealer: Dashboard",   "postTypes": ["page"] },
+    { "name": "dealer-catalog",   "title": "Dealer: Catalog",     "postTypes": ["page"] },
+    { "name": "dealer-inventory", "title": "Dealer: Inventory",   "postTypes": ["page"] },
+    { "name": "dealer-login",     "title": "Dealer: Sign In",     "postTypes": ["page"] },
+    { "name": "dealer-apply",     "title": "Dealer: Apply",       "postTypes": ["page"] },
+    { "name": "dealer-stub",      "title": "Dealer: Stub (Phase 4)", "postTypes": ["page"] },
+    { "name": "page-login",       "title": "Page: Sign In / Register","postTypes": ["page"] }
+  ]
+}

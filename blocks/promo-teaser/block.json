@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/promo-teaser",
+  "title": "OSA · Promo Teaser (July 4)",
+  "category": "osa",
+  "icon": "megaphone",
+  "description": "Independence Day teaser strip for the homepage. Renders only while the promo window is open (inc/promo.php).",
+  "textdomain": "osa-arsenal",
+  "supports": {
+    "html": false,
+    "multiple": false,
+    "align": [ "full" ]
+  },
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

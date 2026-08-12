@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Parchment",
+  "description": "Warm field-manual tones — aged paper and brown-black ink. Same light layout, warmer cast.",
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "ink",         "color": "#15110C", "name": "Ink" },
+        { "slug": "ink-2",       "color": "#241E16", "name": "Ink 2" },
+        { "slug": "ink-3",       "color": "#342C20", "name": "Ink 3" },
+        { "slug": "steel-1",     "color": "#6E6353", "name": "Steel 1" },
+        { "slug": "steel-2",     "color": "#9B917F", "name": "Steel 2" },
+        { "slug": "paper-edge",  "color": "#DDD5C4", "name": "Paper Edge" },
+        { "slug": "paper-tint",  "color": "#EEE7D7", "name": "Paper Tint" },
+        { "slug": "paper",       "color": "#F7F2E7", "name": "Paper" }
+      ]
+    }
+  }
+}

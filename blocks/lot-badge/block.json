@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/lot-badge",
+  "title": "OSA · LOT Badge",
+  "category": "osa",
+  "icon": "tag",
+  "description": "Catalog LOT pill overlaid on product imagery.",
+  "textdomain": "osa-arsenal",
+  "usesContext": [ "postId" ],
+  "supports": {
+    "html": false,
+    "anchor": false,
+    "spacing": { "margin": false, "padding": false }
+  },
+  "attributes": {
+    "lot": { "type": "string", "default": "" }
+  },
+  "render": "file:./render.php"
+}

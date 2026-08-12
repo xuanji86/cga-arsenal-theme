@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/chrome-menu-toggle",
+  "title": "OSA · Menu Toggle",
+  "category": "osa",
+  "icon": "menu-alt",
+  "description": "Mobile hamburger button. Opens the primary menu drawer (handled by mobile-nav.js); hidden on desktop.",
+  "textdomain": "osa-arsenal",
+  "supports": { "html": false },
+  "attributes": {},
+  "render": "file:./render.php"
+}

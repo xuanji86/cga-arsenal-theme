@@ -1,0 +1,3537 @@
+/*
+ * OSA Arsenal — base utilities & component styles
+ * Strictly black/white/paper. Brutalist catalog. Museum-curatorial.
+ * Companion to theme.json — defines utility classes referenced from
+ * patterns, block render templates, and WooCommerce overrides.
+ */
+
+/*
+ * Token bridge: alias the component-level --osa-* variables to the theme.json
+ * presets (--wp--preset--*), with the original literals kept as fallbacks. This
+ * makes every component style below follow Global Styles / style variations /
+ * the Site Editor — change a palette color or switch a style once and the whole
+ * 58KB of component CSS recolors with it. Slugs map 1:1 with theme.json and the
+ * preset values currently equal these literals, so the baseline is unchanged.
+ */
+:root {
+	--osa-ink:         var(--wp--preset--color--ink, #0A0A0A);
+	--osa-ink-2:       var(--wp--preset--color--ink-2, #1A1A1A);
+	--osa-ink-3:       var(--wp--preset--color--ink-3, #2A2A2A);
+	--osa-steel-1:     var(--wp--preset--color--steel-1, #5A5A5A);
+	--osa-steel-2:     var(--wp--preset--color--steel-2, #8A8A8A);
+	--osa-paper-edge:  var(--wp--preset--color--paper-edge, #D9D9D9);
+	--osa-paper-tint:  var(--wp--preset--color--paper-tint, #EFEFEF);
+	--osa-paper:       var(--wp--preset--color--paper, #FFFFFF);
+
+	--osa-f-display:  var(--wp--preset--font-family--display, 'Archivo Black', 'Helvetica Neue', sans-serif);
+	--osa-f-sans:     var(--wp--preset--font-family--sans, 'Archivo', 'Helvetica Neue', sans-serif);
+	--osa-f-mono:     var(--wp--preset--font-family--mono, 'IBM Plex Mono', ui-monospace, 'Menlo', monospace);
+	--osa-f-serif:    var(--wp--preset--font-family--serif, 'Libre Caslon Text', 'Times New Roman', serif);
+	--osa-f-serif-d:  var(--wp--preset--font-family--serif-display, 'Instrument Serif', 'Libre Caslon Text', serif);
+}
+
+html,
+body {
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+}
+
+* { box-sizing: border-box; }
+
+/* ===== Type utilities ===== */
+.osa-display {
+	font-family: var(--osa-f-display);
+	font-weight: 900;
+	letter-spacing: -0.01em;
+	line-height: 0.95;
+}
+.osa-sans   { font-family: var(--osa-f-sans);    }
+.osa-mono   { font-family: var(--osa-f-mono);    }
+.osa-serif  { font-family: var(--osa-f-serif);   }
+.osa-serif-d {
+	font-family: var(--osa-f-serif-d);
+	font-style: italic;
+	line-height: 1.3;
+}
+
+.osa-caps {
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+.osa-mono.osa-caps,
+.osa-mono-caps {
+	font-family: var(--osa-f-mono);
+	text-transform: uppercase;
+	letter-spacing: 0.18em;
+}
+
+/* ===== Hairline rules ===== */
+.osa-hr,
+.osa-hairline {
+	border: 0;
+	border-top: 1px solid var(--osa-ink);
+	margin: 0;
+}
+.osa-hr-soft {
+	border: 0;
+	border-top: 1px solid var(--osa-paper-edge);
+	margin: 0;
+}
+
+/* ===== B/W image placeholder ===== */
+.osa-bw-img {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	background:
+		repeating-linear-gradient(45deg, var(--osa-paper-edge) 0 1px, transparent 1px 9px),
+		var(--osa-paper-tint);
+}
+.osa-bw-img__label {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	color: var(--osa-steel-1);
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+.osa-bw-img--ar-1-1   { aspect-ratio: 1 / 1;  }
+.osa-bw-img--ar-4-3   { aspect-ratio: 4 / 3;  }
+.osa-bw-img--ar-5-4   { aspect-ratio: 5 / 4;  }
+.osa-bw-img--ar-3-4   { aspect-ratio: 3 / 4;  }
+.osa-bw-img--ar-16-9  { aspect-ratio: 16 / 9;  }
+.osa-bw-img--ar-16-10 { aspect-ratio: 16 / 10; }
+.osa-bw-img--ar-21-9  { aspect-ratio: 21 / 9; }
+.osa-bw-img--flat {
+	background: var(--osa-paper-tint);
+}
+
+/* ===== Logo ===== */
+.osa-logo {
+	display: block;
+	image-rendering: auto;
+	height: auto;
+	max-width: 100%;
+}
+
+/* ===== LOT badge (overlay pill) ===== */
+.osa-lot-badge {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	font-family: var(--osa-f-mono);
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	padding: 4px 7px;
+	line-height: 1;
+	z-index: 2;
+}
+
+/* ===== Grade chip ===== */
+.osa-grade-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-family: var(--osa-f-mono);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	border: 1px solid var(--osa-ink);
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+	line-height: 1;
+	white-space: nowrap;
+}
+.osa-grade-chip__pct { font-weight: 800; }
+.osa-grade-chip__sep { opacity: 0.5; font-weight: 400; }
+.osa-grade-chip__code,
+.osa-grade-chip__name {
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+}
+.osa-grade-chip--sm {
+	font-size: 11px;
+	padding: 4px 8px;
+}
+.osa-grade-chip--md {
+	font-size: 12px;
+	padding: 5px 10px;
+}
+.osa-grade-chip--lg {
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+	font-size: 18px;
+	padding: 10px 16px 8px;
+}
+.osa-grade-chip--lg .osa-grade-chip__name {
+	font-size: 9px;
+	color: var(--osa-steel-1);
+}
+.osa-grade-chip--overlay {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 2;
+}
+
+/* ===== Condition scale (NRA 8-tier) ===== */
+.osa-condition-scale {
+	font-family: var(--osa-f-mono);
+	border: 1px solid var(--osa-ink);
+	background: var(--osa-paper);
+}
+.osa-condition-scale__title {
+	font-size: 10px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	padding: 8px 12px;
+	border-bottom: 1px solid var(--osa-paper-edge);
+}
+.osa-condition-scale__grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+}
+.osa-condition-scale__cell {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	padding: 12px 6px;
+	border-right: 1px solid var(--osa-paper-edge);
+	text-align: center;
+	min-height: 70px;
+}
+.osa-condition-scale__cell:last-child { border-right: 0; }
+.osa-condition-scale__cell-pct {
+	font-size: 17px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	color: var(--osa-ink);
+	line-height: 1;
+}
+.osa-condition-scale__cell-code {
+	font-size: 9px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	color: var(--osa-steel-1);
+	text-transform: uppercase;
+}
+.osa-condition-scale__cell-label {
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--osa-paper);
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.osa-condition-scale__cell--active {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	border-right-color: var(--osa-ink);
+}
+.osa-condition-scale__cell--active .osa-condition-scale__cell-pct {
+	color: var(--osa-paper);
+	font-size: 22px;
+}
+.osa-condition-scale__legend {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px 12px;
+	font-size: 9px;
+	color: var(--osa-steel-1);
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	border-top: 1px solid var(--osa-paper-edge);
+}
+
+/* ===== Marquee / ticker strip (static, centered) ===== */
+.osa-marquee {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	border-top: 1px solid var(--osa-ink);
+	border-bottom: 1px solid var(--osa-ink);
+	padding: 12px 24px;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--osa-ink);
+}
+.osa-marquee--invert {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+.osa-marquee__track {
+	display: inline-flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 16px 32px;
+}
+.osa-marquee__sep { opacity: 0.5; }
+
+/* ===== Product card (compact, A variant) ===== */
+.osa-card {
+	display: flex;
+	flex-direction: column;
+	background: var(--osa-paper);
+	border: 1px solid var(--osa-ink);
+	text-decoration: none;
+	color: inherit;
+}
+.osa-card__media {
+	position: relative;
+	border-bottom: 1px solid var(--osa-ink);
+}
+.osa-card__body {
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.osa-card__name {
+	font-family: var(--osa-f-sans);
+	font-weight: 800;
+	font-size: 13px;
+	line-height: 1.2;
+	color: var(--osa-ink);
+}
+.osa-card__meta {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	color: var(--osa-steel-1);
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+.osa-card__price {
+	margin-top: 4px;
+	font-family: var(--osa-f-mono);
+	font-weight: 600;
+	font-size: 13px;
+	color: var(--osa-ink);
+}
+
+/* ===== Catalog archive: equal-size, aligned cards =====
+ * The post-template grid stretches each <li> to the tallest cell in its row,
+ * but the card inside doesn't fill that height by default — so cards with a
+ * meta line (e.g. caliber) or a longer title end at different points and the
+ * boxes look uneven. Make the card fill its cell, reserve two title lines, and
+ * pin the price to the bottom so every card is the same size and the price row
+ * lines up across the grid. Scoped to .osa-shop-main so other .osa-card uses
+ * (front-page catalog-grid, etc.) are untouched.
+ */
+.osa-shop-main .wp-block-post-template.is-layout-grid {
+	grid-auto-rows: 1fr; /* every row equalizes to the tallest → all boxes same size */
+}
+.osa-shop-main .wp-block-post-template.is-layout-grid > li {
+	display: flex;
+}
+.osa-shop-main .wp-block-post-template.is-layout-grid > li > .wp-block-osa-product-card-compact {
+	display: flex;
+	width: 100%;
+}
+.osa-shop-main .osa-card {
+	width: 100%;
+	height: 100%;
+}
+.osa-shop-main .osa-card__body {
+	flex: 1 1 auto;
+}
+.osa-shop-main .osa-card__name {
+	min-height: 2.4em; /* line-height 1.2 × 2 lines — uniform title block */
+}
+.osa-shop-main .osa-card__price {
+	margin-top: auto; /* push to the card's bottom edge so prices align */
+}
+
+/* ===== Catalog grid columns =====
+ * Desktop column count = WooCommerce "Products per row" (Customize → WooCommerce
+ * → Product Catalog), published as --osa-shop-cols by inc/shop.php. The
+ * responsive step-downs to 2 then 1 come from the !important rules in the media
+ * queries below, so any choice degrades well. */
+.osa-shop-main .wp-block-post-template.is-layout-grid { grid-template-columns: repeat(var(--osa-shop-cols, 3), minmax(0, 1fr)); }
+
+/* Card hover effects (off = .osa-card-hover-none, no rules). */
+.osa-card-hover-zoom .osa-shop-main .osa-card__media { overflow: hidden; }
+.osa-card-hover-zoom .osa-shop-main .osa-card__media img { transition: transform 0.45s ease; }
+.osa-card-hover-zoom .osa-shop-main .osa-card:hover .osa-card__media img { transform: scale(1.05); }
+.osa-card-hover-lift .osa-shop-main .osa-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.osa-card-hover-lift .osa-shop-main .osa-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(10, 10, 10, 0.12); }
+@media (prefers-reduced-motion: reduce) {
+	.osa-card-hover-zoom .osa-shop-main .osa-card__media img,
+	.osa-card-hover-lift .osa-shop-main .osa-card { transition: none; }
+	.osa-card-hover-zoom .osa-shop-main .osa-card:hover .osa-card__media img,
+	.osa-card-hover-lift .osa-shop-main .osa-card:hover { transform: none; box-shadow: none; }
+}
+
+/* ===== Single product: sticky gallery + sale badge ===== */
+.osa-product-gallery-col {
+	position: sticky;
+	top: 16px;
+	align-self: flex-start; /* shrink to content so the column can stick */
+}
+.osa-product-gallery-col .wp-block-woocommerce-product-sale-badge {
+	position: absolute;
+	top: 12px;
+	left: 12px; /* top-left: the gallery zoom trigger owns the top-right corner */
+	z-index: 3;
+	margin: 0;
+}
+.osa-product-gallery-col .wc-block-components-product-sale-badge {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	border-radius: 0;
+	border: 0;
+	padding: 5px 9px;
+	min-height: 0;
+}
+@media (max-width: 768px) {
+	.osa-product-gallery-col { position: static; }
+}
+
+/* ===== Catalog grid ===== */
+.osa-catalog-grid {
+	display: grid;
+	gap: 0;
+	border: 1px solid var(--osa-ink);
+	margin-top: -1px; /* collapses borders if stacked */
+}
+.osa-catalog-grid > * {
+	border-right: 1px solid var(--osa-ink);
+	border-bottom: 1px solid var(--osa-ink);
+	margin: 0 -1px -1px 0; /* collapse */
+}
+/* minmax(0, 1fr) (not bare 1fr) so wide card content can't push tracks past the
+   container — bare 1fr = minmax(auto,1fr) and overflows a narrow column (e.g. the
+   dealer dashboard's 66% column overlapping the Next Drop card). */
+.osa-catalog-grid--cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.osa-catalog-grid--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.osa-catalog-grid--cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.osa-catalog-grid--cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.osa-catalog-grid--cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+/* v1.4 §13 V4-2 (option B, user-approved): a `.osa-catalog-grid
+ * {max-width:100%}` used to sit here and silently OUTGUNNED the constrained
+ * containers' zero-specificity child cap (`> :where(…){max-width:
+ * <contentSize>}`) — same (0,1,0) specificity, later in the cascade — so
+ * every grid inside a constrained group escaped to full width. The homepage
+ * floor's ~2500px sprawl on wide viewports was this escape, not its pattern
+ * (which declares contentSize:1440 and now governs again). Real overflow
+ * protection was never this line: it's the minmax(0,1fr) tracks above plus
+ * the cell min-width below. Do not reintroduce a max-width here. */
+.osa-catalog-grid > * { min-width: 0; }
+
+/* ===== Specs table ===== */
+.osa-specs {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: var(--osa-f-mono);
+	font-size: 13px;
+}
+.osa-specs th,
+.osa-specs td {
+	border-bottom: 1px solid var(--osa-paper-edge);
+	padding: 9px 0;
+	text-align: left;
+	font-weight: 400;
+	letter-spacing: 0.06em;
+}
+.osa-specs th {
+	width: 40%;
+	color: var(--osa-steel-1);
+	text-transform: uppercase;
+	font-weight: 500;
+	letter-spacing: 0.14em;
+}
+.osa-specs td {
+	color: var(--osa-ink);
+	font-weight: 400;
+}
+
+/* ---- FAQ signpost under the buy row (templates/single-product.html) ------
+ * Deliberately quiet: mono, small, steel — a signpost, not a second CTA.
+ * No top rule of its own: the buy-row group already closes with a 1px ink
+ * border, and a second line 14px below it reads as a rendering bug.
+ *
+ * Selector is `p.osa-faq-hint`, not `.osa-faq-hint`: global styles ship
+ * `:root :where(p){font-size;line-height}` at the SAME specificity (0,1,0), so
+ * a bare class would win on source order alone. That order holds today, but
+ * LiteSpeed CSS combine / critical-CSS inlining can flip it, and the failure
+ * mode is silent — the signpost just becomes body copy. (0,1,1) settles it. */
+p.osa-faq-hint {
+	margin: 14px 0 0;
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+	line-height: 1.65;
+	letter-spacing: 0.04em;
+	color: var(--osa-steel-1);
+}
+.osa-faq-hint a {
+	color: var(--osa-ink);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	/* keep "Read the FAQ →" off a line break of its own */
+	white-space: nowrap;
+}
+.osa-faq-hint a:hover,
+.osa-faq-hint a:focus-visible {
+	color: var(--osa-ink-2);
+	text-decoration-thickness: 2px;
+}
+
+/* ---- Model backlink (osa/model-page-link) --------------------------------
+ * The one-line link from a product page up to its /firearms/ landing, sitting
+ * directly under the FAQ signpost above. Same quiet mono signpost language on
+ * purpose — two differently-styled micro links stacked in the product summary
+ * would read as competing CTAs. It keeps its own class because the FAQ
+ * signpost's measurements are pinned by tests/test-product-faq-hint.php and the
+ * two lines must stay independently adjustable.
+ *
+ * `p.` for the same reason as the signpost: global styles ship
+ * `:root :where(p){font-size;line-height}` at the SAME specificity (0,1,0), so
+ * a bare class would win on source order alone — an order LiteSpeed CSS
+ * combine / critical-CSS inlining can silently flip.
+ *
+ * The whole sentence is the anchor (the arrow included, as in .osa-faq-hint and
+ * .osa-guide-xlink__line), so there is no separate label element to style. */
+p.osa-model-backlink {
+	margin: 6px 0 0;
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+	line-height: 1.65;
+	letter-spacing: 0.04em;
+	color: var(--osa-steel-1);
+}
+.osa-model-backlink a {
+	color: var(--osa-ink);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+.osa-model-backlink a:hover,
+.osa-model-backlink a:focus-visible {
+	color: var(--osa-ink-2);
+	text-decoration-thickness: 2px;
+}
+
+/* ===== Footer (retail + dealer) ===== */
+.osa-footer {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	padding: 56px 56px 24px;
+}
+.osa-footer__grid {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+	gap: 48px;
+}
+.osa-footer__brand .osa-footer__logo {
+	height: 88px;
+	width: auto;
+	max-width: 100%;
+	display: block;
+}
+.osa-footer__legal {
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	line-height: 1.6;
+	color: var(--osa-steel-2);
+	margin: 24px 0 0;
+}
+.osa-footer__heading {
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.2em;
+	color: var(--osa-paper-edge);
+	text-transform: uppercase;
+	margin: 0 0 16px;
+}
+.osa-footer__list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	font-family: var(--osa-f-sans);
+	font-size: 13px;
+	line-height: 1.9;
+	color: var(--osa-paper);
+}
+.osa-footer__list a {
+	color: inherit;
+	text-decoration: none;
+}
+.osa-footer__list a:hover { color: var(--osa-paper-edge); }
+
+.osa-footer__bar {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+	flex-wrap: wrap;
+	margin-top: 32px;
+	padding-top: 18px;
+	border-top: 1px solid var(--osa-ink-3);
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+}
+/* Blockified footer: the bar items are now <p> blocks; the logo is a link
+   wrapper. Keep them flush so the layout matches the former span/img markup. */
+.osa-footer__bar-item { margin: 0; }
+.osa-chrome-logo { display: inline-block; line-height: 0; }
+
+@media (max-width: 900px) {
+	.osa-footer { padding: 40px 24px 24px; }
+	.osa-footer__grid {
+		grid-template-columns: 1fr 1fr;
+		gap: 32px;
+	}
+	.osa-footer__brand { grid-column: 1 / -1; }
+	.osa-footer__bar { flex-direction: column; }
+}
+
+/* ===== Header sits flush at the top of the page =====
+ * Zero out any inadvertent margin/padding that creeps in from WP wrappers
+ * so the dark utility strip starts at y=0 (below admin bar when present)
+ * and reaches edge-to-edge horizontally.
+ */
+html, body { margin: 0; }
+body .wp-site-blocks {
+	padding-top: 0;
+	margin-top: 0;
+}
+.wp-site-blocks > header.wp-block-template-part,
+.wp-site-blocks > header {
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+.osa-utility-strip { width: 100%; box-sizing: border-box; }
+
+/* ===== Sticky header (Customizer toggle: osa_sticky_header) ===== */
+body.osa-has-sticky-header .wp-site-blocks > header.wp-block-template-part {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+	background: var(--osa-paper);
+}
+body.osa-has-sticky-header.admin-bar .wp-site-blocks > header.wp-block-template-part {
+	top: 32px;
+}
+@media screen and (max-width: 782px) {
+	body.osa-has-sticky-header.admin-bar .wp-site-blocks > header.wp-block-template-part {
+		top: 46px;
+	}
+}
+/* On mobile the utility strip stacks to ~2 rows; sticking the whole header
+   eats too much viewport while scrolling. Only stick the main header row
+   (logo + hamburger + icons); utility strip scrolls away with content. */
+@media (max-width: 900px) {
+	body.osa-has-sticky-header .wp-site-blocks > header.wp-block-template-part {
+		position: static;
+	}
+	body.osa-has-sticky-header .osa-header-row {
+		position: sticky;
+		top: 0;
+		background: var(--osa-paper);
+		border-bottom: 1px solid var(--osa-ink);
+	}
+	body.osa-has-sticky-header.admin-bar .osa-header-row {
+		top: 46px;
+	}
+}
+
+/* ===== UX: sticky shrink + back-to-top + quantity steppers (osa-ux.js) ===== */
+/* Once scrolled, collapse the utility strip and add a shadow. */
+.osa-utility-strip { transition: max-height 0.25s ease, opacity 0.2s ease; overflow: hidden; }
+body.osa-has-sticky-header.osa-header-scrolled .wp-site-blocks > header.wp-block-template-part {
+	box-shadow: 0 2px 14px rgba(10, 10, 10, 0.09);
+}
+body.osa-has-sticky-header.osa-header-scrolled .osa-utility-strip { max-height: 0; opacity: 0; }
+
+.osa-to-top {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	z-index: 60;
+	width: 42px;
+	height: 42px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	border: 1px solid var(--osa-ink);
+	cursor: pointer;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(8px);
+	transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+.osa-to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+.osa-to-top:hover { background: var(--osa-ink-2); }
+
+.osa-qty { display: inline-flex; align-items: stretch; border: 1px solid var(--osa-ink); }
+.osa-qty input.qty {
+	border: 0 !important;
+	border-left: 1px solid var(--osa-paper-edge) !important;
+	border-right: 1px solid var(--osa-paper-edge) !important;
+	width: 48px;
+	text-align: center;
+	-moz-appearance: textfield;
+	background: var(--osa-paper);
+}
+.osa-qty input.qty::-webkit-outer-spin-button,
+.osa-qty input.qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.osa-qty__btn {
+	width: 36px;
+	border: 0;
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+	font-family: var(--osa-f-mono);
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+}
+.osa-qty__btn:hover { background: var(--osa-paper-tint); }
+
+@media (prefers-reduced-motion: reduce) {
+	.osa-utility-strip, .osa-to-top { transition: none; }
+}
+
+/* ===== Header utility strip (dark) ===== */
+.osa-utility-strip {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 24px;
+	padding: 9px 24px;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+.osa-utility-strip__left {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+}
+.osa-utility-strip__msg {
+	color: var(--osa-paper-edge);
+}
+.osa-utility-strip__dealers {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+.osa-utility-strip__arrow {
+	display: inline-block;
+	flex-shrink: 0;
+	vertical-align: middle;
+}
+.osa-utility-strip__right {
+	display: inline-flex;
+	align-items: center;
+	gap: 24px;
+}
+.osa-utility-strip__right a {
+	color: var(--osa-paper-edge);
+	text-decoration: none;
+	letter-spacing: 0.18em;
+	font-weight: 500;
+}
+.osa-utility-strip__right a:hover { color: var(--osa-paper); }
+@media (max-width: 900px) {
+	.osa-utility-strip { flex-direction: column; gap: 8px; padding: 8px 16px; }
+	.osa-utility-strip__right { gap: 14px; flex-wrap: wrap; justify-content: center; }
+}
+
+/* ===== Retail header main row ===== */
+.osa-header-row {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 32px;
+	padding: 14px 24px;
+	background: var(--osa-paper);
+	position: relative;
+}
+/* Header height + nav alignment (Customizer → OSA · Header). */
+.osa-header-h-compact .osa-header-row { padding-top: 8px; padding-bottom: 8px; }
+.osa-header-h-tall .osa-header-row { padding-top: 24px; padding-bottom: 24px; }
+.osa-nav-left .osa-main-nav { justify-content: flex-start; }
+.osa-nav-right .osa-main-nav { justify-content: flex-end; }
+/* Dark header (Customizer): the utility strip is already dark; this darkens the
+   main row and lightens the nav/icons. Nav-link color is desktop-only so the
+   mobile drawer (a light panel) keeps dark links. The logo swaps to a light
+   variant in PHP (chrome-logo render). */
+.osa-dark-header .osa-header-row { background: var(--osa-ink); }
+.osa-dark-header .osa-header-hamburger,
+.osa-dark-header .osa-header-icon { color: var(--osa-paper); }
+.osa-dark-header .osa-header-icon__badge { background: var(--osa-paper); color: var(--osa-ink); }
+@media (min-width: 901px) {
+	.osa-dark-header .osa-main-nav__link { color: var(--osa-paper); }
+	.osa-dark-header .osa-main-nav__link:hover,
+	.osa-dark-header .osa-main-nav__link.is-active { border-bottom-color: var(--osa-paper); }
+}
+/* Hamburger only renders on mobile (≤900px) — hidden on desktop. */
+.osa-header-hamburger {
+	display: none;
+}
+.osa-header-hamburger__icon--close { display: none; }
+.osa-nav-open .osa-header-hamburger__icon--open  { display: none; }
+.osa-nav-open .osa-header-hamburger__icon--close { display: block; }
+.osa-nav-backdrop { display: none; }
+/* Account link inside the mobile drawer — hidden on desktop (account is in icon row). */
+.osa-main-nav__account-link { display: none; }
+.osa-header-logo {
+	display: inline-flex;
+	align-items: center;
+	min-width: 0;
+}
+.osa-header-logo .osa-logo {
+	height: var(--osa-logo-h, 56px);
+	width: auto;
+	display: block;
+}
+.osa-main-nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--osa-nav-gap, 20px);
+	min-width: 0;
+}
+.osa-main-nav__link {
+	font-family: var(--osa-f-sans);
+	font-size: var(--osa-nav-fs, 12px);
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--osa-ink);
+	text-decoration: none;
+	padding-bottom: 6px;
+	border-bottom: 2px solid transparent;
+	transition: border-color 0.15s ease;
+	white-space: nowrap;
+}
+.osa-main-nav__link:hover,
+.osa-main-nav__link.is-active {
+	border-bottom-color: var(--osa-ink);
+}
+.osa-header-controls {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	flex-wrap: nowrap;
+}
+.osa-header-icon {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	color: var(--osa-ink);
+	background: transparent;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	text-decoration: none;
+	transition: color 0.15s ease;
+}
+.osa-header-icon:hover { color: var(--osa-steel-1); }
+.osa-header-icon svg {
+	display: block;
+	width: 22px;
+	height: 22px;
+}
+.osa-header-icon__badge {
+	position: absolute;
+	top: -4px;
+	right: -6px;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 5px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	border-radius: 999px;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0;
+	line-height: 1;
+}
+.osa-header-icon--cart:hover .osa-header-icon__badge { background: var(--osa-steel-1); }
+/* Empty cart badge stays in the DOM (for live fragment updates) but hidden;
+   override the inline-flex display above. */
+.osa-header-icon__badge[hidden] { display: none; }
+
+/* AJAX add-to-cart confirmation (assets/js/osa-add-to-cart.js). */
+.osa-cart-feedback {
+	display: none;
+	margin-top: 12px;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--osa-ink);
+}
+.osa-cart-feedback.is-visible { display: block; }
+.osa-cart-feedback__tick { font-weight: 700; }
+.osa-cart-feedback a { color: var(--osa-ink); text-decoration: underline; text-underline-offset: 2px; }
+.single_add_to_cart_button.loading { opacity: 0.6; pointer-events: none; }
+
+/* Mobile header: hamburger | centered logo | controls + off-canvas nav drawer. */
+@media (max-width: 900px) {
+	.osa-header-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 16px;
+		text-align: initial;
+		/* Sits above drawer (1000) + backdrop (999) so the hamburger/X stays tappable when drawer is open. */
+		z-index: 1001;
+	}
+	.osa-header-hamburger {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		background: transparent;
+		border: 0;
+		padding: 0;
+		cursor: pointer;
+		color: var(--osa-ink);
+		flex: 0 0 auto;
+	}
+	.osa-header-hamburger:hover { color: var(--osa-steel-1); }
+	/* Logo optically centered relative to viewport, independent of side controls' widths. */
+	.osa-header-logo {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		pointer-events: auto;
+	}
+	.osa-header-logo .osa-logo {
+		height: 38px;
+	}
+	.osa-header-controls {
+		gap: 14px;
+		flex: 0 0 auto;
+		flex-wrap: nowrap;
+	}
+
+	/* Nav becomes left-side off-canvas drawer. */
+	.osa-main-nav {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 280px;
+		max-width: 82vw;
+		background: var(--osa-paper);
+		border-right: 1px solid var(--osa-ink);
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+		flex-wrap: nowrap;
+		gap: 0;
+		padding: 72px 24px 32px;
+		transform: translateX(-100%);
+		transition: transform 0.25s ease;
+		z-index: 1000;
+		overflow-y: auto;
+		will-change: transform;
+	}
+	.osa-main-nav__link {
+		display: block;
+		font-size: 14px;
+		padding: 16px 0;
+		border-bottom: 1px solid var(--osa-paper-edge);
+		border-top: none;
+		text-align: left;
+		white-space: normal;
+	}
+	.osa-main-nav__link:hover,
+	.osa-main-nav__link.is-active {
+		border-bottom-color: var(--osa-ink);
+	}
+
+	/* Account link in drawer: same row styling as menu items, plus a stronger
+	   divider above to separate "site nav" from "personal/account" zone. */
+	.osa-main-nav__account-link {
+		display: block;
+		font-family: var(--osa-f-sans);
+		font-size: 14px;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--osa-ink);
+		text-decoration: none;
+		padding: 16px 0;
+		margin-top: 16px;
+		border-top: 1px solid var(--osa-ink);
+		border-bottom: 1px solid var(--osa-paper-edge);
+		text-align: left;
+	}
+	.osa-main-nav__account-link:hover { color: var(--osa-steel-1); }
+
+	/* Hide the header-row account icon on mobile — it's moved into the drawer above. */
+	.osa-header-icon--account { display: none; }
+
+	.osa-nav-open .osa-main-nav { transform: translateX(0); }
+
+	.osa-nav-backdrop {
+		display: block;
+		position: fixed;
+		inset: 0;
+		background: rgba(10, 10, 10, 0.45);
+		z-index: 999;
+	}
+	.osa-nav-backdrop[hidden] { display: none; }
+
+	/* Lock body scroll while drawer is open. */
+	html.osa-nav-open,
+	html.osa-nav-open body { overflow: hidden; }
+}
+
+/* ===== Dealer status strip ===== */
+.osa-dealer-strip {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 6px 20px;
+	background: var(--osa-ink);
+	color: var(--osa-steel-2);
+	border-bottom: 1px solid var(--osa-ink-3);
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+.osa-dealer-strip__status {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+.osa-dealer-strip__dot {
+	width: 6px;
+	height: 6px;
+	background: var(--osa-paper);
+	display: inline-block;
+}
+
+/* ===== WP block buttons (normalize fill vs outline to identical box) =====
+ * WP core's is-style-outline applies a 2px border on the link without
+ * compensating padding, leaving outline buttons ~3px shorter than fill.
+ * Force same border-width / padding / box-sizing on both so they land on
+ * the exact same baseline.
+ */
+.wp-block-button.is-style-fill .wp-block-button__link,
+.wp-block-button.is-style-outline .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1.5px solid var(--osa-ink);
+	border-radius: 0;
+	padding: 12px 20px;
+	box-sizing: border-box;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	line-height: 1.1;
+	min-height: 42px;
+	white-space: nowrap;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+.wp-block-button.is-style-fill .wp-block-button__link {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+.wp-block-button.is-style-fill .wp-block-button__link:hover {
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+}
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+}
+.wp-block-button.is-style-outline .wp-block-button__link:hover {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+
+/* ===== CTA / buttons ===== */
+.osa-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 12px 20px;
+	border: 1.5px solid var(--osa-ink);
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+.osa-btn:hover {
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+}
+.osa-btn--outline {
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+}
+.osa-btn--outline:hover {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+.osa-btn--sm {
+	padding: 7px 12px;
+	font-size: 10px;
+}
+
+/* ===== Cart / Checkout block tweaks =====
+ * Apply the brutalist palette to the WC block-based cart/checkout. We don't
+ * try to redesign the WC blocks wholesale — just normalize borders, fonts,
+ * and accents so they feel native.
+ */
+.wc-block-cart, .wc-block-checkout {
+	font-family: var(--osa-f-sans);
+	color: var(--osa-ink);
+}
+.wc-block-cart-item__product-name,
+.wc-block-components-product-name {
+	font-family: var(--osa-f-sans) !important;
+	font-weight: 800 !important;
+	color: var(--osa-ink) !important;
+	text-decoration: none !important;
+}
+.wc-block-components-product-price__value,
+.wc-block-components-formatted-money-amount,
+.wc-block-components-totals-item__value {
+	font-family: var(--osa-f-mono) !important;
+	font-weight: 600 !important;
+}
+.wc-block-components-totals-item__label,
+.wc-block-cart-items__header-product,
+.wc-block-cart-items__header-total {
+	font-family: var(--osa-f-mono) !important;
+	font-size: 10px !important;
+	letter-spacing: 0.22em !important;
+	text-transform: uppercase !important;
+	color: var(--osa-steel-1) !important;
+}
+.wc-block-components-button,
+.wc-block-cart__submit-button,
+.wc-block-checkout__actions_row button {
+	border-radius: 0 !important;
+	background: var(--osa-ink) !important;
+	color: var(--osa-paper) !important;
+	font-family: var(--osa-f-mono) !important;
+	letter-spacing: 0.18em !important;
+	text-transform: uppercase !important;
+	font-weight: 600 !important;
+	font-size: 11px !important;
+	border: 1.5px solid var(--osa-ink) !important;
+}
+.wc-block-components-totals-wrapper,
+.wc-block-cart-items > * + *,
+.wc-block-components-order-summary-item {
+	border-color: var(--osa-paper-edge) !important;
+}
+.wc-block-components-text-input input,
+.wc-block-components-select select,
+.wc-block-components-form .wc-block-components-text-input input {
+	border-radius: 0 !important;
+	border-color: var(--osa-ink) !important;
+}
+/* On mobile WooCommerce renders a SECOND, full order summary inside the
+ * checkout actions block (the sidebar summary collapses to the "Order summary
+ * $X" bar at the top). Two summaries stacked on a phone reads as a bug — keep
+ * only the top bar and hide the duplicate inline one. It only exists at narrow
+ * widths, so no media query is needed (it's absent from the desktop DOM). */
+.wc-block-checkout .wp-block-woocommerce-checkout-actions-block .wp-block-woocommerce-checkout-order-summary-block {
+	display: none !important;
+}
+/* ===== Account header (above two-column WC area) ===== */
+.osa-account-header {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 48px;
+	align-items: end;
+	padding: 8px 0 32px;
+	border-bottom: 1px solid var(--osa-ink);
+	margin-bottom: 32px;
+}
+.osa-account-header__since {
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	color: var(--osa-steel-1);
+	margin: 0 0 8px;
+}
+.osa-account-header__name {
+	font-family: var(--osa-f-display);
+	font-size: 54px;
+	letter-spacing: -0.005em;
+	line-height: 1;
+	margin: 0 0 8px;
+	text-transform: none;
+}
+.osa-account-header__email {
+	font-size: 11px;
+	color: var(--osa-steel-1);
+	letter-spacing: 0.1em;
+	margin: 0;
+}
+
+/* ===== Stat row (4-up tile grid; used in account header + dealer pages) ===== */
+.osa-stat-row {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	border: 1px solid var(--osa-ink);
+}
+.osa-stat-row--3 { grid-template-columns: repeat(3, 1fr); }
+.osa-stat {
+	padding: 18px 18px 16px;
+	border-right: 1px solid var(--osa-ink);
+}
+.osa-stat:last-child { border-right: 0; }
+.osa-stat__value {
+	font-family: var(--osa-f-display);
+	font-size: 32px;
+	line-height: 1;
+}
+.osa-stat__label {
+	display: block;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	margin-top: 8px;
+}
+
+/* ===== WooCommerce my-account: two-column body styled per design ===== */
+.woocommerce-account .woocommerce-MyAccount-navigation {
+	width: auto !important;
+	float: none !important;
+	margin: 0;
+	border-right: 1px solid var(--osa-paper-edge);
+	min-height: 320px;
+	order: 1;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation ul li {
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid var(--osa-paper-edge);
+}
+.woocommerce-account .woocommerce-MyAccount-navigation ul li a {
+	display: block;
+	padding: 14px 18px;
+	font-family: var(--osa-f-sans);
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--osa-ink);
+	text-decoration: none;
+	letter-spacing: 0.04em;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation ul li a:hover {
+	background: var(--osa-paper-tint);
+}
+.woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active a,
+.woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active a:hover {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	font-weight: 700;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content {
+	float: none !important;
+	width: auto !important;
+	padding: 0 0 0 32px;
+	order: 2;
+	min-width: 0;
+}
+
+/* Wrap WC's two-column flow in a CSS Grid for predictable layout. */
+.woocommerce-account .woocommerce {
+	display: grid;
+	grid-template-columns: 220px 1fr;
+	gap: 0;
+}
+.woocommerce-account .woocommerce > * { float: none !important; }
+
+/* ===== Account sections (Recent Orders, Watch List, etc.) ===== */
+.osa-account-section {
+	margin-bottom: 48px;
+}
+.osa-account-section__head {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	border-bottom: 1px solid var(--osa-ink);
+	padding-bottom: 10px;
+	margin-bottom: 16px;
+}
+.osa-account-section__heading {
+	font-family: var(--osa-f-display);
+	font-size: 18px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin: 0;
+	line-height: 1;
+}
+.osa-account-section__link {
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	color: var(--osa-ink);
+	text-decoration: none;
+}
+.osa-account-section__link:hover { color: var(--osa-steel-1); }
+.osa-account-empty {
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+	color: var(--osa-steel-1);
+}
+
+.osa-account-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+}
+.osa-account-table thead th {
+	text-align: left;
+	font-size: 9px;
+	font-weight: 600;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	padding: 6px 0 10px;
+	border-bottom: 1px solid var(--osa-paper-edge);
+}
+.osa-account-table tbody td {
+	padding: 10px 0;
+	border-bottom: 1px solid var(--osa-paper-edge);
+}
+.osa-account-table__id {
+	font-weight: 700;
+	color: var(--osa-ink);
+	text-decoration: none;
+}
+.osa-account-status { font-size: 10px; margin-right: 6px; color: var(--osa-steel-2); }
+.osa-account-status--processing,
+.osa-account-status--on-hold     { color: var(--osa-ink); }
+.osa-account-status--completed   { color: var(--osa-ink); }
+
+@media (max-width: 900px) {
+	.osa-account-header {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+	.osa-account-header__name { font-size: 36px; }
+	.woocommerce-account .woocommerce {
+		grid-template-columns: 1fr;
+	}
+	.woocommerce-account .woocommerce-MyAccount-navigation {
+		border-right: 0;
+		border-bottom: 1px solid var(--osa-paper-edge);
+		width: auto;
+	}
+	.woocommerce-account .woocommerce-MyAccount-content {
+		padding: 24px 0 0;
+	}
+	.osa-stat-row { grid-template-columns: 1fr 1fr; }
+	.osa-stat:nth-child(2) { border-right: 0; }
+	.osa-stat:nth-child(1), .osa-stat:nth-child(2) { border-bottom: 1px solid var(--osa-ink); }
+}
+
+/* ===== Dealer pending banner ===== */
+.osa-pending-banner {
+	border: 1.5px solid var(--osa-ink);
+	background: var(--osa-paper-tint);
+	padding: 18px 22px;
+	margin: 24px 0 32px;
+}
+.osa-pending-banner .osa-mono-caps {
+	display: block;
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	color: var(--osa-ink);
+	margin-bottom: 6px;
+}
+.osa-pending-banner p {
+	margin: 0;
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+	line-height: 1.55;
+	color: var(--osa-ink-2);
+}
+
+/* ===== Admin price breakdown (Retail + all tiers) ===== */
+.osa-admin-price {
+	display: inline-flex;
+	flex-direction: column;
+	gap: 4px;
+	font-family: var(--osa-f-mono);
+	font-size: 13px;
+	line-height: 1.3;
+}
+.osa-admin-price__row {
+	display: grid;
+	grid-template-columns: 72px auto;
+	gap: 14px;
+	align-items: baseline;
+}
+.osa-admin-price__label {
+	color: var(--osa-steel-1);
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+.osa-admin-price__value {
+	color: var(--osa-ink);
+	font-weight: 600;
+	font-size: 22px;
+	letter-spacing: -0.01em;
+	white-space: nowrap;
+}
+.osa-admin-price__value em {
+	color: var(--osa-steel-1);
+	font-style: normal;
+	font-weight: 500;
+	font-size: 11px;
+	margin-left: 8px;
+	letter-spacing: 0.12em;
+	vertical-align: 0.15em;
+}
+/* Retail is the reference price — subdued so the tier price (dealer pays) reads as primary */
+.osa-admin-price__row:first-child .osa-admin-price__value {
+	color: var(--osa-steel-1);
+	font-size: 15px;
+	font-weight: 500;
+	text-decoration: line-through;
+	text-decoration-thickness: 1px;
+}
+
+/* ===== Dealer price block (TRADE | MAP | MARGIN) ===== */
+.osa-dealer-price {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 10px;
+	font-family: var(--osa-f-mono);
+}
+.osa-dealer-price__trade {
+	font-weight: 700;
+	font-size: 16px;
+	color: var(--osa-ink);
+}
+.osa-dealer-price__map {
+	font-size: 11px;
+	color: var(--osa-steel-2);
+}
+.osa-dealer-price__margin {
+	font-size: 10px;
+	letter-spacing: 0.16em;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	padding: 2px 6px;
+	text-transform: uppercase;
+}
+
+/* ===== Dealer tier card ===== */
+.osa-tier-card {
+	border: 1px solid var(--osa-ink);
+	padding: 16px;
+	background: var(--osa-paper);
+}
+.osa-tier-card__head {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 12px;
+}
+.osa-tier-card__label {
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+}
+.osa-tier-card__current {
+	font-family: var(--osa-f-mono);
+	font-weight: 700;
+	font-size: 14px;
+	letter-spacing: 0.1em;
+}
+.osa-tier-card__bar {
+	height: 6px;
+	background: var(--osa-paper-edge);
+	position: relative;
+}
+.osa-tier-card__bar-fill {
+	height: 100%;
+	background: var(--osa-ink);
+}
+.osa-tier-card__hint {
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	color: var(--osa-steel-1);
+	margin: 10px 0 0;
+}
+
+.osa-stat--emphasis {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+.osa-stat--emphasis .osa-stat__label {
+	color: var(--osa-paper-edge);
+}
+
+/* ===== Dealer catalog table ===== */
+.osa-dealer-table-wrap { width: 100%; }
+.osa-dealer-filter-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+	padding: 14px 0;
+	border-bottom: 1px solid var(--osa-paper-edge);
+	margin-bottom: 12px;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+.osa-dealer-filter-bar__right {
+	margin-left: auto;
+	display: inline-flex;
+	gap: 18px;
+	align-items: center;
+}
+.osa-pill {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid var(--osa-ink);
+	padding: 5px 10px;
+	font-size: 10px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	background: transparent;
+	color: var(--osa-ink);
+	cursor: pointer;
+	text-decoration: none;
+}
+.osa-pill.is-active,
+.osa-pill--solid,
+.osa-pill:hover {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+.osa-link { color: var(--osa-ink); text-decoration: underline; }
+
+.osa-dealer-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: var(--osa-f-sans);
+	font-size: 13px;
+}
+.osa-dealer-table thead th {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	text-align: left;
+	padding: 10px 8px;
+	border-right: 1px solid var(--osa-ink-3);
+}
+.osa-dealer-table thead th:last-child { border-right: 0; }
+.osa-dealer-table tbody td {
+	border-bottom: 1px solid var(--osa-paper-edge);
+	padding: 10px 8px;
+	vertical-align: middle;
+}
+.osa-dealer-table tbody tr:hover { background: var(--osa-paper-tint); }
+.osa-dealer-table .osa-num { text-align: right; white-space: nowrap; }
+.osa-dealer-table .osa-bold { font-weight: 700; }
+.osa-dealer-table .osa-muted { color: var(--osa-steel-2); }
+.osa-dealer-table .osa-low { color: var(--osa-steel-1); }
+.osa-dealer-table .osa-col-check { width: 32px; }
+.osa-dealer-table .osa-col-img { width: 56px; }
+.osa-prod-name a { color: var(--osa-ink); text-decoration: none; font-weight: 800; }
+.osa-prod-sub { font-size: 10px; color: var(--osa-steel-2); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 2px; }
+
+.osa-dealer-bulkbar {
+	position: sticky;
+	bottom: 0;
+	background: var(--osa-paper);
+	border-top: 1px solid var(--osa-ink);
+	padding: 14px 18px;
+	display: flex;
+	gap: 18px;
+	align-items: center;
+	z-index: 10;
+}
+.osa-dealer-bulkbar .osa-spacer { flex: 1; }
+
+/* ===== Retail login + register grid ===== */
+.osa-login-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0;
+	border: 1px solid var(--osa-ink);
+}
+.osa-login-card {
+	padding: 22px 22px 20px;
+	background: var(--osa-paper);
+	border-right: 1px solid var(--osa-ink);
+}
+.osa-login-card:last-child { border-right: 0; }
+.osa-login-card--invert {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+.osa-login-card--invert .osa-login-card__eyebrow,
+.osa-login-card--invert .osa-mono-caps {
+	color: var(--osa-paper-edge);
+}
+.osa-login-card__eyebrow {
+	font-size: 9px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	margin: 0 0 4px;
+}
+.osa-login-card__heading {
+	font-family: var(--osa-f-display);
+	font-size: 22px;
+	letter-spacing: -0.005em;
+	text-transform: uppercase;
+	margin: 0 0 14px;
+	line-height: 1;
+}
+.osa-login-card--invert .osa-login-card__heading { color: var(--osa-paper); }
+
+.osa-form {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+.osa-form label {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+.osa-form label .osa-mono-caps {
+	font-size: 9px;
+	letter-spacing: 0.22em;
+	color: var(--osa-steel-1);
+	margin-bottom: 1px;
+}
+.osa-login-card--invert .osa-form label .osa-mono-caps { color: var(--osa-paper-edge); }
+.osa-form input[type="text"],
+.osa-form input[type="email"],
+.osa-form input[type="password"] {
+	font-family: var(--osa-f-mono);
+	font-size: 13px;
+	border: 1px solid var(--osa-ink);
+	padding: 7px 10px;
+	border-radius: 0;
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+	width: 100%;
+}
+.osa-login-card--invert .osa-form input {
+	background: transparent;
+	border-color: var(--osa-paper);
+	color: var(--osa-paper);
+}
+.osa-form-row-2 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 2px;
+}
+.osa-form-inline {
+	flex-direction: row !important;
+	align-items: center;
+	gap: 8px !important;
+	font-size: 12px;
+}
+.osa-form-foot {
+	margin: 12px 0 0;
+	font-size: 12px;
+}
+.osa-form-foot a { color: inherit; }
+.osa-form-msg {
+	background: var(--osa-paper-tint);
+	border-left: 3px solid var(--osa-ink);
+	padding: 10px 14px;
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+	margin: 0 0 14px;
+}
+
+/* Invert button on dark card */
+.osa-login-card--invert .osa-btn {
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+	border-color: var(--osa-paper);
+}
+.osa-login-card--invert .osa-btn:hover {
+	background: transparent;
+	color: var(--osa-paper);
+}
+
+.osa-login-foot {
+	text-align: center;
+	margin: 24px 0 0;
+	font-size: 12px;
+	color: var(--osa-steel-1);
+}
+.osa-login-foot a { color: var(--osa-ink); }
+
+@media (max-width: 720px) {
+	.osa-login-grid { grid-template-columns: 1fr; }
+	.osa-login-card { border-right: 0; border-bottom: 1px solid var(--osa-ink); }
+	.osa-login-card:last-child { border-bottom: 0; }
+	.osa-form-row-2 { grid-template-columns: 1fr; }
+}
+
+/* ===== Dealer apply / login form ===== */
+.osa-dealer-form {
+	max-width: 720px;
+	margin: 0 auto;
+}
+.osa-form-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 14px 18px;
+}
+.osa-form-grid label {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+.osa-form-grid label .osa-mono-caps {
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	color: var(--osa-steel-1);
+}
+.osa-form-grid input,
+.osa-form-grid select {
+	font-family: var(--osa-f-mono);
+	font-size: 14px;
+	border: 1px solid var(--osa-ink);
+	padding: 9px 11px;
+	border-radius: 0;
+	background: var(--osa-paper);
+}
+.osa-form-error {
+	background: var(--osa-paper-tint);
+	border-left: 3px solid var(--osa-ink);
+	padding: 10px 14px;
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+	margin-bottom: 18px;
+}
+.osa-dealer-form .login-username,
+.osa-dealer-form .login-password,
+.osa-dealer-form .login-remember,
+.osa-dealer-form .login-submit {
+	margin: 12px 0;
+}
+.osa-dealer-form input[type="text"],
+.osa-dealer-form input[type="email"],
+.osa-dealer-form input[type="password"] {
+	font-family: var(--osa-f-mono);
+	font-size: 14px;
+	border: 1px solid var(--osa-ink);
+	padding: 9px 11px;
+	border-radius: 0;
+	background: var(--osa-paper);
+	width: 100%;
+}
+
+/* ===== Search overlay ===== */
+.osa-search-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(10, 10, 10, 0.96);
+	z-index: 99998;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+}
+.osa-search-overlay[hidden] { display: none; }
+.osa-search-overlay__form {
+	width: min(720px, 100%);
+	color: var(--osa-paper);
+}
+.osa-search-overlay__eyebrow {
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	color: var(--osa-paper-edge);
+	margin: 0 0 14px;
+	text-align: center;
+}
+.osa-search-overlay__input {
+	width: 100%;
+	font-family: var(--osa-f-display);
+	font-size: 44px;
+	background: transparent;
+	color: var(--osa-paper);
+	border: 0;
+	border-bottom: 1.5px solid var(--osa-paper);
+	padding: 12px 6px;
+	text-align: center;
+	letter-spacing: -0.005em;
+	outline: none;
+	border-radius: 0;
+	caret-color: var(--osa-paper);
+}
+.osa-search-overlay__input::placeholder {
+	color: var(--osa-steel-2);
+	font-family: var(--osa-f-serif-d);
+	font-style: italic;
+	font-size: 22px;
+	letter-spacing: 0;
+}
+.osa-search-overlay__hints {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 18px;
+	font-size: 10px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+}
+.osa-search-overlay__hints a {
+	color: var(--osa-paper);
+	text-decoration: none;
+	margin: 0 4px;
+}
+.osa-search-overlay__hints a:hover { text-decoration: underline; }
+.osa-search-overlay__hints kbd {
+	font-family: var(--osa-f-mono);
+	background: transparent;
+	border: 1px solid var(--osa-steel-1);
+	padding: 1px 5px;
+	font-size: 9px;
+	color: var(--osa-paper-edge);
+}
+.osa-search-overlay__close {
+	position: absolute;
+	top: 18px;
+	right: 24px;
+	background: transparent;
+	border: 0;
+	color: var(--osa-paper);
+	font-size: 32px;
+	line-height: 1;
+	cursor: pointer;
+	padding: 4px 10px;
+}
+.osa-search-overlay__close:hover { color: var(--osa-paper-edge); }
+
+@media (max-width: 720px) {
+	.osa-search-overlay__input { font-size: 28px; }
+	.osa-search-overlay__input::placeholder { font-size: 16px; }
+	.osa-search-overlay__hints { flex-direction: column; gap: 8px; }
+}
+
+/* Core wp:search block — the INLINE field (templates/404.html), as opposed to
+ * the dark full-screen overlay above. Nothing in the theme claimed
+ * .wp-block-search before, so it rendered as core's default grey box next to
+ * a fully branded submit button (the button already inherits theme.json's
+ * elements.button through wp-element-button). Same tokens as the .osa-form
+ * inputs at :1642 — reused, not a second look. `width` is deliberately NOT
+ * copied: core gives the input flex-grow:1 and we must not fight it.
+ *
+ * :where() KEEPS THIS AT ZERO SPECIFICITY, and that is load-bearing (review
+ * R2). Core ships two rules: the base `:where(.wp-block-search__input)` (also
+ * zero — this file loads later, so we win it), and the button-inside variant
+ * `:where(.wp-block-search__button-inside .wp-block-search__inside-wrapper)
+ * .wp-block-search__input`, which is 0,1,0 because only the ancestor part sits
+ * inside :where(). A bare `.wp-block-search__input` here would TIE that and win
+ * on order, so any button-inside search block would get our 1px border and
+ * 7px/10px padding on top of core's border:none — a double frame. At zero
+ * specificity the variant beats us back automatically, as it should. */
+:where(.wp-block-search__input) {
+	font-family: var(--osa-f-mono);
+	font-size: 13px;
+	border: 1px solid var(--osa-ink);
+	padding: 7px 10px;
+	border-radius: 0;
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+}
+:where(.wp-block-search__input)::placeholder {
+	color: var(--osa-steel-1);
+}
+
+/* ===== Age gate ===== */
+.osa-age-gate-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(10, 10, 10, 0.96);
+	z-index: 99999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	font-family: var(--osa-f-sans);
+	color: var(--osa-paper);
+}
+.osa-age-gate-card {
+	max-width: 520px;
+	width: 100%;
+	border: 1px solid var(--osa-paper);
+	padding: 40px 32px;
+	text-align: center;
+}
+.osa-age-gate-card h2 {
+	font-family: var(--osa-f-display);
+	font-size: 36px;
+	text-transform: uppercase;
+	letter-spacing: -0.005em;
+	margin: 0 0 12px;
+	color: var(--osa-paper);
+}
+.osa-age-gate-card p {
+	font-family: var(--osa-f-serif-d);
+	font-style: italic;
+	font-size: 17px;
+	line-height: 1.45;
+	margin: 0 0 24px;
+	color: var(--osa-paper-edge);
+}
+.osa-age-gate-actions {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+}
+.osa-age-gate-actions .osa-btn--leave {
+	background: transparent;
+	color: var(--osa-paper);
+	border-color: var(--osa-paper);
+}
+
+/* ===== WooCommerce nudges (Phase 1 surface only — Phase 2 expands) ===== */
+.woocommerce-products-header__title {
+	font-family: var(--osa-f-display);
+	font-size: 64px;
+	text-transform: uppercase;
+	letter-spacing: -0.005em;
+	line-height: 1;
+}
+.woocommerce ul.products li.product .price,
+.woocommerce ul.products li.product .woocommerce-Price-amount {
+	font-family: var(--osa-f-mono);
+	font-weight: 600;
+	color: var(--osa-ink);
+}
+
+/* ===== Single-product image gallery =====
+   The woocommerce/product-image-gallery block ships capped at max-width:512px,
+   which leaves a large blank gap inside the wider product column on big screens.
+   Drop the cap so the gallery fills its column; flexslider reads the container
+   width when its JS runs (after this CSS is parsed), so the main image sizes to
+   the full column width. Each frame gets a hairline border. */
+.woocommerce .wp-block-woocommerce-product-image-gallery {
+	max-width: 100% !important; /* override WC block default max-width:512px */
+}
+.woocommerce-product-gallery,
+.woocommerce-product-gallery .flex-viewport {
+	width: 100%;
+}
+.woocommerce-product-gallery__image {
+	border: 1px solid var(--osa-paper-edge);
+	background: var(--osa-paper);
+	box-sizing: border-box;
+}
+.woocommerce-product-gallery__image img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+/* Fallback ONLY if flexslider never wraps the slides in .flex-viewport (no
+   slider): the wrapper stays a direct child of the gallery, so this grid kicks
+   in and the images sit in a bordered grid instead of glued edge-to-edge. When
+   the slider IS active the wrapper lives under .flex-viewport and this can't
+   match, leaving the live slider untouched. */
+.woocommerce-product-gallery > .woocommerce-product-gallery__wrapper {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 14px;
+	margin: 0;
+}
+/* Bordered thumbnails in the slider control strip */
+.woocommerce-product-gallery .flex-control-thumbs li img {
+	border: 1px solid var(--osa-paper-edge);
+}
+
+/* ===== Shop filter (FFL Core Product Filter plugin) ===== */
+
+.osa-shop-layout {
+	display: grid;
+	grid-template-columns: 240px 1fr;
+	gap: 32px;
+	margin-top: 8px;
+	align-items: start;
+}
+.osa-shop-main { min-width: 0; }
+@media (max-width: 900px) {
+	.osa-shop-layout { grid-template-columns: 1fr; gap: 24px; }
+}
+
+.osa-filter-sidebar { font-family: var(--osa-f-mono); }
+
+/* Mobile filter toggle — hidden on desktop (sidebar is always open); shown and
+   driving the collapse at <= 900px. Injected by assets/js/osa-shop-filter.js,
+   which also adds .is-collapsible to the <aside>. The full styling + the form
+   hide rule live in the <= 900px media query so a no-JS load is unaffected. */
+.osa-filter-toggle { display: none; }
+
+.osa-filter-form {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+}
+
+.osa-filter-section__heading {
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.22em;
+	color: var(--osa-ink);
+	margin: 0 0 12px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid var(--osa-ink);
+}
+
+.osa-filter-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.osa-filter-checkbox {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+	line-height: 1.4;
+	color: var(--osa-ink);
+	cursor: pointer;
+	user-select: none;
+}
+.osa-filter-checkbox input[type=checkbox] {
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+.osa-filter-checkbox__box {
+	flex-shrink: 0;
+	width: 12px;
+	height: 12px;
+	border: 1.5px solid var(--osa-ink);
+	background: transparent;
+	transition: background 0.1s ease;
+}
+.osa-filter-checkbox input:checked + .osa-filter-checkbox__box {
+	background: var(--osa-ink);
+}
+.osa-filter-checkbox:hover .osa-filter-checkbox__box {
+	background: var(--osa-paper-edge);
+}
+.osa-filter-checkbox input:checked + .osa-filter-checkbox__box:hover {
+	background: var(--osa-ink);
+}
+.osa-filter-checkbox__name { flex: 1; }
+.osa-filter-count {
+	flex-shrink: 0;
+	font-size: 10px;
+	color: var(--osa-steel-1);
+	letter-spacing: 0.04em;
+}
+
+.osa-price-slider {
+	padding: 8px 6px 4px;
+}
+.osa-price-slider__track {
+	position: relative;
+	width: 100%;
+	height: 4px;
+	background: var(--osa-paper-edge);
+	margin: 18px 0 10px;
+}
+.osa-price-slider__fill {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	background: var(--osa-ink);
+}
+.osa-price-slider__handle {
+	position: absolute;
+	top: 50%;
+	width: 14px;
+	height: 14px;
+	transform: translate(-50%, -50%);
+	background: var(--osa-ink);
+	border: none;
+	border-radius: 0;
+	padding: 0;
+	cursor: grab;
+	touch-action: none;
+}
+.osa-price-slider__handle:active { cursor: grabbing; }
+.osa-price-slider__handle:focus-visible {
+	outline: 2px solid var(--osa-ink);
+	outline-offset: 2px;
+}
+.osa-price-slider__labels {
+	display: flex;
+	justify-content: space-between;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	color: var(--osa-ink);
+}
+.osa-price-slider__nojs {
+	display: flex;
+	gap: 12px;
+	margin-top: 8px;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+}
+.osa-price-slider__nojs input[type=number] {
+	width: 70px;
+	border: 1px solid var(--osa-ink);
+	background: transparent;
+	padding: 4px 6px;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+}
+
+.osa-filter-form__submit {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	border: none;
+	padding: 12px 16px;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.18em;
+	cursor: pointer;
+}
+
+.osa-filter-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 0;
+	margin-bottom: 24px;
+	border-top: 1px solid var(--osa-ink);
+	border-bottom: 1px solid var(--osa-ink);
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--osa-ink);
+}
+.osa-filter-toolbar__left,
+.osa-filter-toolbar__right {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+.osa-filter-toolbar__right { gap: 14px; }
+.osa-filter-toolbar__sep { color: var(--osa-steel-2); }
+.osa-filter-toolbar__count strong { font-weight: 600; letter-spacing: 0.04em; }
+
+.osa-filter-toolbar__chips {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+	text-transform: none;
+	letter-spacing: normal;
+}
+.osa-filter-toolbar__chips-empty em {
+	font-style: normal;
+	color: var(--osa-ink);
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+.osa-filter-toolbar__chips-label {
+	color: var(--osa-steel-1);
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+.osa-filter-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 3px 8px 3px 10px;
+	border: 1px solid var(--osa-ink);
+	color: var(--osa-ink);
+	background: transparent;
+	text-decoration: none;
+	font-size: 10px;
+	line-height: 1.4;
+	letter-spacing: 0.02em;
+}
+.osa-filter-chip:hover {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+.osa-filter-chip__close {
+	font-size: 14px;
+	line-height: 1;
+}
+
+.osa-filter-toolbar__sort-label { color: var(--osa-steel-1); }
+.osa-filter-sort__link {
+	color: var(--osa-ink);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	padding-bottom: 1px;
+}
+.osa-filter-sort__link:hover { border-bottom-color: var(--osa-ink); }
+.osa-filter-sort__link.is-active {
+	font-weight: 600;
+	border-bottom-color: var(--osa-ink);
+}
+
+/* ===== Query pagination (catalog) =====
+ * Brutalist square cells: hairline number tiles that invert to solid ink
+ * on hover/current, with stronger-bordered PREV/NEXT controls that carry
+ * the arrow glyphs. Strips the default underlined-link look.
+ */
+.wp-block-query-pagination.wp-block-query-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 40px;
+	font-family: var(--osa-f-mono);
+}
+
+/* The numbers group is itself a flex item — keep its tiles evenly spaced. */
+.wp-block-query-pagination-numbers {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+/* Shared cell box for number tiles + prev/next controls. */
+.wp-block-query-pagination .page-numbers,
+.wp-block-query-pagination-previous,
+.wp-block-query-pagination-next {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-width: 42px;
+	height: 42px;
+	padding: 0 14px;
+	border: 1.5px solid var(--osa-paper-edge);
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+	font-family: var(--osa-f-mono);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	line-height: 1;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Hoverable tiles + controls invert to solid ink. */
+a.page-numbers:hover,
+.wp-block-query-pagination-previous:hover,
+.wp-block-query-pagination-next:hover {
+	border-color: var(--osa-ink);
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+
+/* Current page reads as the solid, selected tile. */
+.wp-block-query-pagination .page-numbers.current {
+	border-color: var(--osa-ink);
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+
+/* Ellipsis is a quiet glyph, not a box. */
+.wp-block-query-pagination .page-numbers.dots {
+	min-width: 0;
+	padding: 0 4px;
+	border-color: transparent;
+	background: transparent;
+	color: var(--osa-steel-1);
+	letter-spacing: 0.16em;
+}
+
+/* PREV / NEXT are the primary controls — ink hairline + arrow glyph. */
+.wp-block-query-pagination-previous,
+.wp-block-query-pagination-next {
+	border-color: var(--osa-ink);
+	letter-spacing: 0.16em;
+}
+.wp-block-query-pagination-previous-arrow,
+.wp-block-query-pagination-next-arrow {
+	margin: 0;
+	font-size: 14px;
+	line-height: 1;
+}
+
+/* ============================================================== */
+/* MOBILE + TABLET RESPONSIVE                                      */
+/* Breakpoints: 1024 (tablet portrait), 768 (phablet),             */
+/*              600 (phone), 480 (small phone)                     */
+/* ============================================================== */
+
+/* ---------- 1024px and below: tablet portrait ----------------- */
+@media (max-width: 1024px) {
+	main.wp-block-group { padding-left: 20px !important; padding-right: 20px !important; }
+
+	/* Headline scaling — overrides inline font-size on H1/H2 only. */
+	main [style*="font-size:64px"] { font-size: 44px !important; line-height: 1.05 !important; }
+	main [style*="font-size:54px"] { font-size: 36px !important; }
+	main [style*="font-size:48px"] { font-size: 32px !important; }
+	main [style*="font-size:44px"] { font-size: 32px !important; }
+
+	/* Shop / archive grid: 3 cols → 2 cols. */
+	.wp-block-post-template.is-layout-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+	}
+	.osa-catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+	/* Model landing pages ride page.html's BARE <main> (no inline padding),
+	   so the pattern's outer group carries the 24px desktop gutters instead.
+	   At ≤1024 the main.wp-block-group rules above/below take over the side
+	   gutters (20px, then 16px at ≤768) — zero the group's own so the two
+	   don't stack into a double gutter. (!important: beats inline padding,
+	   same mechanism as the main rules.) */
+	.osa-model-landing { padding-left: 0 !important; padding-right: 0 !important; }
+
+	/* Landing two-column zone (v1.4 §13 V4-3) folds back to the single
+	   column: dropping the grid lets the group's own constrained-760/left
+	   WP layout govern again (prose → FAQ → guide, 760 rail), and the FAQ
+	   gets back the stack margins the grid needed zeroed.
+	   TYPE-QUALIFIED (div.) on purpose — QA BUG-2: this block sits EARLIER
+	   in the file than the appended section that declares the desktop grid,
+	   and media queries add no specificity, so a bare .osa-landing-cols here
+	   LOSES the same-specificity source-order race and the grid leaks into
+	   every mobile width. div. (0,1,1) outranks the later (0,1,0) grid
+	   declaration — same idiom as the reduced-motion block's nav./a.
+	   qualifiers. The FAQ margin rule below has no later competitor, so it
+	   needs no qualifier. */
+	div.osa-landing-cols { display: block; }
+	.osa-landing-cols > .osa-model-faq { margin-top: 56px; margin-bottom: 48px; }
+}
+
+/* ---------- 900px and below: existing breakpoint reinforced --- */
+@media (max-width: 900px) {
+	/* Dealer dashboards drop big side padding. */
+	.wp-block-group[style*="padding-left:40px"] {
+		padding-left: 20px !important;
+	}
+	.wp-block-group[style*="padding-right:40px"] {
+		padding-right: 20px !important;
+	}
+
+	/* Filter toolbar: wrap chip row + sort row independently. */
+	.osa-filter-toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
+	.osa-filter-toolbar__left,
+	.osa-filter-toolbar__right { flex-wrap: wrap; }
+
+	/* Catalog filter: collapse the whole sidebar behind a toggle so the
+	   7-section form stops pushing products off-screen. The form hide rule is
+	   gated on .is-collapsible (added by osa-shop-filter.js) — a no-JS load has
+	   no marker, so the form stays fully visible. */
+	.osa-filter-toggle {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		min-height: 44px;
+		margin: 0;
+		padding: 11px 14px;
+		font-family: var(--osa-f-mono);
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.18em;
+		color: var(--osa-ink);
+		background: var(--osa-paper);
+		border: 1px solid var(--osa-ink);
+		cursor: pointer;
+	}
+	.osa-filter-toggle__label { margin-right: auto; }
+	.osa-filter-toggle__count { color: var(--osa-steel-1); letter-spacing: 0.04em; }
+	.osa-filter-toggle__chevron {
+		flex-shrink: 0;
+		font-size: 10px;
+		transition: transform 0.15s ease;
+	}
+	.osa-filter-sidebar.is-open .osa-filter-toggle__chevron { transform: rotate(180deg); }
+	.osa-filter-sidebar.is-collapsible .osa-filter-form { display: none; margin-top: 16px; }
+	.osa-filter-sidebar.is-collapsible.is-open .osa-filter-form { display: flex; }
+
+	/* Dealer KPI row: tighten to 3 cols when 5 tiles overflow. */
+	.osa-stat-row { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+
+/* ---------- 768px and below: phablet -------------------------- */
+@media (max-width: 768px) {
+	body { overflow-x: hidden; } /* defensive against rogue wide blocks */
+
+	main.wp-block-group { padding-left: 16px !important; padding-right: 16px !important; }
+
+	main [style*="font-size:96px"] { font-size: 52px !important; line-height: 1 !important; letter-spacing: -0.01em !important; }
+	main [style*="font-size:64px"] { font-size: 32px !important; }
+	main [style*="font-size:54px"] { font-size: 28px !important; }
+	main [style*="font-size:48px"] { font-size: 24px !important; }
+	main [style*="font-size:44px"] { font-size: 26px !important; }
+	main [style*="font-size:36px"] { font-size: 22px !important; }
+	main [style*="font-size:22px"] { font-size: 18px !important; }
+	.osa-hero-headline { font-size: 52px !important; line-height: 1 !important; }
+
+	/* Single product 2-col → stacked. WP's columns block stacks by default
+	   below 782px; harden the inline flex-basis just in case. */
+	.wp-block-columns.are-vertically-aligned-top > .wp-block-column {
+		flex-basis: 100% !important;
+		border-right: none !important;
+	}
+
+	/* Tighten product detail column padding once stacked. */
+	.wp-block-column[style*="padding:32px"],
+	.wp-block-column[style*="padding-left:32px"] {
+		padding: 20px 0 !important;
+	}
+
+	/* Specs table: tighten cell padding + smaller font. */
+	.osa-specs th, .osa-specs td { padding: 6px 10px; font-size: 13px; }
+
+	/* Dealer pricing pill: stack the three values vertically. */
+	.osa-dealer-price { flex-direction: column; align-items: flex-start; gap: 2px; }
+
+	/* Dealer KPI tiles: 2 cols. */
+	.osa-stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+	/* OSA Catalog Details metabox grid — already mono-flex, just tighten label col. */
+	.osa-meta-grid { grid-template-columns: 1fr !important; }
+
+	/* Filter sidebar: when collapsed at < 900 it's already 1-col;
+	   here make the sections more compact. */
+	.osa-filter-section { margin-bottom: 24px; }
+	.osa-filter-section__heading { font-size: 11px; margin-bottom: 8px; }
+	.osa-filter-list { gap: 4px; }
+	.osa-filter-checkbox { font-size: 13px; }
+
+	/* WC cart + checkout: shrink default WC blocks. */
+	.wp-block-woocommerce-cart-line-items-block .wc-block-cart-items {
+		font-size: 14px;
+	}
+	.wc-block-components-product-name,
+	.wc-block-components-product-metadata { font-size: 14px; }
+
+	/* Forms (dealer apply, login): single-column grid. */
+	.osa-dealer-form .osa-form-grid {
+		grid-template-columns: 1fr !important;
+	}
+}
+
+/* ---------- 600px and below: phone ---------------------------- */
+@media (max-width: 600px) {
+	main.wp-block-group { padding-left: 14px !important; padding-right: 14px !important; }
+
+	main [style*="font-size:96px"] { font-size: 38px !important; line-height: 1 !important; letter-spacing: 0 !important; }
+	main [style*="font-size:64px"] { font-size: 28px !important; letter-spacing: 0 !important; }
+	main [style*="font-size:54px"] { font-size: 24px !important; }
+	main [style*="font-size:48px"] { font-size: 22px !important; }
+	main [style*="font-size:44px"] { font-size: 22px !important; }
+	.osa-hero-headline { font-size: 38px !important; line-height: 1 !important; letter-spacing: 0 !important; }
+
+	/* Shop / archive grid: 2 cols → 1 col. */
+	.wp-block-post-template.is-layout-grid {
+		grid-template-columns: 1fr !important;
+	}
+	.osa-catalog-grid { grid-template-columns: 1fr !important; }
+
+	/* Filter toolbar sort links: smaller + tighter wrap. */
+	.osa-filter-sort__link { font-size: 11px; }
+	.osa-filter-toolbar { font-size: 10px; padding: 12px 0; }
+
+	/* Specs table: full-width single column. */
+	.osa-specs th { width: 40%; }
+
+	/* Dealer KPI: 1 col on phones. */
+	.osa-stat-row { grid-template-columns: 1fr !important; }
+
+	/* Dealer catalog table: horizontal scroll wrapper. */
+	.osa-dealer-catalog-table { overflow-x: auto; }
+	.osa-dealer-catalog-table table { min-width: 720px; }
+
+	/* Marquee ticker stays single-line, just shrink. */
+	.osa-marquee { font-size: 11px; }
+
+	/* Space-between flex groups stack: footer bar rows AND the single-product
+	   price/add-to-cart row (both render as is-content-justification-space-between;
+	   block "style" attrs become layout classes, never inline justify styles). */
+	.wp-block-group.is-layout-flex.is-content-justification-space-between {
+		flex-direction: column;
+		align-items: flex-start !important;
+		gap: 14px;
+	}
+}
+
+/* ---------- 480px and below: very small phone ----------------- */
+@media (max-width: 480px) {
+	main.wp-block-group { padding-left: 12px !important; padding-right: 12px !important; }
+
+	main [style*="font-size:64px"] { font-size: 24px !important; }
+	main [style*="font-size:44px"] { font-size: 20px !important; }
+
+	/* Tighten header utility row (above main nav). */
+	.osa-mono-caps { letter-spacing: 0.12em !important; }
+}
+
+/* ---------- Touch-target hardening ---------------------------- */
+@media (hover: none) and (pointer: coarse) {
+	/* Ensure all interactive controls are at least 40×40 effective. */
+	.osa-filter-checkbox__box { width: 14px; height: 14px; }
+	.osa-filter-checkbox { min-height: 32px; }
+	.osa-price-slider__handle { width: 22px; height: 22px; }
+	.osa-filter-sort__link { padding: 4px 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	/* Model-landing selectors carry an extra type qualifier (nav/a) so they
+	   OUTRANK their own transition declarations, which sit LATER in this file
+	   (appended osa-model-* section) — same-specificity would lose on order. */
+	.osa-filter-toggle__chevron,
+	nav.osa-model-links--cards .osa-model-links__label,
+	nav.osa-model-links--chips .osa-model-links__item,
+	a.osa-guide-xlink { transition: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Related discovery (inc/related.php): sold-out rescue + mobile strip */
+/* ------------------------------------------------------------------ */
+.osa-related-kicker {
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--steel-1, #6b6f72);
+	margin: 0 0 6px;
+}
+
+.osa-related-rescue {
+	margin-top: 28px;
+	padding-top: 20px;
+	border-top: 1px solid var(--wp--preset--color--ink, #1c1c1c);
+}
+
+/* ===== SOLD archive state (design-spec §1–§3, spec §4.3) ====================
+ * Reached only when _osa_sold_at is non-empty — NEVER on plain out-of-stock.
+ * A uniform-price lot awaiting restock keeps every in-stock affordance
+ * (design-spec §0). No new colours and no new fonts: ink / paper / steel-2
+ * and the existing mono stack. */
+
+/* §1 — SOLD chip. It rides the existing gallery badge slot (see :388), so
+ * position and z-index are inherited; only the chip skin lives here, matching
+ * the promo chip exactly so the two read as one family of status chips. */
+.osa-sold-badge {
+	display: inline-block;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	line-height: 1;
+	text-transform: uppercase;
+	padding: 5px 9px;
+}
+
+/* §2.2 — the sale record. One solid ink band whose own edges ARE the rule,
+ * which is why the price row's 1px borders and 20px padding leave with it:
+ * a black block floating inside a hairline frame is muddled hierarchy. */
+.osa-sold-record {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 14px 24px;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	padding: 18px 20px;
+	margin-top: 24px;
+}
+.osa-sold-record__side {
+	display: block;
+}
+.osa-sold-record__side--right {
+	text-align: right;
+	margin-left: auto;
+}
+
+/* ⚠ steel-2 (#8A8A8A) is 5.74:1 on ink and passes AA; steel-1 (#5A5A5A) is
+ * 2.87:1 and does NOT. Do not unify this with the greys used on paper.
+ * Pinned by tests/test-sold-archive.php. */
+.osa-sold-record__label {
+	display: block;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	font-weight: 500;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-2);
+	margin-bottom: 6px;
+}
+.osa-sold-record__figure {
+	display: block;
+	font-family: var(--osa-f-mono);
+	font-size: 22px; /* same size as the live price — page rhythm is unchanged */
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	color: var(--osa-paper);
+}
+.osa-sold-record__figure--word {
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+.osa-sold-record__date {
+	display: block;
+	font-family: var(--osa-f-mono);
+	font-size: 13px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--osa-paper);
+}
+
+/* Two ink blocks in a row need more air than the 32px the condition scale
+ * carries as a block attribute. That value is an inline style, so !important
+ * is the only lever — the same reason the other overrides in this file use it.
+ * Scoped to the band's immediate sibling, which is the scale. */
+.osa-sold-record + * {
+	margin-top: 40px !important;
+}
+
+/* The figure is this page's conclusion: it does not follow the ≤480px
+ * title step-down. */
+@media (max-width: 480px) {
+	.osa-sold-record__figure {
+		font-size: 22px;
+	}
+}
+
+/* §3.1 — on a sold page the rescue strip follows the condition scale instead
+ * of preceding the price row, so it takes the wider gap. */
+.osa-related-rescue--sold {
+	margin-top: 40px;
+}
+
+/* §3.2 — hub CTA. Outlined on purpose: the solid ink on this page belongs to
+ * the sale record, so the action ranks one step below it. --outline already
+ * exists at :1051 and supplies the hover inversion. */
+.osa-btn--block {
+	display: flex;
+	width: 100%;
+	min-height: 44px;
+	margin-top: 16px;
+	text-align: center;
+}
+
+.osa-related-title {
+	font-size: 20px;
+	line-height: 1.2;
+	margin: 0 0 16px;
+}
+
+.osa-related-rescue__grid .osa-card__name {
+	font-size: 13px;
+}
+
+/* Mobile-only horizontal strip for in-stock products. Desktop already
+   gets the 8-up "From the Same Floor" grid at the page bottom. */
+.osa-related-strip-wrap {
+	display: none;
+}
+
+@media (max-width: 782px) {
+	.osa-related-strip-wrap {
+		display: block;
+		margin-top: 28px;
+		padding-top: 20px;
+		border-top: 1px solid var(--wp--preset--color--ink, #1c1c1c);
+	}
+
+	.osa-related-strip {
+		display: flex;
+		gap: 12px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+		padding-bottom: 8px;
+	}
+
+	.osa-related-strip .osa-card {
+		flex: 0 0 66%;
+		max-width: 240px;
+		scroll-snap-align: start;
+	}
+}
+
+/* Sold chip on compact cards (media area is position:relative already
+   for the lot badge). */
+.osa-card__sold {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 2;
+	padding: 3px 8px;
+	font-family: var(--wp--preset--font-family--mono, monospace);
+	font-size: 10px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	background: var(--wp--preset--color--ink, #1c1c1c);
+	color: var(--wp--preset--color--paper, #f5f2ec);
+}
+
+/* Card corner tag — flush top-right slot over the card media, filled via the
+   osa_card_tags filter (e.g. the "Fourth of July" seasonal mark from
+   inc/promo.php). Same visual DNA as the .ind-tag spec in the Claude Design
+   Independence Day page; sold cards keep this corner for .osa-card__sold. */
+.osa-card__tag {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+	font-family: var(--osa-f-mono);
+	font-size: 9px;
+	font-weight: 600;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	padding: 5px 9px;
+}
+
+/* Two tags on one card (e.g. seasonal promo + Free Shipping): the slot is
+   absolutely positioned, so stack the second tag below the first instead of
+   letting it paint over it. */
+.osa-card__tag + .osa-card__tag {
+	top: 26px;
+}
+
+/* Reddit-session banner (assets/js/osa-discovery.js) */
+.osa-reddit-banner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	padding: 9px 40px 9px 16px;
+	position: relative;
+	background: var(--wp--preset--color--ink, #1c1c1c);
+	color: var(--wp--preset--color--paper, #f5f2ec);
+	font-size: 13px;
+	line-height: 1.3;
+}
+
+.osa-reddit-banner__link {
+	color: inherit;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	white-space: nowrap;
+}
+
+.osa-reddit-banner__close {
+	position: absolute;
+	right: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: 0;
+	color: inherit;
+	font-size: 18px;
+	line-height: 1;
+	padding: 6px;
+	cursor: pointer;
+}
+
+@media (max-width: 782px) {
+	.osa-reddit-banner {
+		flex-wrap: wrap;
+		gap: 4px 10px;
+		text-align: left;
+		justify-content: flex-start;
+	}
+}
+
+/* Recently-viewed strip (client-rendered, above "From the Same Floor") */
+.osa-recent {
+	margin-top: 56px;
+	padding-top: 24px;
+	border-top: 1px solid var(--wp--preset--color--ink, #1c1c1c);
+}
+
+.osa-recent__title {
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	margin: 0 0 16px;
+}
+
+.osa-recent__strip {
+	display: flex;
+	gap: 14px;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	padding-bottom: 8px;
+}
+
+.osa-recent__card {
+	flex: 0 0 180px;
+	scroll-snap-align: start;
+	text-decoration: none;
+	color: inherit;
+	font-size: 13px;
+	line-height: 1.35;
+}
+
+.osa-recent__card img {
+	width: 100%;
+	aspect-ratio: 16/9;
+	object-fit: contain;
+	background: var(--wp--preset--color--paper, #f5f2ec);
+	display: block;
+	margin-bottom: 8px;
+}
+
+.osa-recent__name {
+	display: block;
+}
+
+.osa-recent__price {
+	display: block;
+	font-family: var(--wp--preset--font-family--mono, monospace);
+	margin-top: 2px;
+}
+
+/* =============================================================================
+ * osa-auth-* — Login/Register redesign (Direction C · Serial Plate)
+ * Run dir 2026-07-08-login-redesign/design-spec.md is the authoritative spec;
+ * this block mirrors its board reference (Login-C-SplitBrand.dc.html) 1:1.
+ * New namespace, additive only — appended at file end per spec.md so this
+ * whole section diffs as pure insertion. Does not touch osa-login-* (now
+ * dead code, ~1548-1669) or the shared utility classes it shares a stylesheet
+ * with (osa-btn/osa-form-error/osa-form-grid/osa-mono-caps/osa-mono/osa-form
+ * + its label/input/row-2/inline/foot/msg children) — those definitions are
+ * used as-is; osa-dealer's application form depends on some of them too.
+ *
+ * Three breakpoint tiers, locked to the QA screenshot contract (spec.md):
+ *   Desktop  >=1280px    full split-brand, 2-col, brand panel full height
+ *   Tablet   768-1279px  brand panel COMPRESSES to a horizontal band
+ *   Mobile    <768px     brand panel compresses further to a signature strap
+ * ========================================================================== */
+
+.osa-auth-split { display: grid; grid-template-columns: minmax(320px, 42%) 1fr; }
+
+/* ---- Brand panel ---- */
+.osa-auth-brandpanel { position: relative; background: var(--osa-ink); color: var(--osa-paper); padding: 48px 44px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; min-height: 780px; }
+.osa-auth-brandpanel__crest { position: absolute; right: -130px; bottom: -130px; width: 460px; height: 460px; color: var(--osa-ink-3); }
+.osa-auth-brandpanel__crest svg { width: 100%; height: 100%; display: block; }
+.osa-auth-brandpanel__logo { position: relative; display: block; flex: 0 0 auto; height: 60px; width: auto; object-fit: contain; }
+.osa-auth-brandpanel__mid { position: relative; max-width: 340px; }
+.osa-auth-brandpanel__eyebrow { font-size: 10px; letter-spacing: 0.22em; color: var(--osa-steel-2); margin: 0 0 16px; }
+.osa-auth-brandpanel__line { margin: 0; font-family: var(--osa-f-display); font-weight: 900; font-size: 34px; line-height: 1.15; letter-spacing: -0.005em; text-transform: uppercase; }
+.osa-auth-brandpanel__line span { display: block; }
+/* Word-separator between spans is CSS-generated, not a literal space in the
+ * markup: osa_render_login_form() runs ALL output through osa_flatten_html()
+ * to defeat the core/shortcode block's wpautop() pass (notes-woo-dev.md §4),
+ * which unconditionally collapses every bare `>...<` whitespace gap —
+ * including a would-be word-separating space between adjacent <span>s. Moot
+ * at >=1280px (each span is its own block line), but load-bearing at
+ * 768-1279px where they collapse to display:inline on one line. */
+.osa-auth-brandpanel__line span:not(:last-child)::after { content: " "; }
+.osa-auth-brandpanel__foot { position: relative; border-top: 1px solid var(--osa-ink-3); padding-top: 18px; }
+.osa-auth-brandpanel__fact { margin: 0 0 5px; font-family: var(--osa-f-mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--osa-paper-edge); }
+.osa-auth-brandpanel__fact:last-child { margin-bottom: 0; }
+
+/* ---- Form column ---- */
+.osa-auth-formcol { padding: 56px 64px 48px; }
+.osa-auth-formcol__eyebrow { margin: 0 0 6px; font-size: 10px; letter-spacing: 0.22em; color: var(--osa-steel-1); }
+.osa-auth-formcol__lede { margin: 0 0 40px; font-family: var(--osa-f-serif); font-style: italic; font-size: 15px; color: var(--osa-ink-2); max-width: 52ch; }
+
+.osa-auth-formsection { max-width: 420px; }
+.osa-auth-subheading { font-family: var(--osa-f-display); font-weight: 900; font-size: 26px; letter-spacing: -0.005em; text-transform: uppercase; margin: 0 0 20px; }
+
+/* CASCADE GOTCHA (design-spec.md §5.1): .osa-form label sets
+ * {display:flex;flex-direction:column;gap:0} at specificity (0,1,1). A bare
+ * .osa-auth-field is (0,1,0) and loses that fight. Scope two classes deep so
+ * this wins on specificity, not source order. */
+.osa-auth-formsection .osa-auth-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 15px; }
+.osa-auth-field .osa-mono-caps { font-size: 9px; color: var(--osa-steel-1); }
+.osa-auth-field__control { position: relative; display: flex; }
+/* CASCADE GOTCHA (design-spec.md §5.2, revised — G4 finding, PR #6 BUG-2):
+ * .osa-form input[type="password"] sets the shorthand padding:7px 10px at
+ * specificity (0,2,1). The original fix here matched [type="password"]
+ * explicitly to win on specificity — but the reveal button's own JS flips
+ * the input's type to "text" when toggled, and [type="password"] stops
+ * matching at that exact moment, dropping padding-right back to the shared
+ * rule's 10px and running long passwords under the eye icon. Anchor on
+ * ancestor CLASSES instead of the volatile `type` attribute — three classes
+ * deep (formsection + field + field__control) is specificity (0,3,1),
+ * unambiguously beating the shared rule's (0,2,1) regardless of type or
+ * source order, and it's real markup structure that doesn't change when the
+ * button is clicked. */
+.osa-auth-formsection .osa-auth-field .osa-auth-field__control input { padding-right: 40px; }
+.osa-auth-eye { position: absolute; right: 3px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 0; padding: 0; cursor: pointer; color: var(--osa-steel-1); }
+.osa-auth-eye:hover { color: var(--osa-ink); }
+.osa-auth-eye svg { width: 16px; height: 16px; display: block; }
+
+/* <span>, not <div> (G4 finding, PR #6 BUG-1): display:grid works
+ * identically regardless of tag, but <div> is one of wpautop's hardcoded
+ * $allblocks tags and one appearing INSIDE a <form> splits the form's
+ * content into multiple chunks at points wpautop's own cleanup can't fully
+ * unwrap, orphaning a stray </p> next to it. See the docblock on
+ * osa_flatten_html() in inc/login-page.php for the full mechanism — don't
+ * change this back to <div> without reading it. */
+.osa-auth-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.osa-auth-remember { display: flex; align-items: center; gap: 9px; margin: 3px 0 20px; font-size: 12px; }
+.osa-auth-remember input { width: 15px; height: 15px; accent-color: var(--osa-ink); }
+
+/* Replaces inline style="width:100%" on the shared .osa-btn — additive
+ * modifier in the new namespace, .osa-btn's own definition untouched. */
+.osa-auth-btn--block { width: 100%; }
+
+/* .osa-auth-foot is on a plain <a> now, not <p><a>...</a></p> (G4 finding,
+ * PR #6 BUG-1 — same wpautop $allblocks reasoning as .osa-auth-row2 above:
+ * <p> is on wpautop's block-tag list, <a> isn't). display:block replaces
+ * the block-level default a <p> wrapper used to provide; .osa-form's own
+ * display:flex;flex-direction:column also blockifies any direct child
+ * regardless of tag, so this is belt-and-suspenders, not load-bearing, but
+ * don't rely on that implicitly — state it. */
+.osa-auth-foot { display: block; margin: 16px 0 0; font-size: 12px; color: inherit; }
+.osa-auth-foot:hover { color: var(--osa-steel-1); }
+
+/* <small>, not <p> (G4 finding, PR #6 BUG-1 — same reasoning as
+ * .osa-auth-row2/.osa-auth-foot above; also arguably more correct semantics
+ * for fine-print terms copy than <p> ever was). display:block overrides
+ * <small>'s inline default explicitly, same belt-and-suspenders reasoning
+ * as .osa-auth-foot. */
+.osa-auth-terms { display: block; margin-top: 18px; font-size: 11.5px; line-height: 1.5; }
+
+/* .osa-auth-error is ADDITIVE ONLY on top of the shared .osa-form-error
+ * (definition untouched, ~1700 above, osa-dealer's application form depends
+ * on it too) — flex layout for the icon, plus an EXPLICIT color. The shared
+ * class never sets color; today it happens to inherit ink correctly because
+ * this layout never puts the banner on a dark background, but don't leave
+ * that to inheritance (design-spec.md §5.3). */
+.osa-auth-error { display: flex; align-items: flex-start; gap: 8px; color: var(--osa-ink); }
+.osa-auth-error__icon { flex-shrink: 0; font-family: var(--osa-f-mono); font-weight: 700; }
+
+.osa-auth-divider { display: flex; align-items: center; gap: 14px; max-width: 420px; margin: 40px 0; color: var(--osa-steel-1); }
+.osa-auth-divider::before, .osa-auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--osa-paper-edge); }
+.osa-auth-divider span { font-family: var(--osa-f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; }
+
+.osa-auth-dealerline { max-width: 420px; margin-top: 44px; font-size: 12px; color: var(--osa-steel-1); }
+.osa-auth-dealerline a { color: var(--osa-ink); }
+.osa-auth-dealerline a:hover { color: var(--osa-steel-1); }
+
+/* Touch target hardening (design-spec.md §5.4): joins the site's existing
+ * @media(hover:none) block's convention (~2434 above) rather than starting a
+ * new one — visual icon stays 16px, only the hit area grows. */
+@media (hover: none) and (pointer: coarse) {
+	.osa-auth-eye { width: 40px; height: 40px; }
+	.osa-auth-remember { min-height: 40px; }
+}
+
+/* ================= Tablet — 768 to 1279px =================
+ * Brand panel COMPRESSES: exits the side column, becomes a horizontal band
+ * above the form. Crest + FFL fact list drop (redundant with the global
+ * footer's own FFL/address line). Headline collapses from a 3-line stanza to
+ * one line (the span-per-word markup switches block->inline) and the logo
+ * swaps stacked->inline via <picture> art-direction. */
+@media (max-width: 1279px) {
+	.osa-auth-split { grid-template-columns: 1fr; }
+
+	.osa-auth-brandpanel {
+		min-height: 0;
+		flex-direction: row;
+		align-items: center;
+		gap: 24px;
+		padding: 28px 24px;
+	}
+	.osa-auth-brandpanel__crest { display: none; }
+	.osa-auth-brandpanel__logo { height: 40px; }
+	.osa-auth-brandpanel__mid { max-width: none; }
+	.osa-auth-brandpanel__eyebrow { margin: 0 0 4px; }
+	.osa-auth-brandpanel__line { font-size: 20px; line-height: 1.2; white-space: nowrap; }
+	.osa-auth-brandpanel__line span { display: inline; }
+	.osa-auth-brandpanel__foot { display: none; }
+
+	.osa-auth-formcol { padding: 40px 24px; }
+}
+
+/* ================= Mobile — below 768px =================
+ * Brand panel compresses FURTHER: drops to a slim signature strap —
+ * mark-only logo; eyebrow + headline both hidden (.osa-auth-brandpanel__mid
+ * wraps both "Member Access" and the headline, so the one display:none below
+ * takes out the pair together — there's no separate opt-out that keeps the
+ * eyebrow alone). First/Last name un-pairs to full-width stacked fields — a
+ * 2-up grid gets cramped for long names on a ~360px input column. */
+@media (max-width: 767px) {
+	.osa-auth-brandpanel { padding: 16px 20px; gap: 10px; }
+	.osa-auth-brandpanel__logo { height: 22px; }
+	.osa-auth-brandpanel__mid { display: none; }
+
+	.osa-auth-formcol { padding: 32px 20px 40px; }
+	.osa-auth-formcol__lede { margin-bottom: 28px; }
+	.osa-auth-row2 { grid-template-columns: 1fr; }
+}
+
+/* =============================================================================
+ * osa-model-* — Model landing system (run 2026-07-16-model-landing-pages)
+ *
+ * design-spec.md §2–§9 is the authoritative visual spec; spec.md §3.3 freezes
+ * the markup class contract — .osa-model-links(--cards|--chips|__item|__img|
+ * __label|__heading) and .osa-model-faq/.osa-faq-item are RENDERED by the
+ * be-owned blocks/model-links|model-faq/render.php; .osa-section-hd,
+ * .osa-guide-xlink, .osa-model-strip and .osa-model-landing are pattern-side
+ * (patterns/model-landing.php, patterns/model-index-strip.php, docs/
+ * model-landing-template.md). Appended at file end so the section diffs as
+ * pure insertion (osa-auth precedent above).
+ *
+ * Constraints (design-spec §1/§12): zero new tokens (--osa-* bridge only),
+ * zero border-radius, zero box-shadow; the ONLY new media query is
+ * max-width:768px — tablet behavior rides the existing ≤1024 block (which
+ * also hosts the .osa-model-landing gutter hand-off) and the existing
+ * [style*="font-size:…"] scaling selectors; reduced-motion overrides live in
+ * the site-wide block (~2450). Touch-height hard targets: chips 40px,
+ * FAQ summaries ≥44px at ≤768 (79% mobile traffic — do not shave).
+ * ========================================================================== */
+
+/* ---- shared: whole-element focus ring (§4/§5/§6 focus-visible spec) ------ */
+.osa-model-links__item:focus-visible,
+.osa-model-links__index a:focus-visible,
+.osa-model-faq summary:focus-visible,
+.osa-guide-xlink:focus-visible {
+	outline: 2px solid var(--osa-ink);
+	outline-offset: 2px;
+}
+
+/* ---- osa/seo-breadcrumb visible nav (design walkthrough Finding-1) --------
+ * Root cause (verified 2026-07-16): the ffl-core block ships block.json +
+ * render.php ONLY — no style file, no style/viewStyle handle, and its render
+ * doesn't even use get_block_wrapper_attributes — so there was never
+ * anything to load in ANY context, and no theme rule ever targeted
+ * .osa-breadcrumb. The visible <nav><ol> was unstyled from birth; landing
+ * pages are its first on-page placement, which exposed the browser-default
+ * numbered vertical list. Repair lives theme-side (block markup and
+ * ffl-core untouched — spec non-goal); values are the board's .osa-crumb
+ * language: 10px mono-caps rail with › separators. JSON-LD was always fine. */
+.osa-breadcrumb ol {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	font-weight: 500;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+}
+.osa-breadcrumb li {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+.osa-breadcrumb li + li::before {
+	content: "›";
+}
+.osa-breadcrumb a {
+	color: inherit;
+	text-decoration: none;
+}
+.osa-breadcrumb a:hover {
+	color: var(--osa-ink);
+}
+.osa-breadcrumb [aria-current] {
+	color: var(--osa-ink);
+}
+
+/* ---- osa/model-links: heading attribute (§4-C) ---------------------------
+ * be renders a bare <h2 class="osa-model-links__heading"> — the mono-caps
+ * label look is supplied here, not by the .osa-mono-caps utility. Used by
+ * the landing-tail chips ("More from the collection"); cards contexts ship
+ * heading:"" so the grid placement rule below is a safety net, not a path. */
+.osa-model-links__heading {
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	margin: 0 0 4px; /* + the chips row's 8px flex gap = 12px visual (§4-C) */
+}
+
+/* ---- osa/model-links--cards (§4-A): image + label tiles ------------------ */
+.osa-model-links--cards {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+}
+.osa-model-links--cards .osa-model-links__heading {
+	grid-column: 1 / -1;
+	margin: 0;
+}
+.osa-model-links--cards .osa-model-links__item {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	border: 1px solid var(--osa-ink);
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+	text-decoration: none;
+}
+.osa-model-links__img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 21 / 9; /* design-spec v1.1: 16/10 → 21/9 (9-card strip height) */
+	object-fit: cover;
+}
+/* Customizer line without an ImageURL → be renders no <img> at all (the
+ * launch state of all 9 default lines). Paint the same 45° hatch the
+ * .osa-bw-img placeholder uses — texture copied verbatim; the classes can't
+ * be reused because this markup is the be block's, and only CSS is fe's.
+ * Engines without :has() degrade to a label-only tile. Texture only, no
+ * per-card text — designer ruling A / design-spec v1.2 §4-A: the model name
+ * sits in the label bar 10px below. The :not(:has(…)) guard also means an
+ * image-carrying card renders NO ::before — no stacked double media zone. */
+.osa-model-links--cards .osa-model-links__item:not(:has(.osa-model-links__img))::before {
+	content: "";
+	display: block;
+	aspect-ratio: 21 / 9;
+	background:
+		repeating-linear-gradient(45deg, var(--osa-paper-edge) 0 1px, transparent 1px 9px),
+		var(--osa-paper-tint);
+}
+.osa-model-links--cards .osa-model-links__label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	border-top: 1px solid var(--osa-ink);
+	padding: 10px 12px;
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+.osa-model-links--cards .osa-model-links__label::after {
+	content: "→";
+	flex-shrink: 0;
+}
+/* Hover inverts ONLY the label bar — image stays put, no transform (§4-A). */
+.osa-model-links--cards .osa-model-links__item:hover .osa-model-links__label {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+
+/* ---- osa/model-links__index: the hub's landing-page index ----------------
+ * A sibling AFTER the nav, rendered only when linkTo=filter actually redirected
+ * rows away from their landing pages (blocks/model-links/render.php). The card
+ * grid is untouched — this is a text run, so it costs the grid nothing and adds
+ * no new tokens, no new media query, no radius/shadow.
+ *
+ * Type is the mono-caps micro rail already in this file: 10px from
+ * .osa-breadcrumb, 0.14em from the card label bar (the tightest tracking in the
+ * system — a 10-name run needs it). The · separator hangs off li + li::before,
+ * the exact idiom .osa-breadcrumb li + li::before uses, which keeps the glyph
+ * OUTSIDE the anchor box (not underlined, not clickable).
+ *
+ * display:inline on the list is what makes it a natural text flow that wraps
+ * with the viewport instead of a grid that can break.
+ *
+ * The nav and this index sit inside .osa-model-links__group, which exists ONLY
+ * to carry the block's wrapper attributes (the instance's spacing/align) so they
+ * apply to the whole block instead of the grid alone — it is deliberately
+ * UNSTYLED here, and must stay that way or it will fight the author's settings.
+ * Which is also why margin-top below is the index's own: the gap under the grid
+ * used to be the hub instance's 40px bottom margin leaking into the wrong
+ * place, and that margin now correctly separates the block from what follows. */
+.osa-model-links__index {
+	margin-top: 40px;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	font-weight: 500;
+	letter-spacing: 0.14em;
+	line-height: 2;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+}
+/* Block-level in the markup (wpautop safety — see render.php), inline here so
+ * the label and the list read as one continuous text run. */
+.osa-model-links__index-label {
+	display: inline;
+	margin: 0 10px 0 0;
+}
+.osa-model-links__index ul {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.osa-model-links__index li {
+	display: inline;
+}
+.osa-model-links__index li + li::before {
+	content: "·";
+	margin: 0 8px;
+	color: var(--osa-steel-1);
+}
+.osa-model-links__index a {
+	color: var(--osa-ink);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+.osa-model-links__index a:hover {
+	color: var(--osa-steel-1);
+}
+
+/* ---- osa/model-links--chips (§4-B): square pill row ---------------------- */
+.osa-model-links--chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+.osa-model-links--chips .osa-model-links__heading {
+	width: 100%; /* own row above the pills */
+}
+.osa-model-links--chips .osa-model-links__item {
+	display: inline-flex;
+	align-items: center;
+	height: 34px;
+	padding: 0 14px;
+	border: 1px solid var(--osa-ink);
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+	font-family: var(--osa-f-mono);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+.osa-model-links--chips .osa-model-links__item:hover {
+	background: var(--osa-ink);
+	color: var(--osa-paper);
+}
+
+/* ---- osa/model-faq (§5): native <details>, zero JS ------------------------
+ * be renders the h2 bare (no class, no inline style), so the type ramp can't
+ * ride the [style*="font-size:22px"] selectors — the ≤768 block below mirrors
+ * the 22px→18px step-down by hand. */
+.osa-model-faq > h2 {
+	font-family: var(--osa-f-display);
+	font-size: 22px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	border-bottom: 1px solid var(--osa-ink);
+	padding-bottom: 12px;
+	margin: 0;
+}
+.osa-faq-item {
+	border-bottom: 1px solid var(--osa-paper-edge);
+	font-family: var(--osa-f-sans);
+	font-size: 15px;
+	line-height: 1.7;
+	color: var(--osa-ink);
+}
+.osa-faq-item[open] {
+	padding-bottom: 18px; /* answer area breathing room (§5 答案区) */
+}
+.osa-faq-item summary {
+	position: relative;
+	padding: 16px 32px 16px 0;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.5;
+	color: var(--osa-ink);
+	cursor: pointer;
+	list-style: none; /* no default disclosure triangle … */
+}
+.osa-faq-item summary::-webkit-details-marker {
+	display: none; /* … in WebKit either */
+}
+.osa-faq-item summary:hover {
+	color: var(--osa-steel-1);
+}
+/* Open/close indicator is pure CSS content — no icon assets (§12.5). */
+.osa-faq-item summary::after {
+	content: "+";
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	font-family: var(--osa-f-mono);
+	font-size: 16px;
+	color: var(--osa-steel-1);
+}
+.osa-faq-item[open] summary::after {
+	content: "−"; /* U+2212 MINUS SIGN, not a hyphen */
+}
+/* kses-whitelisted answers may carry <p>; keep their rhythm tight. */
+.osa-faq-item p {
+	margin: 0 0 10px;
+}
+.osa-faq-item p:last-child {
+	margin-bottom: 0;
+}
+
+/* ---- .osa-section-hd (§6-A): heading + live-inventory tag over an ink rule.
+ * Left h2 keeps its type inline in the pattern (the 22px scaling hook);
+ * margin-bottom is longhand ONLY — these are direct children of constrained
+ * groups, and a margin shorthand would clobber the layout's auto centering. */
+.osa-section-hd {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	flex-wrap: wrap; /* ≤768 the tag folds under the title (§6-A) */
+	gap: 6px 16px;
+	border-bottom: 1px solid var(--osa-ink);
+	padding-bottom: 12px;
+	margin-bottom: 24px; /* §2: heading row → product grid */
+}
+.osa-section-hd h2 {
+	margin: 0;
+	line-height: 1;
+}
+.osa-section-hd__tag {
+	font-size: 10px;
+	color: var(--osa-steel-1); /* .osa-mono-caps supplies mono/caps/0.18em */
+}
+
+/* ---- .osa-guide-xlink (§6-B): landing → buyer's-guide cross-link card ---- */
+.osa-guide-xlink {
+	display: block;
+	max-width: 760px;
+	border: 1px solid var(--osa-ink);
+	padding: 18px 20px;
+	background: var(--osa-paper);
+	color: var(--osa-ink);
+	text-decoration: none;
+	transition: background-color 0.15s ease;
+}
+.osa-guide-xlink:hover {
+	background: var(--osa-paper-tint); /* secondary action: tint, never invert (§6-B) */
+}
+.osa-guide-xlink__kicker {
+	display: block;
+	font-family: var(--osa-f-mono);
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--osa-steel-1);
+	margin: 0 0 6px;
+}
+.osa-guide-xlink__line {
+	display: block;
+	font-family: var(--osa-f-sans);
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+/* ---- .osa-landing-cols (v1.4 §13 V4-3): desktop two-column content zone ---
+ * The landing's copy/FAQ/guide group. DOM order stays prose → FAQ → guide
+ * (reading + mobile order); the grid re-seats them desktop-side only:
+ * left column prose with the guide card under it, right column FAQ, both
+ * top-aligned so the two 22px h2s start together. These are the DEFAULT
+ * rules — the single-column fallback lives in the EXISTING ≤1024 block
+ * (§12.1: no new media queries), TYPE-QUALIFIED div. there so it outranks
+ * this later same-specificity declaration (QA BUG-2: order alone loses).
+ * The group's own constrained-760/left WP layout takes back over ≤1024.
+ * Track math: 760+64+640 caps the zone at the outer group's 1440 rail,
+ * left-packed.
+ * The FAQ block ships margin-free (pattern) — its 56/48 stack rhythm is
+ * restored by the ≤1024 block; on the grid it must sit flush at the top. */
+.osa-landing-cols {
+	display: grid;
+	grid-template-columns: minmax(0, 760px) minmax(0, 640px);
+	grid-template-areas:
+		"prose faq"
+		"guide faq";
+	column-gap: 64px;
+	row-gap: 48px; /* prose → guide card, left column only (FAQ spans both rows) */
+	align-items: start;
+}
+.osa-landing-cols > .osa-landing-prose {
+	grid-area: prose;
+}
+.osa-landing-cols > .osa-model-faq {
+	grid-area: faq;
+}
+.osa-landing-cols > .osa-guide-xlink {
+	grid-area: guide;
+}
+
+/* ---- .osa-model-strip (§7-A): homepage "Shop by Model" pattern wrapper ----
+ * Desktop needs no rules — the tint band, padding and heading are inline in
+ * patterns/model-index-strip.php and the cards grid is the block default.
+ * The class exists for the ≤768 single-row scroll + padding overrides below. */
+
+/* ---- ≤768 — the one new media query this system is allowed (§12.1) ------- */
+@media (max-width: 768px) {
+	/* cards, grid contexts (/firearms/ index): 3-up → 2-up, tighter gutter */
+	.osa-model-links--cards {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	/* landing index: open the leading so wrapped lines are separable by thumb.
+	   This is a breadcrumb-class text index, not a control — the 40/44px hard
+	   targets stay with the chips and FAQ summaries, and each model's real tap
+	   target is the full card above. */
+	.osa-model-links__index {
+		line-height: 2.4;
+	}
+
+	/* homepage strip context: single scroll row of fixed 200px tiles so 9
+	   cards never stack 5 rows tall on a phone (§7-A; .osa-related-strip
+	   precedent ~2500) */
+	.osa-model-strip .osa-model-links--cards {
+		display: flex;
+		gap: 12px;
+		overflow-x: auto;
+		scroll-snap-type: x proximity;
+		scroll-padding-left: 16px;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+	.osa-model-strip .osa-model-links--cards::-webkit-scrollbar {
+		display: none;
+	}
+	.osa-model-strip .osa-model-links--cards .osa-model-links__item {
+		flex: 0 0 200px;
+		scroll-snap-align: start;
+	}
+
+	/* strip band: 48px 24px → 32px 16px (!important beats the inline padding) */
+	.osa-model-strip {
+		padding: 32px 16px !important;
+	}
+
+	/* chips: wrap row → single scroll row at the 40px touch height (§12.6
+	   hard target). Block flow + inline-flex pills — NOT flex nowrap — so the
+	   optional __heading h2 keeps its own line above the scroll row instead
+	   of becoming the first horizontal item. */
+	.osa-model-links--chips {
+		display: block;
+		white-space: nowrap;
+		overflow-x: auto;
+		scroll-padding-left: 16px;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+	.osa-model-links--chips::-webkit-scrollbar {
+		display: none;
+	}
+	.osa-model-links--chips .osa-model-links__item {
+		height: 40px;
+		margin-right: 12px;
+	}
+	.osa-model-links--chips .osa-model-links__item:last-child {
+		margin-right: 0;
+	}
+	.osa-model-links--chips .osa-model-links__heading {
+		margin: 0 0 12px; /* block flow here: no flex gap to add up (§4-C) */
+	}
+
+	/* FAQ: hand-rolled 22px→18px step for the classless h2 + ≥44px summaries
+	   (14+14 padding + 22.5px line ≈ 50px tap height) */
+	.osa-model-faq > h2 {
+		font-size: 18px;
+	}
+	.osa-faq-item summary {
+		padding: 14px 28px 14px 0;
+	}
+
+	/* guide card: tighter frame (§6-B) */
+	.osa-guide-xlink {
+		padding: 16px;
+	}
+}

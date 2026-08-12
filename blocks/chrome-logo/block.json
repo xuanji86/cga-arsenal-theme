@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/chrome-logo",
+  "title": "OSA · Logo",
+  "category": "osa",
+  "icon": "format-image",
+  "description": "Site logo linking home. Picks an OSA logo variant (or the WordPress Custom Logo) so it works on light or dark chrome.",
+  "textdomain": "osa-arsenal",
+  "supports": {
+    "html": false,
+    "spacing": { "margin": true }
+  },
+  "attributes": {
+    "variant": { "type": "string", "default": "inline-dark" },
+    "useCustomLogo": { "type": "boolean", "default": false },
+    "headerLogo": { "type": "boolean", "default": false },
+    "imgClass": { "type": "string", "default": "" }
+  },
+  "render": "file:./render.php"
+}

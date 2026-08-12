@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/marquee-ticker",
+  "title": "OSA · Marquee Ticker",
+  "category": "osa",
+  "icon": "menu-alt",
+  "description": "Looping text strip with separator. Use for drop announcements, acquisitions, FFL note.",
+  "textdomain": "osa-arsenal",
+  "supports": {
+    "html": false,
+    "align": [ "wide", "full" ]
+  },
+  "attributes": {
+    "items":  { "type": "array",  "default": [], "items": { "type": "string" } },
+    "sep":    { "type": "string", "default": "·" },
+    "invert": { "type": "boolean","default": false }
+  },
+  "render": "file:./render.php"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/model-faq",
+  "title": "OSA · Model FAQ",
+  "category": "osa",
+  "icon": "editor-help",
+  "description": "Long-tail Q&A for a model landing page: native details/summary accordion plus FAQPage JSON-LD generated from the same items.",
+  "textdomain": "osa-arsenal",
+  "supports": {
+    "html": false,
+    "align": [ "wide", "full" ],
+    "spacing": { "margin": true, "padding": true }
+  },
+  "attributes": {
+    "heading": { "type": "string", "default": "Common Questions" },
+    "items":   { "type": "array", "default": [], "items": { "type": "object" } }
+  },
+  "render": "file:./render.php"
+}

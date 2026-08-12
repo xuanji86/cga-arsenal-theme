@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/chrome-controls",
+  "title": "OSA · Header Controls",
+  "category": "osa",
+  "icon": "buttons",
+  "description": "The header's right-side icon cluster: search, account (login-aware), and cart with a live count badge.",
+  "textdomain": "osa-arsenal",
+  "supports": { "html": false },
+  "attributes": {},
+  "render": "file:./render.php"
+}

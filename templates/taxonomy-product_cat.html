@@ -1,0 +1,73 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"40px","right":"24px","bottom":"56px","left":"24px"}}},"layout":{"type":"constrained","contentSize":"1440px"}} -->
+<main class="wp-block-group" style="padding-top:40px;padding-right:24px;padding-bottom:56px;padding-left:24px">
+
+	<!-- Breadcrumb: same block and same spacing idiom as patterns/model-landing.php:31
+	     — bare block, the gap supplied by the next block's margin-top. (The
+	     single-product placement uses a wrapper group instead because nothing
+	     follows it there that could carry the margin.) -->
+	<!-- wp:osa/seo-breadcrumb /-->
+
+	<!-- wp:paragraph {"className":"osa-mono-caps","style":{"spacing":{"margin":{"top":"16px"}},"typography":{"fontSize":"10px","textTransform":"uppercase","letterSpacing":"0.22em","color":"var:preset|color|steel-1"}}} -->
+	<p class="osa-mono-caps" style="margin-top:16px;font-size:10px;text-transform:uppercase;letter-spacing:0.22em;color:var(--wp--preset--color--steel-1)">Shop · Category</p>
+	<!-- /wp:paragraph -->
+
+	<!-- wp:query-title {"type":"archive","showPrefix":false,"level":1,"style":{"typography":{"fontSize":"64px","textTransform":"uppercase","letterSpacing":"-0.005em","lineHeight":"1"}},"fontFamily":"display"} /-->
+
+	<!-- wp:group {"style":{"spacing":{"margin":{"top":"16px","bottom":"8px"}}},"layout":{"type":"constrained","contentSize":"760px","justifyContent":"left"}} -->
+	<div class="wp-block-group" style="margin-top:16px;margin-bottom:8px">
+
+		<!-- wp:term-description {"style":{"typography":{"fontSize":"18px","lineHeight":"1.65"}},"fontFamily":"serif"} /-->
+
+	</div>
+	<!-- /wp:group -->
+
+	<!-- Model chips: byte-parity with archive-product.html:18. These rendered on
+	     category archives before this template existed (they fell back to the
+	     shop template), so omitting them here would strip hub internal links
+	     from exactly the term pages this project is trying to rank. -->
+	<!-- wp:osa/model-links {"variant":"chips","style":{"spacing":{"margin":{"bottom":"24px"}}}} /-->
+
+	<!-- wp:group {"className":"osa-shop-layout","align":"wide","layout":{"type":"default"}} -->
+	<div class="wp-block-group alignwide osa-shop-layout">
+
+		<!-- wp:fcpf/product-filter-sidebar /-->
+
+		<!-- wp:group {"className":"osa-shop-main","layout":{"type":"default"}} -->
+		<div class="wp-block-group osa-shop-main">
+
+			<!-- wp:fcpf/product-filter-toolbar /-->
+
+			<!-- wp:query {"queryId":3,"query":{"perPage":12,"postType":"product","inherit":true,"order":"desc","orderBy":"date"}} -->
+			<div class="wp-block-query">
+
+				<!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+					<!-- wp:osa/product-card-compact {"ar":"16-9"} /-->
+				<!-- /wp:post-template -->
+
+				<!-- wp:query-pagination {"paginationArrow":"arrow","layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"40px"}}}} -->
+					<!-- wp:query-pagination-previous {"label":"Prev"} /-->
+					<!-- wp:query-pagination-numbers /-->
+					<!-- wp:query-pagination-next {"label":"Next"} /-->
+				<!-- /wp:query-pagination -->
+
+				<!-- wp:query-no-results -->
+					<!-- wp:paragraph -->
+					<p>No lots match your filters. Try clearing them.</p>
+					<!-- /wp:paragraph -->
+				<!-- /wp:query-no-results -->
+
+			</div>
+			<!-- /wp:query -->
+
+		</div>
+		<!-- /wp:group -->
+
+	</div>
+	<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

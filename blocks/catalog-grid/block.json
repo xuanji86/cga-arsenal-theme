@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/catalog-grid",
+  "title": "OSA · Catalog Grid",
+  "category": "osa",
+  "icon": "grid-view",
+  "description": "Hard-bordered N-up product grid. Use 4 columns for homepage 12-up, 3 columns for shop, 4 for related.",
+  "textdomain": "osa-arsenal",
+  "supports": {
+    "html": false,
+    "align": [ "wide", "full" ],
+    "spacing": { "margin": true, "padding": true }
+  },
+  "attributes": {
+    "cols":    { "type": "number", "default": 4 },
+    "limit":   { "type": "number", "default": 12 },
+    "orderby": { "type": "string", "default": "date" },
+    "order":   { "type": "string", "default": "DESC", "enum": [ "ASC", "DESC" ] },
+    "category": { "type": "string", "default": "" },
+    "exclude": { "type": "array", "default": [], "items": { "type": "number" } },
+    "related": { "type": "boolean", "default": false },
+    "strip":   { "type": "boolean", "default": false },
+    "model":   { "type": "string",  "default": "" },
+    "instock": { "type": "boolean", "default": false },
+    "list":    { "type": "string",  "default": "" },
+    "schema":  { "type": "string",  "default": "", "enum": [ "", "collection" ] }
+  },
+  "render": "file:./render.php"
+}

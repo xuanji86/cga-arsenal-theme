@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/promo-landing",
+  "title": "OSA · Independence Day Landing",
+  "category": "osa",
+  "icon": "flag",
+  "description": "Independence Day landing body: dark hero + coupon card with countdown, whole-arsenal grid with load-more, assurances strip, statement. Renders only while the promo window is open (inc/promo.php).",
+  "textdomain": "osa-arsenal",
+  "supports": {
+    "html": false,
+    "multiple": false,
+    "align": [ "full" ]
+  },
+  "style": "file:./style.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

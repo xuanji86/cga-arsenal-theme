@@ -1,0 +1,25 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"24px","right":"24px","bottom":"56px","left":"24px"}}},"layout":{"type":"constrained","contentSize":"1440px"}} -->
+<main class="wp-block-group" style="padding-top:24px;padding-right:24px;padding-bottom:56px;padding-left:24px">
+
+	<!-- wp:paragraph {"className":"osa-mono-caps","style":{"typography":{"fontSize":"10px","textTransform":"uppercase","letterSpacing":"0.22em","color":"var:preset|color|steel-1"}}} -->
+	<p class="osa-mono-caps" style="font-size:10px;text-transform:uppercase;letter-spacing:0.22em;color:var(--wp--preset--color--steel-1)">Shop → Cart</p>
+	<!-- /wp:paragraph -->
+
+	<!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"54px","textTransform":"uppercase","letterSpacing":"-0.005em","lineHeight":"1"}},"fontFamily":"display"} -->
+	<h1 class="wp-block-heading has-display-font-family" style="font-size:54px;text-transform:uppercase;letter-spacing:-0.005em;line-height:1">Your Floor</h1>
+	<!-- /wp:heading -->
+
+	<!-- wp:paragraph {"className":"osa-mono-caps","style":{"typography":{"fontSize":"11px","letterSpacing":"0.16em"},"spacing":{"margin":{"top":"4px","bottom":"32px"}}}} -->
+	<p class="osa-mono-caps" style="font-size:11px;letter-spacing:0.16em;margin-top:4px;margin-bottom:32px">Reserved lots</p>
+	<!-- /wp:paragraph -->
+
+	<!-- wp:shortcode -->
+	[woocommerce_cart]
+	<!-- /wp:shortcode -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

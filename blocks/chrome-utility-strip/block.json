@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "osa/chrome-utility-strip",
+  "title": "OSA · Utility Strip",
+  "category": "osa",
+  "icon": "minus",
+  "description": "Thin top strip: announcement message + utility links. Content + visibility are edited under Appearance → Customize → OSA · Header.",
+  "textdomain": "osa-arsenal",
+  "supports": { "html": false },
+  "attributes": {},
+  "render": "file:./render.php"
+}
