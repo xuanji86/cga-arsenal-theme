@@ -15,7 +15,7 @@ gunsammo.club 未来站点的 FSE 块主题，**fork 自 osa-arsenal-theme @ mai
 - `make deploy` — rsync 当前工作树 → **cga-prod**（https://caligunsandammo.com）。prod 规矩：主会话、经用户确认、先 commit 再 deploy。
 
 ## Customizer（2026-08-12 接线）
-- **首页全部文案走 Customize**：外观→自定义→ **CGA · Homepage** 面板（六节按页面顺序）。**傻瓜式约定（2026-08-12 用户要求，勿回退）**：一元素一控件、白话 label（"Green button — text"），链接类拆 text+link 两格（URL 用 esc_url_raw），禁止管道/按行拆语法；hero 特色枪=真实商品下拉（cga_hero_featured_id，0=自动最新有货，注册时查 200 个最新商品），卡片内容本身来自商品记录。默认值=定稿文案，存在 `inc/cga-customizer.php` 的 CGA_* 常量（数组按元素拆）——**改默认文案改常量，别改 pattern 里的渲染**。
+- **首页全部文案走 Customize**：外观→自定义→ **CGA · Homepage** 面板（六节按页面顺序）。**傻瓜式约定（2026-08-12 用户要求，勿回退）**：一元素一控件、白话 label（"Green button — text"），链接类拆 text+link 两格（URL 用 esc_url_raw），禁止管道/按行拆语法；hero 特色枪=**输入即搜**的商品选择器（CGA_Product_Search_Control：WC 自带 wc-product-search/selectWoo + woocommerce_json_search_products AJAX 全目录按名搜索；清空=自动最新有货），卡片内容本身来自商品记录。⚠两个 customize.php 特性：WC admin 资产在该页不注册（select2 皮肤要按插件 URL 直接 enqueue）；控件是展开小节时才嵌入 DOM 的（JIT，4.7+），selectWoo 初始化必须挂 control.deferred.embedded + section.expanded，不能靠 document.ready。默认值=定稿文案，存在 `inc/cga-customizer.php` 的 CGA_* 常量（数组按元素拆）——**改默认文案改常量，别改 pattern 里的渲染**。
 - **Store Facts 单一来源**（CGA · Site Text & Chrome → Store Facts）：地址/营业时间/电话/邮箱/FFL/CFD。消费途径三条：pattern 里 `cga_text()` 的 `{address}{hours}{phone}{email}{ffl}{cfd}{count}` token、页面正文 `[cga_fact key="" line=""]`、页脚 `[cga_footer_legal]`（parts/footer.html 只剩 shortcode，法务块文案在 Customize 改）。
 - 即时预览（postMessage）只覆盖 osa-customize-preview.js 里绑定的 id，且 customizer.php 的 $live 名单必须与 JS 严格一致——多翻一个 id 就是静默 no-op；其余控件走 refresh。
 - OSA 僵尸节（hero/marquee/floor/story/models/dealer drop）已删；marquee/model 的 helper 函数保留（block 还在，插入即用默认值）。
