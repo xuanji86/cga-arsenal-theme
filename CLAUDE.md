@@ -14,6 +14,12 @@ gunsammo.club 未来站点的 FSE 块主题，**fork 自 osa-arsenal-theme @ mai
 - cga-local 管理端：admin / cga2026（仅本地）。
 - 无 prod：本仓目前没有部署面，交付止于 commit + verify。
 
+## Customizer（2026-08-12 接线）
+- **首页全部文案走 Customize**：外观→自定义→ **CGA · Homepage** 面板（Hero/三格 rail/分类货架/四步/服务培训/会员条+店卡）；多字段格子=一个 textarea 按行拆（kicker/title/body/note 之类，控件 label 写明顺序）。默认值=定稿文案，存在 `inc/cga-customizer.php` 的 CGA_* 常量里——**改默认文案改常量，别改 pattern 里的渲染**。
+- **Store Facts 单一来源**（CGA · Site Text & Chrome → Store Facts）：地址/营业时间/电话/邮箱/FFL/CFD。消费途径三条：pattern 里 `cga_text()` 的 `{address}{hours}{phone}{email}{ffl}{cfd}{count}` token、页面正文 `[cga_fact key="" line=""]`、页脚 `[cga_footer_legal]`（parts/footer.html 只剩 shortcode，法务块文案在 Customize 改）。
+- 即时预览（postMessage）只覆盖 osa-customize-preview.js 里绑定的 id，且 customizer.php 的 $live 名单必须与 JS 严格一致——多翻一个 id 就是静默 no-op；其余控件走 refresh。
+- OSA 僵尸节（hero/marquee/floor/story/models/dealer drop）已删；marquee/model 的 helper 函数保留（block 还在，插入即用默认值）。
+
 ## 沿用 OSA 的 gotcha
 - Site Editor 自定义存 DB（wp_template CPT）且覆盖主题文件；模板改了不生效先查 DB override。
 - 首页 patterns 是 PHP 动态的（hero 特色枪=最新有货商品、分类瓦片=实时 count）；空目录时渲染占位块。
