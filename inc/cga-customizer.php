@@ -25,13 +25,23 @@ const CGA_FACT_DEFAULTS = [
 	'cga_fact_address' => "401 S Lincoln Ave, Suite L\nCorona, CA 92882",
 	'cga_fact_hours'   => "Monday – Sunday\n11:00 AM – 7:00 PM",
 	'cga_fact_phone'   => '(951) 547-4790',
-	'cga_fact_email'   => 'info@gunsammo.club',
+	'cga_fact_email'   => 'info@caligunsandammo.com',
 	'cga_fact_ffl'     => '9-33-065-01-8G-09316',
 	'cga_fact_cfd'     => '24307',
 ];
 
 const CGA_FOOTER_TOP_DEFAULT   = "Corona's local gun store — firearms, ammunition, training & FFL transfers.\nCalifornia Guns and Ammo";
 const CGA_FOOTER_EXTRA_DEFAULT = 'CA COE / ammunition vendor licence no. TBD';
+
+/**
+ * Keyless Google Maps embed for the store address — works with no account.
+ * The owner can replace it with the "Share → Embed a map" link from the
+ * store's Google Business listing (shows the name/reviews card).
+ */
+const CGA_MAP_EMBED_DEFAULT = 'https://maps.google.com/maps?q=401%20S%20Lincoln%20Ave%20Suite%20L%2C%20Corona%2C%20CA%2092882&z=15&output=embed';
+
+/** Google Maps directions deep link (keyless Maps URLs API). */
+const CGA_DIRECTIONS_URL_DEFAULT = 'https://www.google.com/maps/dir/?api=1&destination=401%20S%20Lincoln%20Ave%20Suite%20L%2C%20Corona%2C%20CA%2092882';
 
 const CGA_HERO_DEFAULTS = [
 	'cga_hero_eyebrow'    => 'Est. 2023 · Corona, California · FFL {ffl} · CFD# {cfd}',
@@ -106,7 +116,7 @@ const CGA_BAND_STORE_DEFAULTS = [
 	'cga_store_aside'     => 'Open seven days',
 	'cga_store_blurb'     => "Established 2022, open on Lincoln Ave since July 4th, 2023. We don't buy firearms from individuals and we don't take trade-ins — what's listed is what's on the shelf.",
 	'cga_store_cta_label' => 'Get directions',
-	'cga_store_cta_url'   => '/about/',
+	'cga_store_cta_url'   => CGA_DIRECTIONS_URL_DEFAULT,
 	'cga_store_map_note'  => "Map embed\n401 S Lincoln Ave, Suite L",
 ];
 
@@ -162,6 +172,44 @@ function cga_multiline_html( $text ) {
 	$lines = array_filter( array_map( 'trim', preg_split( "/\r?\n/", (string) $text ) ), 'strlen' );
 	return implode( '<br />', array_map( 'esc_html', $lines ) );
 }
+
+/**
+ * Sanitize the map-embed setting: accept the "Share → Embed a map" HTML or a
+ * bare URL, store just the https URL. Anything else saves as ''.
+ */
+function cga_sanitize_map_embed( $value ) {
+	$value = trim( (string) $value );
+	if ( '' === $value ) {
+		return '';
+	}
+	if ( preg_match( '/<iframe[^>]*\bsrc\s*=\s*["\']([^"\']+)["\']/i', $value, $m ) ) {
+		$value = $m[1];
+	}
+	$value = esc_url_raw( $value, [ 'https' ] );
+	return $value ?: '';
+}
+
+/**
+ * The map block: a lazy grayscale-until-hover Google embed, or the hatched
+ * placeholder when the setting is cleared. Used by the homepage store card
+ * (PHP) and page content via [cga_map].
+ *
+ * @param string $fallback_text Placeholder text when no embed is configured.
+ */
+function cga_map_html( $fallback_text = '' ) {
+	$src = cga_sanitize_map_embed( osa_text( 'cga_map_embed', CGA_MAP_EMBED_DEFAULT ) );
+	if ( '' === $src ) {
+		if ( '' === $fallback_text ) {
+			$fallback_text = cga_fact( 'address' );
+		}
+		return '<div class="cga-map cga-map--empty cga-ph">' . cga_multiline_html( $fallback_text ) . '</div>';
+	}
+	return '<div class="cga-map"><iframe src="' . esc_url( $src ) . '" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="' . esc_attr__( 'Map to California Guns and Ammo', 'osa-arsenal' ) . '"></iframe></div>';
+}
+
+add_shortcode( 'cga_map', function () {
+	return cga_map_html();
+} );
 
 /**
  * The hero / shelf featured product: the Customizer pick when set (product
@@ -295,6 +343,19 @@ add_action( 'customize_register', function ( $wp_customize ) {
 	$add( 'cga_facts_section', 'cga_fact_cfd', __( 'CA DOJ CFD number', 'osa-arsenal' ), CGA_FACT_DEFAULTS['cga_fact_cfd'] );
 	$add( 'cga_facts_section', 'cga_footer_legal_top', __( 'Footer — opening lines (above the address)', 'osa-arsenal' ), CGA_FOOTER_TOP_DEFAULT, 'textarea' );
 	$add( 'cga_facts_section', 'cga_footer_legal_extra', __( 'Footer — last line (COE / ammo licence)', 'osa-arsenal' ), CGA_FOOTER_EXTRA_DEFAULT );
+
+	// Map embed: paste Google Maps "Share → Embed a map" HTML or link.
+	$wp_customize->add_setting( 'cga_map_embed', [
+		'default'           => CGA_MAP_EMBED_DEFAULT,
+		'sanitize_callback' => 'cga_sanitize_map_embed',
+		'transport'         => 'refresh',
+	] );
+	$wp_customize->add_control( 'cga_map_embed', [
+		'label'       => __( 'Map (homepage + About page)', 'osa-arsenal' ),
+		'description' => __( 'In Google Maps: Share → "Embed a map" → COPY HTML, then paste it here (the whole code or just the link — both work). The map shows in black & white and turns to color on hover. Clear this box to show a plain placeholder instead.', 'osa-arsenal' ),
+		'section'     => 'cga_facts_section',
+		'type'        => 'textarea',
+	] );
 
 	/* --- Homepage panel --- */
 	$wp_customize->add_panel( 'cga_home', [
