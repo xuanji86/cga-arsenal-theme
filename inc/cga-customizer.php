@@ -223,6 +223,36 @@ add_shortcode( 'cga_footer_legal', function () {
 } );
 
 /* ---------------------------------------------------------------- *
+ * Customizer controls pane: WooCommerce's selectWoo product-search assets
+ * for the featured-product picker. PHP-rendered controls are in the DOM at
+ * load, so WC's ready-time init catches them; the extra trigger on the
+ * customizer 'ready' event is a harmless belt-and-braces re-init.
+ * ---------------------------------------------------------------- */
+
+add_action( 'customize_controls_enqueue_scripts', function () {
+	if ( ! function_exists( 'WC' ) ) {
+		return;
+	}
+	wp_enqueue_script( 'wc-enhanced-select' );
+	// WC's admin stylesheet bundle isn't registered on customize.php, so pull
+	// the selectWoo skin straight from the plugin.
+	wp_enqueue_style( 'cga-select2', WC()->plugin_url() . '/assets/css/select2.css', [], defined( 'WC_VERSION' ) ? WC_VERSION : null );
+	wp_add_inline_style( 'cga-select2', '.customize-control .select2-container{width:100%!important}' );
+	// Customizer controls embed just-in-time (on section expand, WP 4.7+), so a
+	// document.ready init would miss them. Re-trigger WC's enhancer when the
+	// control lands in the DOM and whenever its section opens — the init skips
+	// selects it already enhanced, so repeat triggers are safe.
+	wp_add_inline_script(
+		'wc-enhanced-select',
+		'jQuery(function($){if(!window.wp||!wp.customize){return;}'
+		. 'var kick=function(){$(document.body).trigger("wc-enhanced-select-init");};'
+		. 'wp.customize.control("cga_hero_featured_id",function(c){c.deferred.embedded.done(function(){setTimeout(kick,0);});});'
+		. 'wp.customize.section("cga_hero_section",function(s){s.expanded.bind(function(open){if(open){setTimeout(kick,0);}});});'
+		. '});'
+	);
+} );
+
+/* ---------------------------------------------------------------- *
  * Customizer registration.
  * ---------------------------------------------------------------- */
 
@@ -292,20 +322,41 @@ add_action( 'customize_register', function ( $wp_customize ) {
 		$add( 'cga_hero_section', "cga_hero_stat{$n}_label", sprintf( __( 'Quick number %d — caption', 'osa-arsenal' ), $n ), $label );
 	}
 
-	// Featured product: a dropdown of real products. The card's photo, name,
-	// price, stock and tags come from the product record itself (Products in
-	// the dashboard) — here you only choose WHICH product is shown.
-	$choices = [ 0 => __( 'Automatic — newest product in stock', 'osa-arsenal' ) ];
-	if ( function_exists( 'wc_get_products' ) ) {
-		foreach ( wc_get_products( [ 'status' => 'publish', 'limit' => 200, 'orderby' => 'date', 'order' => 'DESC' ] ) as $p ) {
-			$bits = [ $p->get_name() ];
-			if ( $p->get_price() !== '' ) {
-				$bits[] = wp_strip_all_tags( html_entity_decode( wc_price( (float) $p->get_price() ) ) );
+	// Featured product: WooCommerce's own search-as-you-type product picker
+	// (same selectWoo/AJAX control as in the Woo admin, searches the whole
+	// catalog by name). Empty = Automatic (newest in stock). The card's photo,
+	// name, price, stock and tags come from the product record itself
+	// (Products in the dashboard) — here you only choose WHICH product shows.
+	if ( ! class_exists( 'CGA_Product_Search_Control' ) ) {
+		class CGA_Product_Search_Control extends WP_Customize_Control {
+			public $type = 'cga-product-search';
+			public function render_content() {
+				$value   = (int) $this->value();
+				$current = '';
+				if ( $value && function_exists( 'wc_get_product' ) ) {
+					$p = wc_get_product( $value );
+					if ( $p ) {
+						$current = $p->get_name() . ( $p->get_sku() ? ' (' . $p->get_sku() . ')' : '' );
+					}
+				}
+				?>
+				<label class="customize-control-title" for="<?php echo esc_attr( '_customize-input-' . $this->id ); ?>"><?php echo esc_html( $this->label ); ?></label>
+				<?php if ( $this->description ) : ?>
+				<span class="description customize-control-description"><?php echo esc_html( $this->description ); ?></span>
+				<?php endif; ?>
+				<select id="<?php echo esc_attr( '_customize-input-' . $this->id ); ?>" <?php $this->link(); ?>
+					class="wc-product-search" style="width:100%"
+					data-placeholder="<?php esc_attr_e( 'Automatic — newest in stock (type a name to search)', 'osa-arsenal' ); ?>"
+					data-action="woocommerce_json_search_products"
+					data-security="<?php echo esc_attr( wp_create_nonce( 'search-products' ) ); ?>"
+					data-allow_clear="true">
+					<option value=""></option>
+					<?php if ( $value && '' !== $current ) : ?>
+					<option value="<?php echo esc_attr( $value ); ?>" selected="selected"><?php echo esc_html( $current ); ?></option>
+					<?php endif; ?>
+				</select>
+				<?php
 			}
-			if ( ! $p->is_in_stock() ) {
-				$bits[] = __( 'out of stock', 'osa-arsenal' );
-			}
-			$choices[ $p->get_id() ] = implode( ' — ', $bits );
 		}
 	}
 	$wp_customize->add_setting( 'cga_hero_featured_id', [
@@ -313,13 +364,11 @@ add_action( 'customize_register', function ( $wp_customize ) {
 		'sanitize_callback' => 'absint',
 		'transport'         => 'refresh',
 	] );
-	$wp_customize->add_control( 'cga_hero_featured_id', [
+	$wp_customize->add_control( new CGA_Product_Search_Control( $wp_customize, 'cga_hero_featured_id', [
 		'label'       => __( 'Featured product', 'osa-arsenal' ),
-		'description' => __( 'Which product appears in the card on the right. Its photo, name, price and stock come from the product itself — edit those under Products. "Automatic" always shows the newest product in stock.', 'osa-arsenal' ),
+		'description' => __( 'Type a product name and pick from the matches. Clear the box (×) to go back to Automatic — the newest product in stock. The card\'s photo, name, price and stock come from the product itself: edit those under Products.', 'osa-arsenal' ),
 		'section'     => 'cga_hero_section',
-		'type'        => 'select',
-		'choices'     => $choices,
-	] );
+	] ) );
 	$add( 'cga_hero_section', 'cga_hero_feat_tag', __( 'Featured card — corner tag', 'osa-arsenal' ), CGA_HERO_DEFAULTS['cga_hero_feat_tag'] );
 
 	/* 2 · Fulfilment rail */
