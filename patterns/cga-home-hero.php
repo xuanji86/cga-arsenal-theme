@@ -31,7 +31,7 @@ if ( function_exists( 'wc_get_products' ) ) {
 <div class="cga-page">
 	<section class="home-hero">
 		<div>
-			<p class="cga-eyebrow">Est. 2023 · Corona, California · FFL 9-33-XXX-XX-XX-XXXXX</p>
+			<p class="cga-eyebrow">Est. 2023 · Corona, California · FFL 9-33-065-01-8G-09316 · CFD# 24307</p>
 			<h1 class="cga-h1">Stocked for<br />California.</h1>
 			<p class="cga-lede">Roster-approved handguns, compliant rifles, and ammunition you can actually take home &mdash; on the shelf at 401 S Lincoln Ave. We run the DROS, proctor the FSC, and track the ten-day wait, so nothing surprises you at the counter.</p>
 			<div class="home-hero__cta">
