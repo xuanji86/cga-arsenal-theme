@@ -160,21 +160,21 @@ body {
 	padding: 13px 22px;
 	border: 1.5px solid var(--cga-ink);
 	background: var(--cga-ink);
-	color: var(--cga-paper) !important;
+	color: var(--cga-paper);
 	font-family: var(--cga-f-mono);
 	font-size: 13px;
 	font-weight: 600;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
 	cursor: pointer;
-	text-decoration: none !important;
+	text-decoration: none;
 	transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
-.cga-btn:hover { background: var(--cga-paper); color: var(--cga-ink) !important; }
+.cga-btn:hover { background: var(--cga-paper); color: var(--cga-ink); }
 .cga-btn--pine { background: var(--cga-pine); border-color: var(--cga-pine); }
-.cga-btn--pine:hover { background: var(--cga-pine-2); border-color: var(--cga-pine-2); color: var(--cga-paper) !important; }
-.cga-btn--ghost { background: transparent; color: var(--cga-ink) !important; }
-.cga-btn--ghost:hover { background: var(--cga-ink); color: var(--cga-paper) !important; }
+.cga-btn--pine:hover { background: var(--cga-pine-2); border-color: var(--cga-pine-2); color: var(--cga-paper); }
+.cga-btn--ghost { background: transparent; color: var(--cga-ink); }
+.cga-btn--ghost:hover { background: var(--cga-ink); color: var(--cga-paper); }
 .cga-btn--lg { padding: 17px 28px; width: 100%; }
 
 /* ===== CGA page scaffold (patterns & pages) ===== */
@@ -294,8 +294,8 @@ body {
 .cga-band__eyebrow { margin: 0 0 8px; font-family: var(--cga-f-mono); font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: .7; color: inherit; }
 .cga-band__title { margin: 0; font-family: var(--cga-f-display); font-size: 26px; line-height: 1.1; letter-spacing: 0.01em; text-transform: uppercase; color: inherit; }
 .cga-band__body { margin: 9px 0 0; max-width: 62ch; font-size: 14px; line-height: 1.6; opacity: .85; color: inherit; }
-.cga-band .cga-btn { border-color: var(--cga-paper); background: var(--cga-paper); color: var(--cga-ink) !important; }
-.cga-band .cga-btn:hover { background: transparent; color: var(--cga-paper) !important; }
+.cga-band .cga-btn { border-color: var(--cga-paper); background: var(--cga-paper); color: var(--cga-ink); }
+.cga-band .cga-btn:hover { background: transparent; color: var(--cga-paper); }
 
 /* ===== Store strip ===== */
 .cga-store { display: grid; grid-template-columns: 1.05fr 1fr; border: 1px solid var(--cga-ink); background: var(--cga-paper); }
@@ -441,6 +441,31 @@ body {
 .a-hours div { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--cga-line); font-family: var(--cga-f-mono); font-size: 12px; }
 .a-hours div:last-child { border-bottom: 0; }
 .a-hours b { font-weight: 600; }
+
+/* ===== OSA-plugin copy that doesn't apply to CGA =====
+   These hide/replace OSA-specific strings that are hardcoded in the SHARED
+   plugins (kept byte-identical with OSA prod). Proper fix is upstream:
+   make them options/filters in ffl-core & osa-growth. */
+
+/* ffl-core price badge: "No Sales Tax Outside Texas" — CGA collects CA tax. */
+.ffl-tax-notice-strip { display: none; }
+
+/* ffl-core toolbar: Grade ↓/↑ sorts are the OSA surplus condition system. */
+.osa-filter-toolbar__right a[href*="orderby=grade"] { display: none; }
+
+/* osa-growth footer capture: swap the OSA surplus pitch for CGA copy and
+   hide the $20 signup-coupon chip (no CGA signup offer decided yet). */
+.osa-foot-signup__eyebrow { font-size: 0 !important; }
+.osa-foot-signup__eyebrow::before { content: "Newsletter"; font-size: 11px; letter-spacing: 0.14em; }
+.osa-foot-signup__head { font-size: 0 !important; }
+.osa-foot-signup__head::before { content: "New arrivals, roster changes and range days."; font-size: 20px; font-weight: 800; letter-spacing: 0.01em; }
+.osa-foot-signup__offer { display: none !important; }
+
+/* ===== Form fields (About contact form) ===== */
+.fld { display: flex; flex-direction: column; gap: 5px; }
+.fld label { font-family: var(--cga-f-mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--cga-steel-1); }
+.fld input, .fld select, .fld textarea { border: 1px solid var(--cga-line); background: var(--cga-paper); padding: 10px 11px; font-family: var(--cga-f-sans); font-size: 14px; color: var(--cga-ink); outline: none; resize: vertical; }
+.fld input:focus, .fld select:focus, .fld textarea:focus { border-color: var(--cga-pine); }
 
 /* ===== FAQ ===== */
 .f-hero { padding: 52px 0 40px; border-bottom: 1px solid var(--cga-ink); }

@@ -13,6 +13,20 @@
 
 $cga_shelf_count = wp_count_posts( 'product' );
 $cga_shelf_count = $cga_shelf_count ? (int) $cga_shelf_count->publish : 0;
+
+// The hero features the newest in-stock product; keep the shelf grid from
+// showing the same item twice.
+$cga_shelf_exclude = 0;
+if ( function_exists( 'wc_get_products' ) ) {
+	$cga_shelf_feat = wc_get_products( [
+		'status'       => 'publish',
+		'limit'        => 1,
+		'orderby'      => 'date',
+		'order'        => 'DESC',
+		'stock_status' => 'instock',
+	] );
+	$cga_shelf_exclude = $cga_shelf_feat ? (int) $cga_shelf_feat[0]->get_id() : 0;
+}
 ?>
 <!-- wp:html -->
 <div class="cga-page">
@@ -27,7 +41,7 @@ $cga_shelf_count = $cga_shelf_count ? (int) $cga_shelf_count->publish : 0;
 
 <!-- wp:group {"className":"cga-page","style":{"spacing":{"margin":{"top":"-48px"},"blockGap":"0"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group cga-page" style="margin-top:-48px">
-	<!-- wp:osa/catalog-grid {"cols":4,"limit":8,"instock":true} /-->
+	<!-- wp:osa/catalog-grid {"cols":4,"limit":8,"instock":true,"exclude":[<?php echo (int) $cga_shelf_exclude; ?>]} /-->
 	<!-- wp:spacer {"height":"72px"} -->
 	<div style="height:72px" aria-hidden="true" class="wp-block-spacer"></div>
 	<!-- /wp:spacer -->
