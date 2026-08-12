@@ -12,7 +12,7 @@ gunsammo.club 未来站点的 FSE 块主题，**fork 自 osa-arsenal-theme @ mai
 ## 本地验证
 - `make verify` — rsync 当前工作树 → `~/Desktop/cga-local`（**:8093**）的 `themes/cga-arsenal`。副本非源码，别在副本里改。
 - cga-local 管理端：admin / cga2026（仅本地）。
-- 无 prod：本仓目前没有部署面，交付止于 commit + verify。
+- `make deploy` — rsync 当前工作树 → **cga-prod**（https://caligunsandammo.com）。prod 规矩：主会话、经用户确认、先 commit 再 deploy。
 
 ## Customizer（2026-08-12 接线）
 - **首页全部文案走 Customize**：外观→自定义→ **CGA · Homepage** 面板（Hero/三格 rail/分类货架/四步/服务培训/会员条+店卡）；多字段格子=一个 textarea 按行拆（kicker/title/body/note 之类，控件 label 写明顺序）。默认值=定稿文案，存在 `inc/cga-customizer.php` 的 CGA_* 常量里——**改默认文案改常量，别改 pattern 里的渲染**。
