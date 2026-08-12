@@ -86,51 +86,55 @@ function osa_seed_default_menus() {
 		'primary' => [
 			'name'  => 'Primary',
 			'items' => [
-				[ 'Shop',           '/shop/' ],
-				[ 'Models',         '/firearms/' ], // model landing index (flat walker: single item, no dropdown)
-				[ 'Archive',        '/archive/' ],
-				[ 'Journal',        '/journal/' ],
-				[ 'FFL & Shipping', '/ffl-shipping/' ],
-				[ 'Dealers',        '/dealer/' ],
+				[ 'Handguns',   '/product-category/handguns/' ],
+				[ 'Long Guns',  '/product-category/long-guns/' ],
+				[ 'Receivers',  '/product-category/receivers/' ],
+				[ 'Ammunition', '/product-category/ammunition/' ],
+				[ 'Optics',     '/product-category/optics/' ],
+				[ 'Services',   '/services/' ],
+				[ 'CA Guide',   '/ca-guide/' ],
 			],
 		],
 		'footer-shop' => [
 			'name'  => 'Footer · Shop',
 			'items' => [
-				[ 'All Inventory',     '/shop/' ],
-				[ 'Vintage',           '/shop/?era=vintage' ],
-				[ 'Rifles',            '/shop/?cat=rifles' ],
-				[ 'Handguns',          '/shop/?cat=handguns' ],
-				[ 'Recently Acquired', '/shop/?just-in=1' ],
-				[ 'Popular Models',    '/firearms/' ],
+				[ 'All Inventory', '/shop/' ],
+				[ 'Handguns',      '/product-category/handguns/' ],
+				[ 'Long Guns',     '/product-category/long-guns/' ],
+				[ 'Receivers',     '/product-category/receivers/' ],
+				[ 'Ammunition',    '/product-category/ammunition/' ],
+				[ 'Optics',        '/product-category/optics/' ],
 			],
 		],
 		'footer-services' => [
 			'name'  => 'Footer · Services',
 			'items' => [
-				[ 'Consignment',  '/consignment/' ],
-				[ 'FFL Transfer', '/services/ffl/' ],
-				[ 'Appraisal',    '/services/appraisal/' ],
-				[ 'Restoration',  '/services/restoration/' ],
+				[ 'FSC testing',        '/services/#fsc' ],
+				[ 'Incoming transfers', '/services/#transfers' ],
+				[ 'Layaway',            '/services/#layaway' ],
+				[ 'Price match',        '/services/#price-match' ],
+				[ 'Training',           '/services/#training' ],
 			],
 		],
 		'footer-account' => [
-			'name'  => 'Footer · Account',
+			'name'  => 'Footer · Support',
 			'items' => [
-				// Guarded: activation can happen before WooCommerce is installed/active.
-				[ 'Sign In',       function_exists( 'wc_get_page_permalink' ) ? ( wc_get_page_permalink( 'myaccount' ) ?: '/my-account/' ) : '/my-account/' ],
-				[ 'Dealer Apply',  '/dealer/apply/' ],
-				[ 'Order History', '/my-account/orders/' ],
-				[ 'Watch List',    '/my-account/watch-list/' ],
+				[ 'Buying in California', '/ca-guide/' ],
+				[ 'FAQ',                  '/faq/' ],
+				[ 'Shipping policy',      '/policies/#shipping' ],
+				[ 'Return policy',        '/policies/#returns' ],
+				[ 'Contact us',           '/about/#contact' ],
 			],
 		],
 		'footer-house' => [
-			'name'  => 'Footer · House',
+			'name'  => 'Footer · Company',
 			'items' => [
-				[ 'Our Story', '/about/' ],
-				[ 'Journal',   '/journal/' ],
-				[ 'Visit',     '/visit/' ],
-				[ 'Contact',   '/contact/' ],
+				[ 'About us',         '/about/' ],
+				[ 'Membership',       '/membership/' ],
+				// Guarded: activation can happen before WooCommerce is installed/active.
+				[ 'Sign In',          function_exists( 'wc_get_page_permalink' ) ? ( wc_get_page_permalink( 'myaccount' ) ?: '/my-account/' ) : '/my-account/' ],
+				[ 'Terms of service', '/policies/#terms' ],
+				[ 'Privacy policy',   '/policies/#privacy' ],
 			],
 		],
 	];
@@ -165,11 +169,13 @@ function osa_seed_default_menus() {
  */
 function osa_header_nav_fallback() {
 	$items = [
-		[ '/shop/',           'Shop' ],
-		[ '/archive/',        'Archive' ],
-		[ '/journal/',        'Journal' ],
-		[ '/ffl-shipping/',   'FFL & Shipping' ],
-		[ '/dealer/',         'Dealers' ],
+		[ '/product-category/handguns/',   'Handguns' ],
+		[ '/product-category/long-guns/',  'Long Guns' ],
+		[ '/product-category/receivers/',  'Receivers' ],
+		[ '/product-category/ammunition/', 'Ammunition' ],
+		[ '/product-category/optics/',     'Optics' ],
+		[ '/services/',                    'Services' ],
+		[ '/ca-guide/',                    'CA Guide' ],
 	];
 	echo '<nav id="osa-mobile-nav" class="osa-main-nav" aria-label="Primary">';
 	foreach ( $items as [ $href, $label ] ) {

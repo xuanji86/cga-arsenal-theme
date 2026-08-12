@@ -32,7 +32,7 @@ add_action( 'after_setup_theme', function () {
 	add_theme_support( 'wc-product-gallery-lightbox' );
 	add_theme_support( 'wc-product-gallery-slider' );
 
-	add_editor_style( 'assets/css/osa-base.css' );
+	add_editor_style( [ 'assets/css/osa-base.css', 'assets/css/cga-base.css' ] );
 } );
 
 /**
@@ -45,6 +45,14 @@ add_action( 'wp_enqueue_scripts', function () {
 		OSA_THEME_URI . '/assets/css/osa-base.css',
 		[],
 		file_exists( $css_path ) ? (string) filemtime( $css_path ) : OSA_THEME_VERSION
+	);
+	// CGA layer must load after the OSA skeleton (ground + accent overrides).
+	$cga_path = OSA_THEME_DIR . '/assets/css/cga-base.css';
+	wp_enqueue_style(
+		'cga-base',
+		OSA_THEME_URI . '/assets/css/cga-base.css',
+		[ 'osa-base' ],
+		file_exists( $cga_path ) ? (string) filemtime( $cga_path ) : OSA_THEME_VERSION
 	);
 }, 20 );
 
@@ -68,6 +76,7 @@ require_once OSA_THEME_DIR . '/inc/related.php';
 require_once OSA_THEME_DIR . '/inc/promo.php';
 require_once OSA_THEME_DIR . '/inc/sale-flash.php';
 require_once OSA_THEME_DIR . '/inc/sold-archive.php';
+require_once OSA_THEME_DIR . '/inc/cga-compliance.php';
 
 /*
  * SEO: stop advertising per-post/product comment feeds (/product/x/feed/) in

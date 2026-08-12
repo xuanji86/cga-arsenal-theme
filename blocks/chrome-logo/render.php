@@ -53,4 +53,10 @@ $wrapper   = function_exists( 'get_block_wrapper_attributes' )
 ?>
 <a href="<?php echo esc_url( home_url( '/' ) ); ?>" <?php echo $wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> aria-label="<?php echo esc_attr( $name ); ?> home">
 	<img src="<?php echo esc_url( $src ); ?>" alt="<?php echo esc_attr( $name ); ?>" class="<?php echo esc_attr( $img_class ); ?>" />
+	<?php if ( ! empty( $attributes['headerLogo'] ) ) : // CGA lockup: badge + stacked wordmark (hidden in the footer via CSS). ?>
+	<span class="cga-logo__wordmark" aria-hidden="true">
+		<span class="cga-logo__name">California<br />Guns and Ammo</span>
+		<span class="cga-logo__sub">Corona, CA · Est. 2023</span>
+	</span>
+	<?php endif; ?>
 </a>

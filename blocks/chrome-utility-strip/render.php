@@ -17,6 +17,7 @@ $msg = function_exists( 'osa_text' ) ? osa_text( 'osa_header_strip', OSA_HEADER_
 ?>
 <div class="osa-utility-strip">
 	<div class="osa-utility-strip__left">
+		<span class="osa-utility-strip__dot" aria-hidden="true"></span>
 		<span class="osa-utility-strip__msg"><?php echo esc_html( $msg ); ?></span>
 	</div>
 	<nav class="osa-utility-strip__right" aria-label="Utility">

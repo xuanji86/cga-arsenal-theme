@@ -23,9 +23,15 @@
         { "slug": "ink-3",       "color": "#2A2A2A", "name": "Ink 3" },
         { "slug": "steel-1",     "color": "#5A5A5A", "name": "Steel 1" },
         { "slug": "steel-2",     "color": "#8A8A8A", "name": "Steel 2" },
-        { "slug": "paper-edge",  "color": "#D9D9D9", "name": "Paper Edge" },
-        { "slug": "paper-tint",  "color": "#EFEFEF", "name": "Paper Tint" },
-        { "slug": "paper",       "color": "#FFFFFF", "name": "Paper" }
+        { "slug": "paper-edge",  "color": "#D8D2C6", "name": "Paper Edge" },
+        { "slug": "paper-tint",  "color": "#EDE9E0", "name": "Paper Tint" },
+        { "slug": "paper",       "color": "#FFFFFF", "name": "Paper" },
+        { "slug": "sand",        "color": "#F5F2EC", "name": "Sand" },
+        { "slug": "pine",        "color": "#1F3D2B", "name": "Pine" },
+        { "slug": "pine-2",      "color": "#2F5D40", "name": "Pine 2" },
+        { "slug": "pine-tint",   "color": "#E7EEE8", "name": "Pine Tint" },
+        { "slug": "clay",        "color": "#8A4B2A", "name": "Clay" },
+        { "slug": "clay-tint",   "color": "#F3E7DE", "name": "Clay Tint" }
       ]
     },
     "typography": {
@@ -224,7 +230,7 @@
   },
   "styles": {
     "color": {
-      "background": "var(--wp--preset--color--paper)",
+      "background": "var(--wp--preset--color--sand)",
       "text": "var(--wp--preset--color--ink)"
     },
     "typography": {
@@ -245,7 +251,7 @@
     "elements": {
       "link": {
         "color": { "text": "var(--wp--preset--color--ink)" },
-        ":hover": { "color": { "text": "var(--wp--preset--color--steel-1)" } },
+        ":hover": { "color": { "text": "var(--wp--preset--color--pine-2)" } },
         "typography": { "textDecoration": "underline" }
       },
       "h1": {
@@ -332,18 +338,10 @@
     }
   },
   "templateParts": [
-    { "name": "header",        "area": "header", "title": "Header (Retail)" },
-    { "name": "footer",        "area": "footer", "title": "Footer (Retail)" },
-    { "name": "header-dealer", "area": "header", "title": "Header (Dealer)" },
-    { "name": "footer-dealer", "area": "footer", "title": "Footer (Dealer)" }
+    { "name": "header", "area": "header", "title": "Header" },
+    { "name": "footer", "area": "footer", "title": "Footer" }
   ],
   "customTemplates": [
-    { "name": "dealer-dashboard", "title": "Dealer: Dashboard",   "postTypes": ["page"] },
-    { "name": "dealer-catalog",   "title": "Dealer: Catalog",     "postTypes": ["page"] },
-    { "name": "dealer-inventory", "title": "Dealer: Inventory",   "postTypes": ["page"] },
-    { "name": "dealer-login",     "title": "Dealer: Sign In",     "postTypes": ["page"] },
-    { "name": "dealer-apply",     "title": "Dealer: Apply",       "postTypes": ["page"] },
-    { "name": "dealer-stub",      "title": "Dealer: Stub (Phase 4)", "postTypes": ["page"] },
-    { "name": "page-login",       "title": "Page: Sign In / Register","postTypes": ["page"] }
+    { "name": "page-login", "title": "Page: Sign In / Register", "postTypes": ["page"] }
   ]
 }

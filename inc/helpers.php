@@ -125,7 +125,7 @@ function osa_placeholder( $label = 'product shot', $ar = '4-3' ) {
  */
 function osa_logo_url( $variant = 'inline-dark' ) {
 	$variant = sanitize_file_name( $variant );
-	return OSA_THEME_URI . '/assets/logos/osa-' . $variant . '.png';
+	return OSA_THEME_URI . '/assets/logos/cga-' . $variant . '.png';
 }
 
 /**
@@ -293,6 +293,13 @@ function osa_render_product_card_compact( $post_id, $ar = '5-4' ) {
 	echo '</span>';
 
 	echo '<span class="osa-card__body">';
+
+	// CGA card: manufacturer eyebrow above the name.
+	$brand = osa_product_term( 'pa_manufacturer', $post_id );
+	if ( $brand ) {
+		printf( '<span class="osa-card__brand">%s</span>', esc_html( $brand ) );
+	}
+
 	printf( '<span class="osa-card__name">%s</span>', esc_html( $name ) );
 
 	$meta_bits = array_filter( [ $caliber, $year ] );
@@ -300,8 +307,19 @@ function osa_render_product_card_compact( $post_id, $ar = '5-4' ) {
 		printf( '<span class="osa-card__meta">%s</span>', esc_html( implode( ' · ', $meta_bits ) ) );
 	}
 
+	// CGA: California compliance chips (data from pa_ca-status).
+	if ( function_exists( 'cga_status_chips_html' ) ) {
+		echo cga_status_chips_html( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- builds escaped markup.
+	}
+
 	if ( $product ) {
+		echo '<span class="osa-card__foot">';
 		printf( '<span class="osa-card__price">%s</span>', wp_kses_post( $product->get_price_html() ) );
+		$stock_line = function_exists( 'cga_card_stock_line' ) ? cga_card_stock_line( $product ) : '';
+		if ( $stock_line ) {
+			printf( '<span class="osa-card__stock">%s</span>', esc_html( $stock_line ) );
+		}
+		echo '</span>';
 	}
 
 	echo '</span>';

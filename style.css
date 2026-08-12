@@ -1,15 +1,18 @@
 /*
-Theme Name: OSA Arsenal
-Theme URI: https://oldsteelarsenal.com
-Author: Old Steel Arsenal
+Theme Name: CGA Arsenal
+Theme URI: https://gunsammo.club
+Author: Old Steel Arsenal / California Guns & Ammo
 Author URI: https://oldsteelarsenal.com
-Description: Brutalist-catalog block theme for OSA — Old Steel Arsenal. WooCommerce-ready storefront for Cold War &amp; WWII surplus and modern firearms, with parallel retail and dealer (B2B) flows. Strictly black/white/paper, museum-curatorial typography, NRA condition grading.
-Version: 0.1.0
-Requires at least: 6.6
-Tested up to: 6.9
+Description: California Guns & Ammo block theme — a recolored fork of the OSA Arsenal theme (sand ground, pine accent, California compliance layer). Brutalist catalog, museum-curatorial.
+Requires at least: 6.5
+Tested up to: 6.8
 Requires PHP: 8.1
-License: GPL v2 or later
+Version: 0.1.0
+License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: osa-arsenal
-Tags: block-theme, full-site-editing, woocommerce, e-commerce, retail, custom-colors
+Tags: block-theme, woocommerce, e-commerce
 */
+
+/* Styles live in theme.json, assets/css/osa-base.css (inherited skeleton)
+   and assets/css/cga-base.css (CGA recolor + design-system components). */

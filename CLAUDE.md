@@ -1,20 +1,20 @@
-# osa-arsenal-theme — 零售站块主题(源仓库)
+# cga-arsenal-theme — California Guns & Ammo 块主题（源仓库）
 
-> ⚠️ **先看这个:Makefile 里的 `status / deploy-dry / deploy / rollback / db-drift / clean-backups` 全部含 prod SSH(ssh oldsteel),团队角色(dev/qa/designer/reviewer)一律禁用——它们是主会话专属。**
-> 团队角色允许的只有:**`make verify`**(纯本地:rsync 当前工作树 → osa-local 副本,并提示打开 http://localhost:8090)和 **`php tests/run.php`**(纯本地测试)。
+gunsammo.club 未来站点的 FSE 块主题，**fork 自 osa-arsenal-theme @ main(22279c1)**。设计定稿在 Claude Design 画板 `c7402e0a-fa33-4e4a-8a3d-6cb1902dc263`（入口 Demo.dc.html）与 artifact demo；本主题的视觉与文案以那套定稿为准。
 
-oldsteelarsenal.com 的 FSE 块主题源仓库(远端 github.com/xuanji86/osa-arsenal-theme)。结构:`templates/`、`parts/`、`patterns/`、`styles/`(风格变体)、`blocks/`、`inc/`(PHP,如 product-meta 的 summary hook)、`woocommerce/`(WC 模板覆盖)、`theme.json`、`functions.php`。部署文档 `DEPLOY.md`。
+## 与 OSA 主题的差异（fork 要点）
+- **调色**：theme.json palette 换 CGA 色 —— ground=sand `#F5F2EC`，paper-edge/tint 变暖，新增 pine `#1F3D2B` / pine-2 / pine-tint / clay / clay-tint。组件级换色都在 `assets/css/cga-base.css`（在 osa-base.css 之后加载；内部 `--cga-*` 变量桥接 theme.json 预设）。**别改 osa-base.css 来做 CGA 视觉**——CGA 层永远写在 cga-base.css。
+- **内部 API 仍是 osa_***：函数名、text domain（osa-arsenal）、block 命名空间（osa/）与 `--osa-*` 变量全部保留，便于回收上游改动。只有面向用户的输出换成 CGA。
+- **新增**：`inc/cga-compliance.php`（`pa_ca-status` → 合规 chips；卡片/PDP 用 `[cga_status_chips]`）、patterns/cga-*.php（首页 7 段）、logo 资产 `assets/logos/cga-*.png`。
+- **删除**：dealer 全套（templates/parts/patterns + theme.json 注册）、OSA 首页 patterns（hero-catalog-first / floor-section / story-strip / three-pillar / model-index-strip / model-landing）、independence-day 促销页模板、PDP 的 condition-scale（军品品相体系）。blocks/model-* 代码保留但 OSA_MODEL_LINKS_DEFAULT 置空——CGA 暂无型号 hub。
+- **商品卡**（inc/helpers.php `osa_render_product_card_compact`）多了三样：pa_manufacturer 品牌行、合规 chips、库存行（"1 left"/"N in stock"）。
 
-## 测试与本地验证
-- `php tests/run.php` — 自带 harness,每个 tests/test-*.php 独立 PHP 进程跑(可 stub 有/无 WooCommerce),无需 WP 环境
-- `make verify` — 把**当前工作树**(含未提交改动)rsync 进 osa-local 的主题目录看真实效果。**注意它会 --delete 覆盖副本现场**:并行任务时 verify/浏览器验证要串行(QA 默认持锁)
-- osa-local 里的 `themes/osa-arsenal` 只是运行副本;在副本里手改主题 = 脏数据,会被下次 verify 覆盖。**永远从本仓改起**
+## 本地验证
+- `make verify` — rsync 当前工作树 → `~/Desktop/cga-local`（**:8093**）的 `themes/cga-arsenal`。副本非源码，别在副本里改。
+- cga-local 管理端：admin / cga2026（仅本地）。
+- 无 prod：本仓目前没有部署面，交付止于 commit + verify。
 
-## 关键 gotcha
-- 块主题的 Site Editor 自定义存 DB(`wp_template` CPT)且**覆盖主题文件**;改模板文件不生效先查 DB override(这正是 `make db-drift` 存在的原因——但那是主会话的活)
-- 卡片角标(corner tag)有堆叠逻辑(见 8459c80);promo 模块是季节性的,动 patterns 前读最近提交
-
-## 部署政策
-交付止于 commit/PR + `make verify` 本地验证报告。prod 部署/回滚/对账(repo↔prod 漂移检查)只由主会话经用户确认执行;大型主题任务开工前,主会话应先跑一次 `make status` 确认 prod 无散改。
-
-主会话部署备忘:`deploy.sh` 有交互式 `[y/N]` 确认(scripts/deploy.sh:24),非交互环境用 `printf 'y\n' | make deploy`(前提:用户已明确批准本次部署);deploy 要求干净工作树(未跟踪文件也算脏);tests/ 经 .gitattributes export-ignore 不会上 prod;每次部署自动留 predeploy 快照 + deploy-* 标签。
+## 沿用 OSA 的 gotcha
+- Site Editor 自定义存 DB（wp_template CPT）且覆盖主题文件；模板改了不生效先查 DB override。
+- 首页 patterns 是 PHP 动态的（hero 特色枪=最新有货商品、分类瓦片=实时 count）；空目录时渲染占位块。
+- 年龄门默认开启（`osa_age_gate_enabled`），截图/E2E 先设 cookie `osa_age_ok=1`。

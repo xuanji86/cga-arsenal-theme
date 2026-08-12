@@ -17,20 +17,20 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const OSA_HERO_HEADLINE_DEFAULT   = 'Honest steel. Honest wood.';
-const OSA_HERO_SUBHEAD_DEFAULT    = 'A vetted catalog of Cold War and WWII surplus firearms — graded by hand, photographed honestly, available in store or shipped to your FFL. Modern firearms available to order.';
-const OSA_HEADER_STRIP_DEFAULT    = 'FFL Transfer Available · 50 States · No Paperwork on You.';
-const OSA_HEADER_STRIP_LINKS_DEFAULT = "Shipping & FFL | /ffl-shipping/\nTrack an Order | /order-tracking/\nDealers | /dealer/ | external";
-const OSA_FOOTER_TAGLINE_DEFAULT  = 'A curated arsenal of consigned and acquired firearms.';
-const OSA_FOOTER_LEGAL_DEFAULT    = "Old Steel Arsenal Inc · Federally licensed dealer.\nFFL 5-75-085-01-9B-42763\n3209 Premier Drive STE117, Plano, TX 75075";
-const OSA_FOOTER_HEADINGS_DEFAULT = "Shop\nServices\nAccount\nAbout Us";
-const OSA_FOOTER_COPYRIGHT_DEFAULT  = '© MMXXVI Old Steel Arsenal Inc. All rights reserved.';
-const OSA_FOOTER_COMPLIANCE_DEFAULT = 'Must be 18+ / 21+ to purchase · Local laws apply · No shipping to prohibited jurisdictions';
+const OSA_HERO_HEADLINE_DEFAULT   = 'Stocked for California.';
+const OSA_HERO_SUBHEAD_DEFAULT    = 'Roster-approved handguns, compliant rifles, and ammunition you can actually take home — on the shelf at 401 S Lincoln Ave. We run the DROS, proctor the FSC, and track the ten-day wait, so nothing surprises you at the counter.';
+const OSA_HEADER_STRIP_DEFAULT    = 'Open today 11am–7pm · 401 S Lincoln Ave, Suite L · Corona, CA 92882';
+const OSA_HEADER_STRIP_LINKS_DEFAULT = "(951) 547-4790 | tel:+19515474790\nBuying in California | /ca-guide/\nServices | /services/\nMembers | /membership/";
+const OSA_FOOTER_TAGLINE_DEFAULT  = "Corona's local gun store — firearms, ammunition, training & FFL transfers.";
+const OSA_FOOTER_LEGAL_DEFAULT    = "California Guns and Ammo\n401 S Lincoln Ave, Suite L, Corona, CA 92882\n(951) 547-4790 · info@gunsammo.club\nFFL 9-33-XXX-XX-XX-XXXXX · CA DOJ certified dealer\nCA COE / ammunition vendor licence no. TBD";
+const OSA_FOOTER_HEADINGS_DEFAULT = "Shop\nServices\nSupport\nCompany";
+const OSA_FOOTER_COPYRIGHT_DEFAULT  = '© 2026 California Guns and Ammo. All rights reserved.';
+const OSA_FOOTER_COMPLIANCE_DEFAULT = 'Must be 21+ to purchase a handgun · 18+ for long guns where permitted · All transfers through a licensed FFL';
 
-const OSA_MARQUEE_DEFAULT_ITEMS   = "Drop · Thursday 09:00 CT\nConsignment open year-round\nFFL transfer · 50 states";
+const OSA_MARQUEE_DEFAULT_ITEMS   = "DROS $37.19 · ten-day wait\nFSC testing $26 · walk-in\nIncoming FFL transfers $75 · DROS included";
 
-const OSA_FLOOR_HEADING_DEFAULT   = 'Items in stock';
-const OSA_FLOOR_CTA_DEFAULT       = 'View items';
+const OSA_FLOOR_HEADING_DEFAULT   = 'On the shelf this week';
+const OSA_FLOOR_CTA_DEFAULT       = 'View all';
 
 const OSA_CARD_BADGE_MODE_DEFAULT = 'auto';           // auto | on | off
 const OSA_CARD_BADGE_TEXT_DEFAULT = 'Fourth of July'; // historical promo copy
@@ -51,7 +51,9 @@ const OSA_CARD_BADGE_TEXT_DEFAULT = 'Fourth of July'; // historical promo copy
 // 4 while the cards' Media-Library images stay owner-managed. Landing surfaces
 // (homepage strip, shop chips, landing tails) ignore the slugs — only the
 // hub block instance opts in with linkTo=filter (spec §B, B-plan).
-const OSA_MODEL_LINKS_DEFAULT = "West German SIG P226 & P228|/firearms/west-german-sig-p226-p228/||p226,p228\nMosin-Nagant Rifles|/firearms/mosin-nagant/||m39,m91-30,m28-30,m28-30-2,m91,m91-59,m44,type-53,1891-30,1891-59\nSKS Rifles|/firearms/sks/||sks,type-56,type-26,sks-45,59-66\nK98k Mauser Rifles|/firearms/k98k-mauser/||98,k98k,g33-40,k98,mod-98\nLuger P08 Pistols|/firearms/luger-p08/||p08,luger\nM1 Garand Rifles|/firearms/m1-garand/||m1\nM1903 Springfield Rifles|/firearms/m1903-springfield/||03-a3,1903,model-1903\nArisaka Rifles|/firearms/arisaka/||type-38,type-99,type-2,training-rifle\nCZ 75 & 85 Pistols|/firearms/cz-75-85/||85,75";
+// CGA has no shop-by-model hub yet (OSA's /firearms/ layer). Empty default =
+// model-links / model-page-link blocks render nothing until rows are added.
+const OSA_MODEL_LINKS_DEFAULT = '';
 
 const OSA_DEALER_DROP_LABEL_DEFAULT   = 'Drop · This Thursday 09:00 CT';
 const OSA_DEALER_DROP_HEADING_DEFAULT = 'Next Drop';
@@ -63,9 +65,9 @@ const OSA_STORY_QUOTE_DEFAULT       = "Every item passes a bench inspection befo
 const OSA_STORY_ATTRIBUTION_DEFAULT = '— Shaun. G';
 
 const OSA_AGE_GATE_EYEBROW_DEFAULT = 'Age Verification';
-const OSA_AGE_GATE_TITLE_DEFAULT   = 'Are you 21+ or 18+ for long guns?';
-const OSA_AGE_GATE_BODY_DEFAULT    = 'OSA sells modern handguns to buyers 21 and older, and long guns to buyers 18 and older. Federal and state law apply. By continuing, you confirm you meet the minimum age in your jurisdiction.';
-const OSA_AGE_GATE_ENTER_DEFAULT   = 'Enter Catalog';
+const OSA_AGE_GATE_TITLE_DEFAULT   = 'Are you 21 or older?';
+const OSA_AGE_GATE_BODY_DEFAULT    = 'California Guns and Ammo sells handguns to buyers 21 and older, and long guns to buyers 18 and older where permitted. Federal and California law apply. By continuing, you confirm you meet the minimum age in your jurisdiction.';
+const OSA_AGE_GATE_ENTER_DEFAULT   = 'Enter Store';
 const OSA_AGE_GATE_LEAVE_DEFAULT   = 'Leave';
 const OSA_AGE_GATE_LEAVE_URL_DEFAULT = 'https://www.google.com/';
 
