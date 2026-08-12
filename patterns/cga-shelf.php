@@ -5,35 +5,23 @@
  * Categories: osa-section
  * Inserter: yes
  *
- * Newest in-stock inventory, 8-up on the OSA catalog grid (cards carry the
- * CGA brand line, compliance chips and stock count).
+ * Newest in-stock inventory, 8-up on the OSA catalog grid. Heading/aside are
+ * Customizer-driven (CGA · Homepage → Categories & shelf; {count} = live
+ * product count). Excludes the hero's featured product so it never shows
+ * twice.
  *
  * @package OSA_Arsenal
  */
 
-$cga_shelf_count = wp_count_posts( 'product' );
-$cga_shelf_count = $cga_shelf_count ? (int) $cga_shelf_count->publish : 0;
-
-// The hero features the newest in-stock product; keep the shelf grid from
-// showing the same item twice.
-$cga_shelf_exclude = 0;
-if ( function_exists( 'wc_get_products' ) ) {
-	$cga_shelf_feat = wc_get_products( [
-		'status'       => 'publish',
-		'limit'        => 1,
-		'orderby'      => 'date',
-		'order'        => 'DESC',
-		'stock_status' => 'instock',
-	] );
-	$cga_shelf_exclude = $cga_shelf_feat ? (int) $cga_shelf_feat[0]->get_id() : 0;
-}
+$cga_shelf_feat    = function_exists( 'cga_featured_product' ) ? cga_featured_product() : null;
+$cga_shelf_exclude = $cga_shelf_feat ? (int) $cga_shelf_feat->get_id() : 0;
 ?>
 <!-- wp:html -->
 <div class="cga-page">
 	<section class="home-block">
 		<div class="cga-section">
-			<h2 class="cga-section__title">On the shelf this week</h2>
-			<p class="cga-section__aside"><a href="/shop/">Updated as the POS receives · View all <?php echo esc_html( (string) $cga_shelf_count ); ?> &rarr;</a></p>
+			<h2 class="cga-section__title"><?php echo esc_html( cga_text( 'cga_shelf_heading', CGA_SHELF_HEADING_DEFAULT ) ); ?></h2>
+			<p class="cga-section__aside"><a href="/shop/"><?php echo esc_html( cga_text( 'cga_shelf_aside', CGA_SHELF_ASIDE_DEFAULT ) ); ?></a></p>
 		</div>
 	</section>
 </div>

@@ -6,7 +6,8 @@
  * Inserter: yes
  *
  * "Shop the counter" — the five top-level categories with live product
- * counts and their category images.
+ * counts and their category images. Heading/aside are Customizer-driven
+ * (CGA · Homepage → Categories & shelf); the tiles themselves are data.
  *
  * @package OSA_Arsenal
  */
@@ -17,8 +18,8 @@ $cga_cat_slugs = [ 'handguns', 'long-guns', 'receivers', 'ammunition', 'optics' 
 <div class="cga-page">
 	<section class="home-block">
 		<div class="cga-section">
-			<h2 class="cga-section__title">Shop the counter</h2>
-			<p class="cga-section__aside">Live inventory from the POS</p>
+			<h2 class="cga-section__title"><?php echo esc_html( cga_text( 'cga_cats_heading', CGA_CATS_HEADING_DEFAULT ) ); ?></h2>
+			<p class="cga-section__aside"><?php echo esc_html( cga_text( 'cga_cats_aside', CGA_CATS_ASIDE_DEFAULT ) ); ?></p>
 		</div>
 		<div class="cga-cats">
 			<?php

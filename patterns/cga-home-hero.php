@@ -6,43 +6,35 @@
  * Inserter: yes
  *
  * Split hero: statement + store facts left, one featured firearm right.
- * The featured card is the newest in-stock product — live data, no
- * hand-picked placeholder that goes stale.
+ * All copy is Customizer-driven (CGA · Homepage → Hero); the featured card
+ * is the newest in-stock product unless a SKU is pinned in the Customizer.
  *
  * @package OSA_Arsenal
  */
 
-$cga_count = wp_count_posts( 'product' );
-$cga_count = $cga_count ? (int) $cga_count->publish : 0;
+$cga_feat = function_exists( 'cga_featured_product' ) ? cga_featured_product() : null;
 
-$cga_feat = null;
-if ( function_exists( 'wc_get_products' ) ) {
-	$cga_feat_list = wc_get_products( [
-		'status'       => 'publish',
-		'limit'        => 1,
-		'orderby'      => 'date',
-		'order'        => 'DESC',
-		'stock_status' => 'instock',
-	] );
-	$cga_feat      = $cga_feat_list ? $cga_feat_list[0] : null;
-}
+list( $cga_cta1_label, $cga_cta1_url ) = cga_link( 'cga_hero_cta1', CGA_HERO_CTA1_DEFAULT );
+list( $cga_cta2_label, $cga_cta2_url ) = cga_link( 'cga_hero_cta2', CGA_HERO_CTA2_DEFAULT );
 ?>
 <!-- wp:html -->
 <div class="cga-page">
 	<section class="home-hero">
 		<div>
-			<p class="cga-eyebrow">Est. 2023 · Corona, California · FFL 9-33-065-01-8G-09316 · CFD# 24307</p>
-			<h1 class="cga-h1">Stocked for<br />California.</h1>
-			<p class="cga-lede">Roster-approved handguns, compliant rifles, and ammunition you can actually take home &mdash; on the shelf at 401 S Lincoln Ave. We run the DROS, proctor the FSC, and track the ten-day wait, so nothing surprises you at the counter.</p>
+			<p class="cga-eyebrow"><?php echo esc_html( cga_text( 'cga_hero_eyebrow', CGA_HERO_EYEBROW_DEFAULT ) ); ?></p>
+			<h1 class="cga-h1"><?php echo cga_multiline_html( cga_text( 'cga_hero_headline', CGA_HERO_HEADLINE_DEFAULT ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapes per line. ?></h1>
+			<p class="cga-lede"><?php echo esc_html( cga_text( 'cga_hero_lede', CGA_HERO_LEDE_DEFAULT ) ); ?></p>
 			<div class="home-hero__cta">
-				<a class="cga-btn cga-btn--pine" href="/shop/">Shop in-stock firearms</a>
-				<a class="cga-btn cga-btn--ghost" href="/ca-guide/">How to buy in California &rarr;</a>
+				<a class="cga-btn cga-btn--pine" href="<?php echo esc_url( $cga_cta1_url ); ?>"><?php echo esc_html( $cga_cta1_label ); ?></a>
+				<a class="cga-btn cga-btn--ghost" href="<?php echo esc_url( $cga_cta2_url ); ?>"><?php echo esc_html( $cga_cta2_label ); ?></a>
 			</div>
 			<div class="home-hero__meta">
-				<span class="home-stat"><b><?php echo esc_html( $cga_count ?: '—' ); ?></b><span>Items on the shelf</span></span>
-				<span class="home-stat"><b>11&ndash;7</b><span>Open every day</span></span>
-				<span class="home-stat"><b>10 days</b><span>CA waiting period</span></span>
-				<span class="home-stat"><b>$26</b><span>FSC test, walk-in</span></span>
+				<?php foreach ( cga_lines( 'cga_hero_stats', CGA_HERO_STATS_DEFAULT ) as $cga_stat ) :
+					if ( '' === $cga_stat ) { continue; }
+					$cga_parts = array_map( 'trim', explode( '|', $cga_stat, 2 ) );
+					?>
+				<span class="home-stat"><b><?php echo esc_html( $cga_parts[0] ); ?></b><span><?php echo esc_html( $cga_parts[1] ?? '' ); ?></span></span>
+				<?php endforeach; ?>
 			</div>
 		</div>
 		<?php if ( $cga_feat ) : ?>

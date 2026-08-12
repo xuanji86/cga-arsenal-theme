@@ -5,24 +5,28 @@
  * Categories: osa-section
  * Inserter: yes
  *
- * The four-step California purchase sequence (reworked from OSA's
- * three-pillar-process for the CA compliance flow).
+ * The four-step California purchase sequence. Customizer-driven
+ * (CGA · Homepage → California four-step): one textarea per step,
+ * lines = title / body; numbers render from position.
  *
  * @package OSA_Arsenal
  */
+
+list( $cga_aside_label, $cga_aside_url ) = cga_link( 'cga_steps_aside', CGA_STEPS_ASIDE_DEFAULT );
 ?>
 <!-- wp:html -->
 <div class="cga-page">
 	<section class="home-block">
 		<div class="cga-section">
-			<h2 class="cga-section__title">Buying a firearm in California</h2>
-			<p class="cga-section__aside"><a href="/ca-guide/">Full guide &rarr;</a></p>
+			<h2 class="cga-section__title"><?php echo esc_html( cga_text( 'cga_steps_heading', CGA_STEPS_HEADING_DEFAULT ) ); ?></h2>
+			<p class="cga-section__aside"><a href="<?php echo esc_url( $cga_aside_url ); ?>"><?php echo esc_html( $cga_aside_label ); ?></a></p>
 		</div>
 		<div class="cga-steps">
-			<div class="cga-step"><span class="cga-step__n">01</span><h3 class="cga-step__t">Reserve online</h3><p class="cga-step__d">Pay for any in-stock firearm and it comes off the floor under your name the moment the order lands.</p></div>
-			<div class="cga-step"><span class="cga-step__n">02</span><h3 class="cga-step__t">Paperwork at the counter</h3><p class="cga-step__d">Bring your CA DL or ID, your FSC, and &mdash; for handguns &mdash; proof of residency. We submit the DROS to CA DOJ that day.</p></div>
-			<div class="cga-step"><span class="cga-step__n">03</span><h3 class="cga-step__t">Ten-day wait</h3><p class="cga-step__d">State law, not shop policy. We text you the release date the moment the DROS clears so you don&rsquo;t have to count.</p></div>
-			<div class="cga-step"><span class="cga-step__n">04</span><h3 class="cga-step__t">Pick up &amp; demo</h3><p class="cga-step__d">Come back, pass the safe-handling demonstration, and walk out. Your paperwork stays on file with us.</p></div>
+			<?php foreach ( CGA_STEP_DEFAULTS as $cga_i => $cga_default ) :
+				$cga_step = cga_lines( 'cga_step_' . ( $cga_i + 1 ), $cga_default, 2 );
+				?>
+			<div class="cga-step"><span class="cga-step__n"><?php echo esc_html( sprintf( '%02d', $cga_i + 1 ) ); ?></span><h3 class="cga-step__t"><?php echo esc_html( $cga_step[0] ); ?></h3><p class="cga-step__d"><?php echo esc_html( $cga_step[1] ); ?></p></div>
+			<?php endforeach; ?>
 		</div>
 	</section>
 </div>

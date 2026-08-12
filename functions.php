@@ -77,6 +77,7 @@ require_once OSA_THEME_DIR . '/inc/promo.php';
 require_once OSA_THEME_DIR . '/inc/sale-flash.php';
 require_once OSA_THEME_DIR . '/inc/sold-archive.php';
 require_once OSA_THEME_DIR . '/inc/cga-compliance.php';
+require_once OSA_THEME_DIR . '/inc/cga-customizer.php';
 
 /*
  * SEO: stop advertising per-post/product comment feeds (/product/x/feed/) in

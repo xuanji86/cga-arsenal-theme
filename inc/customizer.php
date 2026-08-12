@@ -73,8 +73,8 @@ const OSA_AGE_GATE_LEAVE_URL_DEFAULT = 'https://www.google.com/';
 
 add_action( 'customize_register', function ( $wp_customize ) {
 	$wp_customize->add_panel( 'osa_site', [
-		'title'       => __( 'OSA · Text & Headlines', 'osa-arsenal' ),
-		'description' => __( 'Edit the editable text strings (headlines, taglines, ticker, etc.) that appear across the site.', 'osa-arsenal' ),
+		'title'       => __( 'CGA · Site Text & Chrome', 'osa-arsenal' ),
+		'description' => __( 'Site-wide chrome and text: header, utility strip, store facts, shop cards, age gate. Homepage sections live in the CGA · Homepage panel.', 'osa-arsenal' ),
 		'priority'    => 30,
 	] );
 
@@ -229,10 +229,10 @@ add_action( 'customize_register', function ( $wp_customize ) {
 		'type'        => 'select',
 		'choices'     => [
 			'custom'  => __( 'WordPress Custom Logo', 'osa-arsenal' ),
-			'inline'  => __( 'OSA — Inline lockup', 'osa-arsenal' ),
-			'stacked' => __( 'OSA — Stacked lockup', 'osa-arsenal' ),
-			'banner'  => __( 'OSA — Banner lockup', 'osa-arsenal' ),
-			'mark'    => __( 'OSA — Mark only', 'osa-arsenal' ),
+			'inline'  => __( 'CGA — Inline lockup', 'osa-arsenal' ),
+			'stacked' => __( 'CGA — Stacked lockup', 'osa-arsenal' ),
+			'banner'  => __( 'CGA — Banner lockup', 'osa-arsenal' ),
+			'mark'    => __( 'CGA — Mark only', 'osa-arsenal' ),
 		],
 	] );
 
@@ -258,34 +258,6 @@ add_action( 'customize_register', function ( $wp_customize ) {
 		'section'     => 'osa_header_section',
 		'type'        => 'number',
 		'input_attrs' => [ 'min' => 8, 'max' => 48, 'step' => 1 ],
-	] );
-
-	// --- Hero ---
-	$wp_customize->add_section( 'osa_hero_section', [
-		'title' => __( 'Homepage Hero', 'osa-arsenal' ),
-		'panel' => 'osa_site',
-	] );
-
-	$wp_customize->add_setting( 'osa_hero_headline', [
-		'default'           => OSA_HERO_HEADLINE_DEFAULT,
-		'sanitize_callback' => 'sanitize_text_field',
-		'transport'         => 'refresh',
-	] );
-	$wp_customize->add_control( 'osa_hero_headline', [
-		'label'   => __( 'Headline', 'osa-arsenal' ),
-		'section' => 'osa_hero_section',
-		'type'    => 'text',
-	] );
-
-	$wp_customize->add_setting( 'osa_hero_subheadline', [
-		'default'           => OSA_HERO_SUBHEAD_DEFAULT,
-		'sanitize_callback' => 'sanitize_textarea_field',
-		'transport'         => 'refresh',
-	] );
-	$wp_customize->add_control( 'osa_hero_subheadline', [
-		'label'   => __( 'Sub-headline (italic serif copy on the right)', 'osa-arsenal' ),
-		'section' => 'osa_hero_section',
-		'type'    => 'textarea',
 	] );
 
 	// Footer content (tagline/legal/headings/copyright/compliance) is now edited
@@ -351,126 +323,6 @@ add_action( 'customize_register', function ( $wp_customize ) {
 		'type'        => 'text',
 	] );
 
-	// --- Marquee ---
-	$wp_customize->add_section( 'osa_marquee_section', [
-		'title' => __( 'Homepage · Marquee Ticker', 'osa-arsenal' ),
-		'panel' => 'osa_site',
-	] );
-	$wp_customize->add_setting( 'osa_marquee_items', [
-		'default'           => OSA_MARQUEE_DEFAULT_ITEMS,
-		'sanitize_callback' => 'sanitize_textarea_field',
-		'transport'         => 'refresh',
-	] );
-	$wp_customize->add_control( 'osa_marquee_items', [
-		'label'       => __( 'Ticker items (one per line)', 'osa-arsenal' ),
-		'description' => __( 'Each line becomes a phrase in the looping black band between hero and product grid.', 'osa-arsenal' ),
-		'section'     => 'osa_marquee_section',
-		'type'        => 'textarea',
-	] );
-
-	// --- The Floor ---
-	$wp_customize->add_section( 'osa_floor_section', [
-		'title' => __( 'Homepage · The Floor', 'osa-arsenal' ),
-		'panel' => 'osa_site',
-	] );
-	$wp_customize->add_setting( 'osa_floor_heading', [
-		'default'           => OSA_FLOOR_HEADING_DEFAULT,
-		'sanitize_callback' => 'sanitize_text_field',
-		'transport'         => 'refresh',
-	] );
-	$wp_customize->add_control( 'osa_floor_heading', [
-		'label'   => __( 'Section heading', 'osa-arsenal' ),
-		'section' => 'osa_floor_section',
-		'type'    => 'text',
-	] );
-	$wp_customize->add_setting( 'osa_floor_view_all_label', [
-		'default'           => OSA_FLOOR_CTA_DEFAULT,
-		'sanitize_callback' => 'sanitize_text_field',
-		'transport'         => 'refresh',
-	] );
-	$wp_customize->add_control( 'osa_floor_view_all_label', [
-		'label'       => __( '"View all" button label', 'osa-arsenal' ),
-		'description' => __( 'Use {count} where you want the live published-product count substituted.', 'osa-arsenal' ),
-		'section'     => 'osa_floor_section',
-		'type'        => 'text',
-	] );
-
-	$wp_customize->add_setting( 'osa_floor_cols', [
-		'default'           => 4,
-		'sanitize_callback' => 'absint',
-		'transport'         => 'refresh',
-	] );
-	$wp_customize->add_control( 'osa_floor_cols', [
-		'label'       => __( 'Products per row', 'osa-arsenal' ),
-		'description' => __( 'Desktop columns in the homepage grid. Tablet shows 2 and phones 1 automatically.', 'osa-arsenal' ),
-		'section'     => 'osa_floor_section',
-		'type'        => 'number',
-		'input_attrs' => [ 'min' => 2, 'max' => 6, 'step' => 1 ],
-	] );
-
-	$wp_customize->add_setting( 'osa_floor_rows', [
-		'default'           => 3,
-		'sanitize_callback' => 'absint',
-		'transport'         => 'refresh',
-	] );
-	$wp_customize->add_control( 'osa_floor_rows', [
-		'label'       => __( 'Rows', 'osa-arsenal' ),
-		'description' => __( 'How many rows of products to show. Total products = rows × products per row.', 'osa-arsenal' ),
-		'section'     => 'osa_floor_section',
-		'type'        => 'number',
-		'input_attrs' => [ 'min' => 1, 'max' => 8, 'step' => 1 ],
-	] );
-
-	// --- Armorer's Note (story strip on homepage + product detail) ---
-	$wp_customize->add_section( 'osa_story_section', [
-		'title' => __( "Homepage · Armorer's Note", 'osa-arsenal' ),
-		'panel' => 'osa_site',
-	] );
-	foreach ( [
-		'osa_story_label'       => [ __( 'Top label', 'osa-arsenal' ),   OSA_STORY_LABEL_DEFAULT,       'text' ],
-		'osa_story_quote'       => [ __( 'Quote', 'osa-arsenal' ),       OSA_STORY_QUOTE_DEFAULT,       'textarea' ],
-		'osa_story_attribution' => [ __( 'Attribution', 'osa-arsenal' ), OSA_STORY_ATTRIBUTION_DEFAULT, 'text' ],
-	] as $key => $spec ) {
-		$wp_customize->add_setting( $key, [
-			'default'           => $spec[1],
-			'sanitize_callback' => 'textarea' === $spec[2] ? 'sanitize_textarea_field' : 'sanitize_text_field',
-			'transport'         => 'refresh',
-		] );
-		$wp_customize->add_control( $key, [
-			'label'   => $spec[0],
-			'section' => 'osa_story_section',
-			'type'    => $spec[2],
-		] );
-	}
-
-	// --- Model Pages (landing links) ---
-	$wp_customize->add_section( 'osa_models_section', [
-		'title'       => __( 'OSA · Model Pages', 'osa-arsenal' ),
-		'panel'       => 'osa_site',
-		'description' => __( 'The model landing pages linked by the osa/model-links block (homepage "Shop by Model" cards, shop chips, landing cross-links). Adding a landing page here publishes it to every entry point at once.', 'osa-arsenal' ),
-	] );
-
-	// The setting key, sanitize_textarea_field callback and refresh transport are
-	// unchanged from the original textarea; the control UI is a media-picker
-	// repeater (OSA_Model_Links_Control) that serializes rows back to the newline
-	// `Label|URL|ImageURL|FilterSlugs` string. Trailing empty fields are dropped,
-	// so slug-less rows stay byte-identical to the legacy `Label|URL` format. The
-	// default (OSA_MODEL_LINKS_DEFAULT) now carries the 4th filter-slug field.
-	$wp_customize->add_setting( 'osa_model_links', [
-		'default'           => OSA_MODEL_LINKS_DEFAULT,
-		'sanitize_callback' => 'sanitize_textarea_field',
-		'transport'         => 'refresh',
-	] );
-	// Required here (not at file load) because WP_Customize_Control is only
-	// defined inside the Customizer bootstrap.
-	require_once OSA_THEME_DIR . '/inc/class-osa-model-links-control.php';
-	$wp_customize->add_control( new OSA_Model_Links_Control( $wp_customize, 'osa_model_links', [
-		'label'       => __( 'Model links', 'osa-arsenal' ),
-		'description' => __( 'The model landing pages linked across the site (homepage “Shop by Model” cards, shop chips, landing cross-links). Add, reorder, or remove rows, and pick a card image from the Media Library — no need to type image URLs. Clear every row to hide the block everywhere.', 'osa-arsenal' ),
-		'section'     => 'osa_models_section',
-		'settings'    => 'osa_model_links',
-	] ) );
-
 	// --- Age Gate ---
 	$wp_customize->add_section( 'osa_age_gate_section', [
 		'title'       => __( 'Age Gate', 'osa-arsenal' ),
@@ -510,28 +362,6 @@ add_action( 'customize_register', function ( $wp_customize ) {
 		] );
 	}
 
-	// --- Dealer Dashboard drop card ---
-	$wp_customize->add_section( 'osa_dealer_drop_section', [
-		'title' => __( 'Dealer Dashboard · Drop Card', 'osa-arsenal' ),
-		'panel' => 'osa_site',
-	] );
-	foreach ( [
-		'osa_dealer_drop_label'   => [ __( 'Top label', 'osa-arsenal' ), OSA_DEALER_DROP_LABEL_DEFAULT,   'text' ],
-		'osa_dealer_drop_heading' => [ __( 'Heading', 'osa-arsenal' ),   OSA_DEALER_DROP_HEADING_DEFAULT, 'text' ],
-		'osa_dealer_drop_body'    => [ __( 'Body copy', 'osa-arsenal' ), OSA_DEALER_DROP_BODY_DEFAULT,    'textarea' ],
-		'osa_dealer_drop_cta'     => [ __( 'Button', 'osa-arsenal' ),    OSA_DEALER_DROP_CTA_DEFAULT,     'text' ],
-	] as $key => $spec ) {
-		$wp_customize->add_setting( $key, [
-			'default'           => $spec[1],
-			'sanitize_callback' => 'textarea' === $spec[2] ? 'sanitize_textarea_field' : 'sanitize_text_field',
-			'transport'         => 'refresh',
-		] );
-		$wp_customize->add_control( $key, [
-			'label'   => $spec[0],
-			'section' => 'osa_dealer_drop_section',
-			'type'    => $spec[2],
-		] );
-	}
 } );
 
 /**
@@ -946,14 +776,23 @@ add_action( 'admin_menu', function () {
  * instantly in the preview (no full reload). Runs after the settings register.
  */
 add_action( 'customize_register', function ( $wp_customize ) {
+	// Exactly the ids bound in assets/js/osa-customize-preview.js — a flipped
+	// setting the JS doesn't handle would preview as a silent no-op.
 	$live = [
-		'osa_hero_headline',
-		'osa_hero_subheadline',
 		'osa_header_strip',
-		'osa_floor_heading',
-		'osa_story_label',
-		'osa_story_quote',
-		'osa_story_attribution',
+		'cga_hero_eyebrow',
+		'cga_hero_headline',
+		'cga_hero_lede',
+		'cga_rail_heading',
+		'cga_cats_heading',
+		'cga_steps_heading',
+		'cga_svc_heading',
+		'cga_train_heading',
+		'cga_store_heading',
+		'cga_band_eyebrow',
+		'cga_band_title',
+		'cga_band_body',
+		'cga_store_blurb',
 	];
 	foreach ( $live as $id ) {
 		$setting = $wp_customize->get_setting( $id );
