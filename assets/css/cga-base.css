@@ -480,7 +480,10 @@ body {
 /* ===== Form fields (About contact form) ===== */
 .fld { display: flex; flex-direction: column; gap: 5px; }
 .fld label { font-family: var(--cga-f-mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--cga-steel-1); }
-.fld input, .fld select, .fld textarea { border: 1px solid var(--cga-line); background: var(--cga-paper); padding: 10px 11px; font-family: var(--cga-f-sans); font-size: 14px; color: var(--cga-ink); outline: none; resize: vertical; }
+/* width/max-width: a <select> keeps its longest option as intrinsic MIN
+   width and will widen its grid column past the viewport on phones. */
+.fld input, .fld select, .fld textarea { width: 100%; max-width: 100%; border: 1px solid var(--cga-line); background: var(--cga-paper); padding: 10px 11px; font-family: var(--cga-f-sans); font-size: 14px; color: var(--cga-ink); outline: none; resize: vertical; }
+.a-cols > * { min-width: 0; }
 .fld input:focus, .fld select:focus, .fld textarea:focus { border-color: var(--cga-pine); }
 
 /* ===== FAQ ===== */
@@ -522,6 +525,25 @@ body {
 .p-sec li { margin: 0 0 6px; }
 .p-flag { display: inline-block; font-family: var(--cga-f-mono); font-size: 9px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--cga-clay); background: var(--cga-clay-tint); color: var(--cga-clay); margin-left: 8px; vertical-align: middle; }
 
+/* ===== Mobile refinements (2026-08-12 audit at true 375px) ===== */
+
+/* The header lockup must never inherit the theme's link underline. */
+.osa-chrome-logo,
+.osa-chrome-logo * { text-decoration: none !important; }
+
+/* Long tokens (the store email) must never widen their card. */
+.cga-store__v { overflow-wrap: anywhere; }
+
+/* osa-growth footer capture: the widget gives its form `flex: 1 1 360px` —
+   fine in the desktop ROW band (basis = width), but the widget's own mobile
+   breakpoint flips the band to a COLUMN, where that 360px basis becomes
+   dead HEIGHT under the button. Shared plugin stays byte-identical;
+   neutralize theme-side. Stray <br>s between its hidden inputs also die. */
+@media (max-width: 900px) {
+	.osa-foot-signup__form { flex-basis: auto !important; }
+}
+.osa-foot-signup__form br { display: none; }
+
 /* ===== Responsive ===== */
 @media (max-width: 1180px) {
 	.cga-cats { grid-template-columns: repeat(3, minmax(0,1fr)); }
@@ -531,12 +553,66 @@ body {
 	.cga-rail { grid-template-columns: 1fr; }
 	.cga-rail__cell { border-right: 0; border-bottom: 1px solid var(--cga-line); }
 	.cga-store { grid-template-columns: 1fr; }
+	/* Stacked store card: the map's left rule becomes a top rule. */
+	.cga-store__map { border-left: 0; border-top: 1px solid var(--cga-line); }
 	.cga-h1 { font-size: 44px; }
 	.home-hero, .g-hero, .s-hero, .a-hero, .m-hero__in { grid-template-columns: 1fr; gap: 36px; }
+	/* Big display type inside grid children must never widen the page. */
+	.home-hero > *, .g-hero > *, .s-hero > *, .a-hero > *, .m-hero__in > * { min-width: 0; }
 	.home-train, .s-two, .a-cols, .m-perks, .m-tiers, .a-why { grid-template-columns: 1fr; }
 	.s-cell, .a-side, .m-perk { border-right: 0; border-bottom: 1px solid var(--cga-line); }
 	.a-cell { border-right: 0; }
 	.g-cols, .f-cols, .p-cols { grid-template-columns: 1fr; gap: 26px; }
 	.g-toc, .f-toc, .p-toc { position: static; }
 	.m-hero h1 { font-size: 42px; }
+}
+
+@media (max-width: 640px) {
+	/* Utility strip: one centered message; the links repeat the nav, drop them. */
+	.osa-utility-strip__right { display: none; }
+	.osa-utility-strip { text-align: center; }
+
+	/* Header: badge-only lockup, like the comp's mobile screens. */
+	.cga-logo__wordmark { display: none; }
+
+	/* Display type. The attribute selectors scale the PAGES' inline-styled
+	   h1s (52/56/60px), same mechanism osa-base uses for 64/54/48/44px. */
+	.cga-h1 { font-size: 38px !important; overflow-wrap: break-word; }
+	.m-hero h1 { font-size: 36px; }
+	main [style*="font-size:60px"] { font-size: 38px !important; line-height: 1.02 !important; }
+	main [style*="font-size:56px"] { font-size: 36px !important; line-height: 1.05 !important; }
+	main [style*="font-size:52px"] { font-size: 34px !important; line-height: 1.05 !important; }
+
+	/* Buttons: tighter so the hero pair stays one line each. */
+	.cga-btn { padding: 12px 15px; font-size: 12px; letter-spacing: 0.12em; }
+
+	/* Category tiles: two-up; the odd fifth tile goes full width. */
+	.cga-cats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+	.cga-cat:last-child { grid-column: 1 / -1; }
+
+	/* These read as a single column on phones. */
+	.cga-steps, .cga-svc, .cga-store__rows { grid-template-columns: 1fr; }
+
+	/* Services rate card: name + price on one row, note full-width below —
+	   the desktop three-column row is unreadable at phone widths. */
+	.rate__hd { grid-template-columns: 1fr auto; }
+	.rate__hd span:nth-child(3) { display: none; }
+	.rate__r { grid-template-columns: 1fr auto; gap: 4px 18px; }
+	.rate__d { grid-column: 1 / -1; }
+
+	.g-fact b { font-size: 16px; }
+}
+
+/* Product grids: two-up on phones (the comp's mobile spec). osa-base forces
+   1fr at ≤600 with !important — this file loads later, so same-weight rules
+   here win. Card type compacts to fit the ~170px cells. */
+@media (max-width: 600px) {
+	.osa-catalog-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+	.osa-shop-main .wp-block-post-template.is-layout-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+	.osa-card__body { padding: 9px 10px 11px; }
+	.osa-card__name { font-size: 11.5px; min-height: 0; }
+	.osa-card__brand, .osa-card__meta { font-size: 9px; }
+	.osa-card__price { font-size: 12px; }
+	.osa-card__stock { font-size: 9px; letter-spacing: 0.1em; }
+	.osa-card .cga-tag { height: 17px; padding: 0 5px; font-size: 8px; letter-spacing: 0.08em; }
 }
