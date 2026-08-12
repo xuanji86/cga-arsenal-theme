@@ -31,7 +31,9 @@ const CGA_FACT_DEFAULTS = [
 ];
 
 const CGA_FOOTER_TOP_DEFAULT   = "Corona's local gun store — firearms, ammunition, training & FFL transfers.\nCalifornia Guns and Ammo";
-const CGA_FOOTER_EXTRA_DEFAULT = 'CA COE / ammunition vendor licence no. TBD';
+// Empty until the owner supplies the COE / ammo vendor licence number —
+// the Customizer field (Store Facts) is still there to fill in later.
+const CGA_FOOTER_EXTRA_DEFAULT = '';
 
 /**
  * Keyless Google Maps embed for the store address — works with no account.
