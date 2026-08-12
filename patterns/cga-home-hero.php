@@ -7,39 +7,38 @@
  *
  * Split hero: statement + store facts left, one featured firearm right.
  * All copy is Customizer-driven (CGA · Homepage → Hero); the featured card
- * is the newest in-stock product unless a SKU is pinned in the Customizer.
+ * is the product picked in the Customizer dropdown (or the newest in-stock
+ * product on "Automatic").
  *
  * @package OSA_Arsenal
  */
 
 $cga_feat = function_exists( 'cga_featured_product' ) ? cga_featured_product() : null;
 
-list( $cga_cta1_label, $cga_cta1_url ) = cga_link( 'cga_hero_cta1', CGA_HERO_CTA1_DEFAULT );
-list( $cga_cta2_label, $cga_cta2_url ) = cga_link( 'cga_hero_cta2', CGA_HERO_CTA2_DEFAULT );
+$cga_d = CGA_HERO_DEFAULTS;
 ?>
 <!-- wp:html -->
 <div class="cga-page">
 	<section class="home-hero">
 		<div>
-			<p class="cga-eyebrow"><?php echo esc_html( cga_text( 'cga_hero_eyebrow', CGA_HERO_EYEBROW_DEFAULT ) ); ?></p>
-			<h1 class="cga-h1"><?php echo cga_multiline_html( cga_text( 'cga_hero_headline', CGA_HERO_HEADLINE_DEFAULT ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapes per line. ?></h1>
-			<p class="cga-lede"><?php echo esc_html( cga_text( 'cga_hero_lede', CGA_HERO_LEDE_DEFAULT ) ); ?></p>
+			<p class="cga-eyebrow"><?php echo esc_html( cga_text( 'cga_hero_eyebrow', $cga_d['cga_hero_eyebrow'] ) ); ?></p>
+			<h1 class="cga-h1"><?php echo cga_multiline_html( cga_text( 'cga_hero_headline', $cga_d['cga_hero_headline'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapes per line. ?></h1>
+			<p class="cga-lede"><?php echo esc_html( cga_text( 'cga_hero_lede', $cga_d['cga_hero_lede'] ) ); ?></p>
 			<div class="home-hero__cta">
-				<a class="cga-btn cga-btn--pine" href="<?php echo esc_url( $cga_cta1_url ); ?>"><?php echo esc_html( $cga_cta1_label ); ?></a>
-				<a class="cga-btn cga-btn--ghost" href="<?php echo esc_url( $cga_cta2_url ); ?>"><?php echo esc_html( $cga_cta2_label ); ?></a>
+				<a class="cga-btn cga-btn--pine" href="<?php echo esc_url( cga_text( 'cga_hero_cta1_url', $cga_d['cga_hero_cta1_url'] ) ); ?>"><?php echo esc_html( cga_text( 'cga_hero_cta1_label', $cga_d['cga_hero_cta1_label'] ) ); ?></a>
+				<a class="cga-btn cga-btn--ghost" href="<?php echo esc_url( cga_text( 'cga_hero_cta2_url', $cga_d['cga_hero_cta2_url'] ) ); ?>"><?php echo esc_html( cga_text( 'cga_hero_cta2_label', $cga_d['cga_hero_cta2_label'] ) ); ?></a>
 			</div>
 			<div class="home-hero__meta">
-				<?php foreach ( cga_lines( 'cga_hero_stats', CGA_HERO_STATS_DEFAULT ) as $cga_stat ) :
-					if ( '' === $cga_stat ) { continue; }
-					$cga_parts = array_map( 'trim', explode( '|', $cga_stat, 2 ) );
+				<?php foreach ( CGA_HERO_STATS as $cga_i => [ $cga_dv, $cga_dl ] ) :
+					$cga_n = $cga_i + 1;
 					?>
-				<span class="home-stat"><b><?php echo esc_html( $cga_parts[0] ); ?></b><span><?php echo esc_html( $cga_parts[1] ?? '' ); ?></span></span>
+				<span class="home-stat"><b><?php echo esc_html( cga_text( "cga_hero_stat{$cga_n}_value", $cga_dv ) ); ?></b><span><?php echo esc_html( cga_text( "cga_hero_stat{$cga_n}_label", $cga_dl ) ); ?></span></span>
 				<?php endforeach; ?>
 			</div>
 		</div>
 		<?php if ( $cga_feat ) : ?>
 		<div class="home-feat">
-			<span class="home-feat__tag">Featured · New arrival</span>
+			<span class="home-feat__tag"><?php echo esc_html( cga_text( 'cga_hero_feat_tag', $cga_d['cga_hero_feat_tag'] ) ); ?></span>
 			<div class="home-feat__media">
 				<?php echo get_the_post_thumbnail( $cga_feat->get_id(), 'large', [ 'alt' => esc_attr( $cga_feat->get_name() ), 'style' => 'max-width:100%;max-height:100%;object-fit:contain;' ] ); ?>
 			</div>
@@ -57,7 +56,7 @@ list( $cga_cta2_label, $cga_cta2_url ) = cga_link( 'cga_hero_cta2', CGA_HERO_CTA
 		</div>
 		<?php else : ?>
 		<div class="home-feat">
-			<span class="home-feat__tag">Featured · New arrival</span>
+			<span class="home-feat__tag"><?php echo esc_html( cga_text( 'cga_hero_feat_tag', $cga_d['cga_hero_feat_tag'] ) ); ?></span>
 			<div class="home-feat__media cga-ph">Featured firearm<br />appears when inventory syncs</div>
 		</div>
 		<?php endif; ?>
