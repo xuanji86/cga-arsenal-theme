@@ -27,7 +27,7 @@ const OSA_FOOTER_HEADINGS_DEFAULT = "Shop\nServices\nSupport\nCompany";
 const OSA_FOOTER_COPYRIGHT_DEFAULT  = '© 2026 California Guns and Ammo. All rights reserved.';
 const OSA_FOOTER_COMPLIANCE_DEFAULT = 'Must be 21+ to purchase a handgun · 18+ for long guns where permitted · All transfers through a licensed FFL';
 
-const OSA_MARQUEE_DEFAULT_ITEMS   = "DROS $37.19 · ten-day wait\nFSC testing $26 · walk-in\nIncoming FFL transfers $75 · DROS included";
+const OSA_MARQUEE_DEFAULT_ITEMS   = "DROS $43 · ten-day wait\nFSC testing $26 · walk-in\nIncoming FFL transfers $70 + DROS\nWe buy guns · request an offer";
 
 const OSA_FLOOR_HEADING_DEFAULT   = 'On the shelf this week';
 const OSA_FLOOR_CTA_DEFAULT       = 'View all';

@@ -68,9 +68,9 @@ const CGA_RAIL_HEADING_DEFAULT = 'How your order gets to you';
 const CGA_RAIL_ASIDE_DEFAULT   = 'Chosen at checkout';
 /** small label / title / body / fee note. */
 const CGA_RAIL_CELLS = [
-	[ '01 / California buyers', 'Pick up in Corona', "Buy online, finish at the counter. Bring your CA driver's license or ID and your Firearm Safety Certificate; we submit the DROS the same day and the state's ten-day wait starts from that submission.", 'DROS $37.19 · dealer fee $ TBD · non-refundable' ],
+	[ '01 / California buyers', 'Pick up in Corona', "Buy online, finish at the counter. Bring your CA driver's license or ID and your Firearm Safety Certificate; we submit the DROS the same day and the state's ten-day wait starts from that submission.", 'DROS $43 · non-refundable once submitted' ],
 	[ '02 / Out-of-state buyers', 'Ship to your FFL', 'Pick your local dealer at checkout and we verify their license against the ATF listing before the firearm leaves the building. Tracking goes to you and to them; the transfer finishes on their counter.', 'Flat $35 · Ships in 1–2 business days' ],
-	[ '03 / In-store services', 'Ammo background check & FFL transfer', 'Every ammunition sale includes the CA DOJ eligibility check, run face-to-face at the counter. Bought a firearm elsewhere? We accept incoming FFL transfers — we handle the DROS and hold it through the ten-day wait.', 'Ammo check $1 · FFL transfer $75, DROS included' ],
+	[ '03 / In-store services', 'Ammo background check & FFL transfer', 'Every ammunition sale includes the CA DOJ eligibility check, run face-to-face at the counter. Bought a firearm elsewhere? We accept incoming FFL transfers — we handle the DROS and hold it through the ten-day wait.', 'Ammo check $5 · FFL transfer $70 + DROS' ],
 ];
 
 const CGA_CATS_HEADING_DEFAULT  = 'Shop the counter';
@@ -95,7 +95,7 @@ const CGA_SVC_ASIDE_URL_DEFAULT   = '/services/';
 /** price tag / title / body. */
 const CGA_SVCS = [
 	[ '$26 · Walk-in', 'FSC test', 'Two attempts included, $1 for the laminate. Fail the first and you retake after 24 hours — no new fee.' ],
-	[ '$75 · DROS included', 'Incoming transfers', 'Bought elsewhere online? Send the seller our FFL. Once tracking shows delivered, come in for the background check.' ],
+	[ '$70 + DROS', 'Incoming transfers', 'Bought elsewhere online? Send the seller our FFL. Once tracking shows delivered, come in for the background check.' ],
 	[ '20% down', 'Layaway', 'Firearms only. Twenty percent holds it; the balance is due in full before the DROS is submitted.' ],
 	[ 'Local shops', 'Price match', "Show us a local shop's advertised price on the same item in stock and we'll match it at the counter." ],
 ];
