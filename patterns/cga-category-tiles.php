@@ -30,6 +30,11 @@ $cga_cat_slugs = [ 'handguns', 'long-guns', 'receivers', 'ammunition', 'optics' 
 				}
 				$cga_thumb_id  = (int) get_term_meta( $cga_term->term_id, 'thumbnail_id', true );
 				$cga_thumb_url = $cga_thumb_id ? wp_get_attachment_image_url( $cga_thumb_id, 'medium' ) : '';
+				// Umbrella tiles: POS pushes products into child categories (Pistol under
+				// Handguns…). get_term_by() suppresses the WC count filter, so read WC's
+				// children-inclusive count meta; the raw term count only sees direct products.
+				$cga_wc_count  = get_term_meta( $cga_term->term_id, 'product_count_product_cat', true );
+				$cga_count     = '' === $cga_wc_count ? (int) $cga_term->count : (int) $cga_wc_count;
 				?>
 			<a class="cga-cat" href="<?php echo esc_url( get_term_link( $cga_term ) ); ?>">
 				<div class="cga-cat__media<?php echo $cga_thumb_url ? '' : ' cga-ph'; ?>">
@@ -39,7 +44,7 @@ $cga_cat_slugs = [ 'handguns', 'long-guns', 'receivers', 'ammunition', 'optics' 
 					<?php echo esc_html( strtolower( $cga_term->name ) ); ?>
 					<?php endif; ?>
 				</div>
-				<div class="cga-cat__label"><span><?php echo esc_html( $cga_term->name ); ?></span><span><?php echo esc_html( (string) $cga_term->count ); ?></span></div>
+				<div class="cga-cat__label"><span><?php echo esc_html( $cga_term->name ); ?></span><span><?php echo esc_html( (string) $cga_count ); ?></span></div>
 			</a>
 			<?php endforeach; ?>
 		</div>
