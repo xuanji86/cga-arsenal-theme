@@ -335,7 +335,7 @@ body {
 .home-hero__meta { display: flex; gap: 34px; flex-wrap: wrap; margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--cga-line); }
 .home-stat { display: flex; flex-direction: column; gap: 5px; }
 .home-stat b { font-family: var(--cga-f-mono); font-size: 16px; font-weight: 600; line-height: 1; }
-.home-stat span { font-family: var(--cga-f-mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--cga-steel-1); }
+.home-stat span { font-family: var(--cga-f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--cga-steel-1); }
 .home-feat { position: relative; border: 1px solid var(--cga-ink); background: var(--cga-paper); }
 .home-feat__tag { position: absolute; top: 0; left: 0; padding: 6px 11px; background: var(--cga-ink); color: var(--cga-paper); font-family: var(--cga-f-mono); font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; z-index: 2; }
 .home-feat__media { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; padding: 30px 26px; border-bottom: 1px solid var(--cga-line); }
