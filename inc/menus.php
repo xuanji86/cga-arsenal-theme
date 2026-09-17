@@ -86,8 +86,8 @@ function osa_seed_default_menus() {
 		'primary' => [
 			'name'  => 'Primary',
 			'items' => [
-				[ 'Handguns',   '/product-category/handguns/' ],
-				[ 'Long Guns',  '/product-category/long-guns/' ],
+				[ 'Pistols',    '/product-category/pistol/' ],
+				[ 'Rifles',     '/product-category/rifle/' ],
 				[ 'Receivers',  '/product-category/receivers/' ],
 				[ 'Ammunition', '/product-category/ammunition/' ],
 				[ 'Optics',     '/product-category/optics/' ],
@@ -99,8 +99,8 @@ function osa_seed_default_menus() {
 			'name'  => 'Footer · Shop',
 			'items' => [
 				[ 'All Inventory', '/shop/' ],
-				[ 'Handguns',      '/product-category/handguns/' ],
-				[ 'Long Guns',     '/product-category/long-guns/' ],
+				[ 'Pistols',       '/product-category/pistol/' ],
+				[ 'Rifles',        '/product-category/rifle/' ],
 				[ 'Receivers',     '/product-category/receivers/' ],
 				[ 'Ammunition',    '/product-category/ammunition/' ],
 				[ 'Optics',        '/product-category/optics/' ],
@@ -169,8 +169,8 @@ function osa_seed_default_menus() {
  */
 function osa_header_nav_fallback() {
 	$items = [
-		[ '/product-category/handguns/',   'Handguns' ],
-		[ '/product-category/long-guns/',  'Long Guns' ],
+		[ '/product-category/pistol/',     'Pistols' ],
+		[ '/product-category/rifle/',      'Rifles' ],
 		[ '/product-category/receivers/',  'Receivers' ],
 		[ '/product-category/ammunition/', 'Ammunition' ],
 		[ '/product-category/optics/',     'Optics' ],
@@ -220,3 +220,19 @@ add_action( 'wp_enqueue_scripts', function () {
 		true
 	);
 }, 25 );
+
+/**
+ * Retired umbrella categories (2026-09-16): /product-category/handguns/ and
+ * /long-guns/ 301 to the POS leaf that replaced them, so bookmarks and indexed
+ * URLs land on the right shelf instead of a 404.
+ */
+add_action( 'template_redirect', function () {
+	if ( ! is_404() ) {
+		return;
+	}
+	$path = (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH );
+	if ( preg_match( '#^/product-category/(handguns|long-guns)(/|$)#', $path, $m ) ) {
+		wp_safe_redirect( home_url( '/product-category/' . ( 'handguns' === $m[1] ? 'pistol' : 'rifle' ) . '/' ), 301 );
+		exit;
+	}
+} );

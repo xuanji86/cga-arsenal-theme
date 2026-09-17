@@ -287,7 +287,10 @@ add_action( 'customize_controls_enqueue_scripts', function () {
 	// WC's admin stylesheet bundle isn't registered on customize.php, so pull
 	// the selectWoo skin straight from the plugin.
 	wp_enqueue_style( 'cga-select2', WC()->plugin_url() . '/assets/css/select2.css', [], defined( 'WC_VERSION' ) ? WC_VERSION : null );
-	wp_add_inline_style( 'cga-select2', '.customize-control .select2-container{width:100%!important}' );
+	// The results dropdown is appended to <body> at z-index 1051, underneath the
+	// customizer overlay (.wp-full-overlay, 500000): it opened invisibly, so a
+	// click looked dead. Lift it above the overlay.
+	wp_add_inline_style( 'cga-select2', '.customize-control .select2-container{width:100%!important}.select2-container--open .select2-dropdown{z-index:500001}' );
 	// Customizer controls embed just-in-time (on section expand, WP 4.7+), so a
 	// document.ready init would miss them. Re-trigger WC's enhancer when the
 	// control lands in the DOM and whenever its section opens — the init skips

@@ -12,7 +12,9 @@
  * @package OSA_Arsenal
  */
 
-$cga_cat_slugs = [ 'handguns', 'long-guns', 'receivers', 'ammunition', 'optics' ];
+// Guns are filed under the POS Item Group leaf (Pistol, Rifle); the Handguns /
+// Long Guns umbrellas were retired 2026-09-16.
+$cga_cat_slugs = [ 'pistol', 'rifle', 'receivers', 'ammunition', 'optics' ];
 ?>
 <!-- wp:html -->
 <div class="cga-page">
@@ -30,8 +32,8 @@ $cga_cat_slugs = [ 'handguns', 'long-guns', 'receivers', 'ammunition', 'optics' 
 				}
 				$cga_thumb_id  = (int) get_term_meta( $cga_term->term_id, 'thumbnail_id', true );
 				$cga_thumb_url = $cga_thumb_id ? wp_get_attachment_image_url( $cga_thumb_id, 'medium' ) : '';
-				// Umbrella tiles: POS pushes products into child categories (Pistol under
-				// Handguns…). get_term_by() suppresses the WC count filter, so read WC's
+				// Umbrella tiles: POS pushes products into child categories (Pistol Ammo
+				// under Ammunition…). get_term_by() suppresses the WC count filter, so read WC's
 				// children-inclusive count meta; the raw term count only sees direct products.
 				$cga_wc_count  = get_term_meta( $cga_term->term_id, 'product_count_product_cat', true );
 				$cga_count     = '' === $cga_wc_count ? (int) $cga_term->count : (int) $cga_wc_count;
