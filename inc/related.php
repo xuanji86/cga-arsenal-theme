@@ -190,6 +190,7 @@ function osa_related_print_product_json() {
 		return;
 	}
 	$img = get_the_post_thumbnail_url( $product->get_id(), 'medium' );
+	$map = osa_map_state( $product ); // Under MAP: the strip says what the page says.
 	printf(
 		'<script type="application/json" id="osa-product-json">%s</script>',
 		wp_json_encode( [
@@ -197,7 +198,7 @@ function osa_related_print_product_json() {
 			// Titles arrive entity-encoded (&#8243; etc.); the strip renders
 			// them as text, so decode once here or entities show literally.
 			'name'  => html_entity_decode( get_the_title( $product->get_id() ), ENT_QUOTES, 'UTF-8' ),
-			'price' => html_entity_decode(
+			'price' => $map ? $map['label'] : html_entity_decode(
 				wp_strip_all_tags( wc_price( (float) $product->get_price() ) ),
 				ENT_QUOTES,
 				'UTF-8'
