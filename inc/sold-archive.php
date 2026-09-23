@@ -349,8 +349,10 @@ function osa_sold_price_row_block( $content, $block ) {
 	$post_id = get_queried_object_id();
 	$sold_at = get_post_meta( $post_id, '_osa_sold_at', true );
 	$price   = get_post_meta( $post_id, '_osa_sold_price', true );
-	if ( osa_map_state( wc_get_product( $post_id ) ) ) {
-		$price = ''; // Under MAP: never publish the figure, the band keeps its date (variant B).
+	// A realized price below the MAP is never published; the band keeps its date
+	// (variant B). Judged on that figure, not on today's asking price (owner ruling).
+	if ( osa_map_hides_amount( $post_id, $price ) ) {
+		$price = '';
 	}
 	$variant = osa_sold_record_variant( $price, $sold_at );
 
