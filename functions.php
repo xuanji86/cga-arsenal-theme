@@ -63,6 +63,7 @@ require_once OSA_THEME_DIR . '/inc/product-meta.php';
 require_once OSA_THEME_DIR . '/inc/blocks.php';
 require_once OSA_THEME_DIR . '/inc/patterns.php';
 require_once OSA_THEME_DIR . '/inc/helpers.php';
+require_once OSA_THEME_DIR . '/inc/map-price.php';
 require_once OSA_THEME_DIR . '/inc/menus.php';
 require_once OSA_THEME_DIR . '/inc/customizer.php';
 require_once OSA_THEME_DIR . '/inc/age-gate.php';

@@ -80,7 +80,9 @@
 
 	/* ---------------- Recently viewed ---------------- */
 
-	var LS_RECENT = 'osaRecent';
+	// 2: entries saved before MAP pricing went live can hold a price the product
+	// page now hides; a new key drops them.
+	var LS_RECENT = 'osaRecent2';
 
 	function esc(s) {
 		var d = document.createElement('div');

@@ -10,6 +10,7 @@ gunsammo.club 未来站点的 FSE 块主题，**fork 自 osa-arsenal-theme @ mai
 - **商品卡**（inc/helpers.php `osa_render_product_card_compact`）多了三样：pa_manufacturer 品牌行、合规 chips、库存行（"1 left"/"N in stock"）。
 
 ## 本地验证
+- `php tests/run.php` — 纯本地测试,harness 抄自 OSA 主题(run.php + bootstrap.php,同名同用法):每个 tests/test-*.php 独立 PHP 进程跑,无需 WP 环境。目前只有 test-map-price.php(MAP 隐价:最近浏览 JSON + SOLD 条)。tests/ 不进 verify/deploy 的 rsync。
 - `make verify` — rsync 当前工作树 → `~/Desktop/cga-local`（**:8093**）的 `themes/cga-arsenal`。副本非源码，别在副本里改。
 - cga-local 管理端：admin / cga2026（仅本地）。
 - `make deploy` — rsync 当前工作树 → **cga-prod**（https://caligunsandammo.com）。prod 规矩：主会话、经用户确认、先 commit 再 deploy。
