@@ -322,7 +322,7 @@ function osa_render_login_form() {
 			<picture>
 				<source media="(min-width:1280px)" srcset="<?php echo esc_url( osa_logo_url( 'stacked-light' ) ); ?>" />
 				<source media="(min-width:768px)" srcset="<?php echo esc_url( osa_logo_url( 'inline-light' ) ); ?>" />
-				<img class="osa-auth-brandpanel__logo" src="<?php echo esc_url( osa_logo_url( 'mark-light' ) ); ?>" alt="OSA — Old Steel Arsenal" />
+				<img class="osa-auth-brandpanel__logo" src="<?php echo esc_url( osa_logo_url( 'mark-light' ) ); ?>" alt="California Guns and Ammo" />
 			</picture>
 
 			<div class="osa-auth-brandpanel__mid">
@@ -332,8 +332,8 @@ function osa_render_login_form() {
 
 			<div class="osa-auth-brandpanel__foot">
 				<p class="osa-auth-brandpanel__fact">Federally Licensed Dealer</p>
-				<p class="osa-auth-brandpanel__fact">FFL 5-75-085-01-9B-42763</p>
-				<p class="osa-auth-brandpanel__fact">Plano, Texas</p>
+				<p class="osa-auth-brandpanel__fact">FFL <?php echo esc_html( cga_fact( 'ffl' ) ); ?></p>
+				<p class="osa-auth-brandpanel__fact"><?php echo esc_html( trim( (string) strrchr( "\n" . trim( cga_fact( 'address' ) ), "\n" ) ) ); ?></p>
 			</div>
 		</aside>
 
@@ -376,7 +376,7 @@ function osa_render_login_form() {
 				</form>
 			</div>
 
-			<div class="osa-auth-divider"><span>New to OSA</span></div>
+			<div class="osa-auth-divider"><span>New here</span></div>
 
 			<div class="osa-auth-formsection">
 				<h2 class="osa-auth-subheading">Open an Account</h2>
@@ -415,14 +415,11 @@ function osa_render_login_form() {
 					<button type="submit" class="osa-btn osa-auth-btn--block">Create Account →</button>
 
 					<small class="osa-auth-terms osa-mono">
-						By signing up you confirm you are at least 18 (long guns) / 21 (handguns) and accept OSA's terms.
+						By signing up you confirm you are at least 18 (long guns) / 21 (handguns) and accept our terms.
 					</small>
 				</form>
 			</div>
 
-			<p class="osa-auth-dealerline osa-mono">
-				Dealers: <a href="<?php echo esc_url( site_url( '/dealer/login/' ) ); ?>">sign in to the dealer portal</a> · <a href="<?php echo esc_url( site_url( '/dealer/apply/' ) ); ?>">apply for a dealer account</a>.
-			</p>
 		</div>
 
 	</div>
