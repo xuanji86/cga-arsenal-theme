@@ -77,6 +77,10 @@ const CGA_CATS_HEADING_DEFAULT  = 'Shop the counter';
 const CGA_CATS_ASIDE_DEFAULT    = 'Live inventory from the POS';
 const CGA_SHELF_HEADING_DEFAULT = 'On the shelf this week';
 const CGA_SHELF_ASIDE_DEFAULT   = 'Updated as the POS receives · View all {count} →';
+const CGA_SHELF_ROTATION_DEFAULT = 'daily'; // off | daily | hourly
+const CGA_SHELF_PINNED_DEFAULT   = 4;
+const CGA_SHELF_SCOPE_DEFAULT    = 'guns';  // guns | all
+const CGA_SHELF_GUN_CATS         = 'pistol,revolver,rifle,shotgun'; // slugs that don't exist are ignored
 
 const CGA_STEPS_HEADING_DEFAULT     = 'Buying a firearm in California';
 const CGA_STEPS_ASIDE_LABEL_DEFAULT = 'Full guide →';
@@ -238,6 +242,27 @@ function cga_featured_product() {
 	return $found ? $found[0] : null;
 }
 
+/**
+ * osa/catalog-grid attributes for the homepage shelf (patterns/cga-shelf.php),
+ * from the Customizer's "Product grid — order / how many newest stay fixed /
+ * what to show". Always in-stock, 4×2, minus the hero's featured product.
+ *
+ * @param int $exclude Hero product ID (0 = none).
+ * @return array
+ */
+function cga_shelf_grid_attrs( $exclude ) {
+	$attrs = [ 'cols' => 4, 'limit' => 8, 'instock' => true, 'exclude' => [ (int) $exclude ] ];
+	if ( 'all' !== get_theme_mod( 'cga_shelf_scope', CGA_SHELF_SCOPE_DEFAULT ) ) {
+		$attrs['category'] = CGA_SHELF_GUN_CATS;
+	}
+	$rotation = get_theme_mod( 'cga_shelf_rotation', CGA_SHELF_ROTATION_DEFAULT );
+	if ( in_array( $rotation, [ 'daily', 'hourly' ], true ) ) {
+		$attrs['rotation'] = $rotation;
+		$attrs['pinned']   = min( $attrs['limit'], max( 0, (int) get_theme_mod( 'cga_shelf_pinned', CGA_SHELF_PINNED_DEFAULT ) ) );
+	}
+	return $attrs;
+}
+
 /* ---------------------------------------------------------------- *
  * Shortcodes — how PAGE CONTENT and the footer consume store facts.
  * [cga_fact key="phone"]          → escaped fact ('br' joins multiline)
@@ -311,7 +336,7 @@ add_action( 'customize_controls_enqueue_scripts', function () {
 
 add_action( 'customize_register', function ( $wp_customize ) {
 
-	// One plain field. $type: text | textarea | url | select.
+	// One plain field. $type: text | textarea | url | select | number.
 	$add = static function ( $section, $key, $label, $default, $type = 'text', $extra = [] ) use ( $wp_customize ) {
 		$sanitize = 'sanitize_text_field';
 		if ( 'textarea' === $type ) {
@@ -320,6 +345,8 @@ add_action( 'customize_register', function ( $wp_customize ) {
 			$sanitize = 'esc_url_raw';
 		} elseif ( 'select' === $type ) {
 			$sanitize = 'sanitize_text_field';
+		} elseif ( 'number' === $type ) {
+			$sanitize = 'absint';
 		}
 		$wp_customize->add_setting( $key, [
 			'default'           => $default,
@@ -456,13 +483,31 @@ add_action( 'customize_register', function ( $wp_customize ) {
 	/* 3 · Categories & shelf */
 	$wp_customize->add_section( 'cga_catalog_section', [
 		'title'       => __( '3 · Categories & product grid', 'osa-arsenal' ),
-		'description' => __( 'Headings only — the category tiles and the product grid fill themselves from live inventory.', 'osa-arsenal' ),
+		'description' => __( 'Headings, plus which products the grid shows. The category tiles and the product grid fill themselves from live inventory.', 'osa-arsenal' ),
 		'panel'       => 'cga_home',
 	] );
 	$add( 'cga_catalog_section', 'cga_cats_heading', __( 'Categories — heading', 'osa-arsenal' ), CGA_CATS_HEADING_DEFAULT );
 	$add( 'cga_catalog_section', 'cga_cats_aside', __( 'Categories — small note on the right', 'osa-arsenal' ), CGA_CATS_ASIDE_DEFAULT );
 	$add( 'cga_catalog_section', 'cga_shelf_heading', __( 'Product grid — heading', 'osa-arsenal' ), CGA_SHELF_HEADING_DEFAULT );
 	$add( 'cga_catalog_section', 'cga_shelf_aside', __( 'Product grid — note on the right (links to the shop)', 'osa-arsenal' ), CGA_SHELF_ASIDE_DEFAULT );
+	$add( 'cga_catalog_section', 'cga_shelf_rotation', __( 'Product grid — order', 'osa-arsenal' ), CGA_SHELF_ROTATION_DEFAULT, 'select', [
+		'description' => __( 'Daily or hourly: the newest products stay at the front, and the rest of the grid is a different pick from older stock each day (or hour), so older listings get seen.', 'osa-arsenal' ),
+		'choices'     => [
+			'off'    => __( 'Off — newest first', 'osa-arsenal' ),
+			'daily'  => __( 'Daily rotation', 'osa-arsenal' ),
+			'hourly' => __( 'Hourly rotation', 'osa-arsenal' ),
+		],
+	] );
+	$add( 'cga_catalog_section', 'cga_shelf_pinned', __( 'Product grid — how many newest stay fixed at the front', 'osa-arsenal' ), CGA_SHELF_PINNED_DEFAULT, 'number', [
+		'description' => __( 'Only used when the order is Daily or Hourly. 0 = the whole grid rotates; 8 = the grid always shows the newest.', 'osa-arsenal' ),
+		'input_attrs' => [ 'min' => 0, 'max' => 8, 'step' => 1 ],
+	] );
+	$add( 'cga_catalog_section', 'cga_shelf_scope', __( 'Product grid — what to show', 'osa-arsenal' ), CGA_SHELF_SCOPE_DEFAULT, 'select', [
+		'choices' => [
+			'guns' => __( 'Guns only', 'osa-arsenal' ),
+			'all'  => __( 'All in-stock items', 'osa-arsenal' ),
+		],
+	] );
 
 	/* 4 · CA four-step */
 	$wp_customize->add_section( 'cga_steps_section', [

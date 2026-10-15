@@ -24,6 +24,8 @@ $strip   = ! empty( $attributes['strip'] );
 $instock = ! empty( $attributes['instock'] );
 $list    = sanitize_text_field( $attributes['list'] ?? '' );
 $schema  = 'collection' === ( $attributes['schema'] ?? '' ) ? 'collection' : '';
+$rotation = in_array( $attributes['rotation'] ?? '', [ 'daily', 'hourly' ], true ) ? $attributes['rotation'] : '';
+$pinned  = max( 0, (int) ( $attributes['pinned'] ?? 0 ) );
 
 // Strip mode is a related-products presentation: only meaningful on an
 // in-stock single product (sold-out pages get the summary rescue block).
@@ -89,6 +91,42 @@ if ( $related && is_singular( 'product' ) && function_exists( 'osa_get_related_p
 			'taxonomy' => 'pa_model',
 			'field'    => 'slug',
 			'terms'    => array_map( 'trim', explode( ',', $model ) ),
+		];
+	}
+
+	// Daily / hourly rotation (homepage shelf; ported from OSA's floor): the
+	// first `pinned` slots keep the orderby order (newest arrivals); the rest
+	// are a seeded shuffle of everything else that matches, so older listings
+	// get their turn. The seed is the store's local date (or date + hour), so
+	// every visitor sees one lineup per period, and a LiteSpeed page cache (if
+	// present) is capped at the next period boundary.
+	if ( $rotation ) {
+		$hourly  = 'hourly' === $rotation;
+		$id_args = array_merge( $args, [ 'fields' => 'ids' ] );
+		$ids     = [];
+		if ( $pinned > 0 ) {
+			$ids = ( new WP_Query( array_merge( $id_args, [ 'posts_per_page' => min( $pinned, $limit ) ] ) ) )->posts;
+		}
+		if ( $limit > count( $ids ) ) {
+			$ids = array_merge( $ids, ( new WP_Query( array_merge( $id_args, [
+				'posts_per_page' => $limit - count( $ids ),
+				'post__not_in'   => array_merge( $exclude, $ids ),
+				'orderby'        => 'RAND(' . (int) wp_date( $hourly ? 'YmdH' : 'Ymd' ) . ')',
+			] ) ) )->posts );
+		}
+		$now  = new DateTimeImmutable( 'now', wp_timezone() );
+		$next = $hourly ? $now->setTime( (int) $now->format( 'G' ), 0 )->modify( '+1 hour' ) : $now->modify( 'tomorrow' );
+		do_action( 'litespeed_control_set_ttl', max( 60, $next->getTimestamp() - time() ), "OSA catalog-grid {$rotation} rotation" );
+		if ( ! $ids ) {
+			return '';
+		}
+		$args = [
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page' => count( $ids ),
+			'post__in'       => $ids,
+			'orderby'        => 'post__in',
+			'no_found_rows'  => true,
 		];
 	}
 }
