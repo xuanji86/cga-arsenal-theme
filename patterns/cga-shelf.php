@@ -5,10 +5,11 @@
  * Categories: osa-section
  * Inserter: yes
  *
- * Newest in-stock inventory, 8-up on the OSA catalog grid. Heading/aside are
- * Customizer-driven (CGA · Homepage → Categories & shelf; {count} = live
- * product count). Excludes the hero's featured product so it never shows
- * twice.
+ * In-stock inventory, 8-up on the OSA catalog grid. Heading/aside and which
+ * products show (order: newest / daily / hourly rotation, newest kept at the
+ * front, guns only vs everything) are Customizer-driven (CGA · Homepage →
+ * Categories & product grid; {count} = live product count). Excludes the
+ * hero's featured product so it never shows twice.
  *
  * @package OSA_Arsenal
  */
@@ -29,7 +30,7 @@ $cga_shelf_exclude = $cga_shelf_feat ? (int) $cga_shelf_feat->get_id() : 0;
 
 <!-- wp:group {"className":"cga-page","style":{"spacing":{"margin":{"top":"-48px"},"blockGap":"0"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group cga-page" style="margin-top:-48px">
-	<!-- wp:osa/catalog-grid {"cols":4,"limit":8,"instock":true,"exclude":[<?php echo (int) $cga_shelf_exclude; ?>]} /-->
+	<!-- wp:osa/catalog-grid <?php echo wp_json_encode( cga_shelf_grid_attrs( $cga_shelf_exclude ) ); ?> /-->
 	<!-- wp:spacer {"height":"72px"} -->
 	<div style="height:72px" aria-hidden="true" class="wp-block-spacer"></div>
 	<!-- /wp:spacer -->
