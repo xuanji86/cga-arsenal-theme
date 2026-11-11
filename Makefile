@@ -2,7 +2,7 @@
 # `make verify` mirrors osa-arsenal-theme's workflow: rsync the CURRENT
 # WORKING TREE (uncommitted changes included) into the cga-local Docker copy.
 
-THEME_DEST := $(HOME)/Desktop/cga-local/public_html/wp-content/themes/cga-arsenal
+THEME_DEST := $(HOME)/Desktop/OSA/cga-local/public_html/wp-content/themes/cga-arsenal
 
 PROD_DEST := cga-prod:~/cga/deploy/wp/public_html/wp-content/themes/cga-arsenal
 
