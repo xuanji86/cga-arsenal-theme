@@ -326,6 +326,25 @@ function osa_render_product_card_compact( $post_id, $ar = '5-4' ) {
 	echo '</a>';
 }
 
+/**
+ * Card corner tag for a pre-order: the POS flags it with `_osa_preorder` = "1"
+ * (stock = remaining pre-order slots, so it is an ordinary in-stock product to
+ * WooCommerce). Out-of-stock cards keep the corner for "Sold". Registered ahead
+ * of other corner tags so it takes the top slot; the rest stack below it.
+ *
+ * @param array      $tags    Corner tags so far.
+ * @param int        $post_id Product ID.
+ * @param mixed|null $product WC_Product or null without product context.
+ */
+function osa_card_preorder_tag( $tags, $post_id = 0, $product = null ) {
+	$tags = is_array( $tags ) ? $tags : [];
+	if ( $product && $product->is_in_stock() && '1' === trim( (string) osa_product_meta( 'preorder', (int) $post_id ) ) ) {
+		array_unshift( $tags, __( 'Pre-order', 'osa-arsenal' ) );
+	}
+	return $tags;
+}
+add_filter( 'osa_card_tags', 'osa_card_preorder_tag', 5, 3 );
+
 /*
  * osa_grade_terms_ordered() and osa_grade_info_map() have been moved to
  * the ffl-core plugin (includes/catalog/condition-helpers.php) and now
