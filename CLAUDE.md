@@ -13,7 +13,7 @@ gunsammo.club 未来站点的 FSE 块主题，**fork 自 osa-arsenal-theme @ mai
 - `php tests/run.php` — 纯本地测试,harness 抄自 OSA 主题(run.php + bootstrap.php,同名同用法):每个 tests/test-*.php 独立 PHP 进程跑,无需 WP 环境。目前只有 test-map-price.php(MAP 隐价:最近浏览 JSON + SOLD 条)。tests/ 不进 verify/deploy 的 rsync。
 - `make verify` — rsync 当前工作树 → `~/Desktop/OSA/cga-local`（**:8093**）的 `themes/cga-arsenal`。副本非源码，别在副本里改。
 - cga-local 管理端：账号口令见 cga-local 仓的说明（仅本地）。
-- `make deploy` — rsync 当前工作树 → **cga-prod**（https://caligunsandammo.com）。prod 规矩：主会话、经用户确认、先 commit 再 deploy。
+- `make deploy` — 仅干净工作树(脏则拒绝)：先在 cga-prod 上把线上主题目录打包到 `~/deploy-backups/cga-arsenal/predeploy-<时间戳>.tar.gz`(留最近 10 个)，再 rsync → **cga-prod**（https://caligunsandammo.com），`--delete-excluded` 会清掉线上已有的排除项，结尾打印回滚命令；不清缓存(部署的人自己做)。prod 规矩：主会话、经用户确认、先 commit 再 deploy。
 
 ## Customizer（2026-08-12 接线）
 - **首页全部文案走 Customize**：外观→自定义→ **CGA · Homepage** 面板（六节按页面顺序）。**傻瓜式约定（2026-08-12 用户要求，勿回退）**：一元素一控件、白话 label（"Green button — text"），链接类拆 text+link 两格（URL 用 esc_url_raw），禁止管道/按行拆语法；hero 特色枪=**输入即搜**的商品选择器（CGA_Product_Search_Control：WC 自带 wc-product-search/selectWoo + woocommerce_json_search_products AJAX 全目录按名搜索；清空=自动最新有货），卡片内容本身来自商品记录。⚠两个 customize.php 特性：WC admin 资产在该页不注册（select2 皮肤要按插件 URL 直接 enqueue）；控件是展开小节时才嵌入 DOM 的（JIT，4.7+），selectWoo 初始化必须挂 control.deferred.embedded + section.expanded，不能靠 document.ready。默认值=定稿文案，存在 `inc/cga-customizer.php` 的 CGA_* 常量（数组按元素拆）——**改默认文案改常量，别改 pattern 里的渲染**。
