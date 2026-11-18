@@ -63,10 +63,15 @@ add_shortcode( 'cga_status_chips', function () {
 } );
 
 /**
- * Card stock line ("4 in stock" / "1 left"), real inventory only.
+ * Card stock line ("4 in stock" / "1 left"), real inventory only. A pre-order
+ * (`_osa_preorder` = "1", as osa_card_preorder_tag reads it) has no inventory:
+ * its stock is the pre-order slots left, so it gets no line.
  */
 function cga_card_stock_line( $product ) {
 	if ( ! $product || ! $product->is_in_stock() ) {
+		return '';
+	}
+	if ( '1' === trim( (string) osa_product_meta( 'preorder', (int) $product->get_id() ) ) ) {
 		return '';
 	}
 	$qty = $product->get_stock_quantity();
