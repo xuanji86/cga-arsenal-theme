@@ -13,6 +13,7 @@ verify:
 		--exclude '.git' \
 		--exclude 'tests' \
 		--exclude 'Makefile' \
+		--exclude 'CLAUDE.md' \
 		--exclude '._*' \
 		--exclude '.DS_Store' \
 		./ $(THEME_DEST)/
@@ -28,6 +29,7 @@ deploy:
 		--exclude '.git' \
 		--exclude 'tests' \
 		--exclude 'Makefile' \
+		--exclude 'CLAUDE.md' \
 		--exclude '._*' \
 		--exclude '.DS_Store' \
 		./ $(PROD_DEST)/
