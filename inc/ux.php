@@ -8,6 +8,16 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/*
+ * Motion gate: before first paint, tag <html> with .motion unless the visitor
+ * asked for reduced motion. Every animation in osa-base.css is scoped under
+ * .motion, and the markup is always the finished state, so with no JS or with
+ * reduced motion the page simply renders still.
+ */
+add_action( 'wp_head', function () {
+	echo "<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion');</script>\n";
+}, 1 );
+
 add_action( 'wp_enqueue_scripts', function () {
 	$rel  = '/assets/js/osa-ux.js';
 	$path = OSA_THEME_DIR . $rel;

@@ -37,6 +37,10 @@ foreach ( $items as $idx => $item ) {
 	}
 }
 
+// The tail separator only shows while scrolling (osa-ux.js loops copies of the
+// list end to end, so each copy needs one before the next begins).
+$pieces[] = '<span class="osa-marquee__sep osa-marquee__sep--tail" aria-hidden="true">' . esc_html( $sep ) . '</span>';
+
 echo '<div ' . $wrapper . '>';
-echo '<div class="osa-marquee__track">' . implode( '', $pieces ) . '</div>';
+echo '<div class="osa-marquee__track"><div class="osa-marquee__list">' . implode( '', $pieces ) . '</div></div>';
 echo '</div>';

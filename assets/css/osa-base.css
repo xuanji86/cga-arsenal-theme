@@ -283,6 +283,11 @@ body {
 	justify-content: center;
 	gap: 16px 32px;
 }
+/* Still: the list wrapper drops out of layout so the items wrap in the track as
+   before; looping copies (osa-ux.js) and the tail separator only show while it runs. */
+.osa-marquee__list { display: contents; }
+.osa-marquee__list[data-osa-copy],
+.osa-marquee__sep--tail { display: none; }
 .osa-marquee__sep { opacity: 0.5; }
 
 /* ===== Product card (compact, A variant) ===== */
@@ -3054,6 +3059,111 @@ a.page-numbers:hover,
 	.osa-auth-formcol { padding: 32px 20px 40px; }
 	.osa-auth-formcol__lede { margin-bottom: 28px; }
 	.osa-auth-row2 { grid-template-columns: 1fr; }
+}
+
+/* ===== Motion =====
+   Every rule below is scoped under html.motion, which inc/ux.php sets in <head>
+   unless the visitor prefers reduced motion. The markup is always the finished
+   state, so with no JS or reduced motion the page renders still. Behaviour lives
+   in assets/js/osa-ux.js. Easing: one curve for everything that settles. */
+:root { --osa-ease-out: cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+/* Marquee: a seamless loop once osa-ux.js has filled the strip with copies of the
+   list (.is-running). Paper/ink fades at both ends; hover, focus or a tap pause it. */
+.motion .osa-marquee.is-running {
+	--osa-mq-bg: var(--osa-paper);
+	position: relative;
+	justify-content: flex-start;
+	overflow: hidden;
+	padding-left: 0;
+	padding-right: 0;
+}
+.motion .osa-marquee--invert.is-running { --osa-mq-bg: var(--osa-ink); }
+.motion .osa-marquee.is-running::before,
+.motion .osa-marquee.is-running::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	z-index: 1;
+	width: 64px;
+	pointer-events: none;
+}
+.motion .osa-marquee.is-running::before { left: 0; background: linear-gradient(90deg, var(--osa-mq-bg), transparent); }
+.motion .osa-marquee.is-running::after { right: 0; background: linear-gradient(270deg, var(--osa-mq-bg), transparent); }
+.motion .osa-marquee.is-running .osa-marquee__track {
+	flex-wrap: nowrap;
+	gap: 0;
+	width: max-content;
+	animation: osa-marquee var(--osa-mq-dur, 40s) linear infinite;
+}
+.motion .osa-marquee.is-running .osa-marquee__list { display: flex; flex: none; flex-wrap: nowrap; gap: 32px; padding-right: 32px; }
+.motion .osa-marquee.is-running .osa-marquee__sep--tail { display: inline; }
+.motion .osa-marquee.is-paused .osa-marquee__track,
+.motion .osa-marquee.is-running:focus-visible .osa-marquee__track { animation-play-state: paused; }
+.osa-marquee:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
+@media (hover: hover) {
+	.motion .osa-marquee.is-running:hover .osa-marquee__track { animation-play-state: paused; }
+}
+@keyframes osa-marquee { to { transform: translate3d(calc(-1 * var(--osa-mq-w, 50%)), 0, 0); } }
+
+/* Scroll reveal: home sections below the fold rise in once; columns inside a
+   section follow one after another (--osa-d). */
+.motion [data-osa-reveal] {
+	transition:
+		opacity 0.6s var(--osa-ease-out) var(--osa-d, 0ms),
+		transform 0.7s var(--osa-ease-out) var(--osa-d, 0ms);
+}
+.motion [data-osa-reveal]:not(.is-in) { opacity: 0; transform: translateY(14px); }
+.motion [data-osa-reveal].no-anim { transition: none; }
+
+/* Add to cart: a ring turns while the request runs, the label reads "Added" for a
+   beat, the header count pops and the confirmation line slides in. */
+.motion .single_add_to_cart_button.loading { opacity: 1; }
+.motion .single_add_to_cart_button.loading::after {
+	content: "";
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	margin-left: 10px;
+	border: 2px solid currentColor;
+	border-right-color: transparent;
+	border-radius: 50%;
+	vertical-align: -1px;
+	animation: osa-spin 0.7s linear infinite;
+}
+@keyframes osa-spin { to { transform: rotate(360deg); } }
+.motion .single_add_to_cart_button.is-added { animation: osa-press 0.35s var(--osa-ease-out); }
+@keyframes osa-press { 40% { transform: scale(0.97); } }
+.motion .osa-cart-count.is-bumped { animation: osa-bump 0.4s cubic-bezier(0.3, 1.6, 0.5, 1); }
+@keyframes osa-bump { 45% { transform: scale(1.35); } }
+.motion .osa-cart-feedback.is-visible { animation: osa-slide-in 0.4s var(--osa-ease-out); }
+@keyframes osa-slide-in { from { opacity: 0; transform: translateY(-4px); } }
+
+/* Desktop nav: one 2px rule slides between links (hover, open panel, current
+   section) in place of each link's own underline. */
+.osa-main-nav__mark { display: none; }
+@media (min-width: 901px) {
+	.motion .osa-main-nav.is-marked .osa-main-nav__link { border-bottom-color: transparent; }
+	.motion .osa-main-nav__mark {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: var(--osa-mk-w, 0);
+		height: 2px;
+		background: var(--osa-ink);
+		opacity: 0;
+		pointer-events: none;
+		transform: translate3d(var(--osa-mk-x, 0), var(--osa-mk-y, 0), 0);
+		transition:
+			transform 0.35s var(--osa-ease-out),
+			width 0.35s var(--osa-ease-out),
+			opacity 0.2s ease;
+	}
+	.motion .osa-main-nav__mark.is-on { opacity: 1; }
+	.motion .osa-main-nav__mark.is-placing { transition: opacity 0.2s ease; }
+	.osa-dark-header .osa-main-nav__mark { background: var(--osa-paper); }
 }
 
 /* =============================================================================
