@@ -66,6 +66,12 @@ body {
 	border-bottom-color: var(--cga-pine);
 }
 
+/* Motion layer (osa-base.css "Motion"): on the light header the sliding nav rule
+   carries pine like the underline it replaces (the dark header keeps upstream's
+   paper rule); a still-ground marquee fades into sand, not paper. */
+.motion body:not(.osa-dark-header) .osa-main-nav__mark { background: var(--cga-pine); }
+.motion .osa-marquee.is-running:not(.osa-marquee--invert) { --osa-mq-bg: var(--cga-sand); }
+
 /* Cart count badge → pine. */
 .osa-header-icon__badge {
 	background: var(--cga-pine);

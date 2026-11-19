@@ -69,6 +69,7 @@
 					}
 					applyFragments( data.fragments );
 					showFeedback( form, btn );
+					celebrate( btn );
 				} )
 				.catch( function () {
 					btn.classList.remove( 'loading' );
@@ -114,6 +115,32 @@
 			esc( cfg.addedText ) +
 			' · <a href="' + esc( cfg.cartUrl ) + '">' + esc( cfg.cartText ) + '</a>';
 		note.classList.add( 'is-visible' );
+	}
+
+	// Motion only (html.motion): the button reads "Added" for a beat and the
+	// header count pops. The aria-live line above is the accessible confirmation.
+	function celebrate( btn ) {
+		if ( ! document.documentElement.classList.contains( 'motion' ) ) {
+			return;
+		}
+		document.querySelectorAll( '.osa-cart-count' ).forEach( function ( badge ) {
+			badge.classList.remove( 'is-bumped' );
+			void badge.offsetWidth; // restart the animation on a repeat add
+			badge.classList.add( 'is-bumped' );
+		} );
+		// Keep the button's own markup (an icon, screen-reader text) for the restore.
+		if ( btn._osaLabel === undefined ) {
+			btn._osaLabel = btn.innerHTML;
+		}
+		window.clearTimeout( btn._osaReset );
+		btn.style.minWidth = btn.offsetWidth + 'px'; // no width jump on the swap
+		btn.textContent = '✓ ' + cfg.addedLabel;
+		btn.classList.add( 'is-added' );
+		btn._osaReset = window.setTimeout( function () {
+			btn.innerHTML = btn._osaLabel;
+			btn.classList.remove( 'is-added' );
+			btn.style.minWidth = '';
+		}, 1600 );
 	}
 
 	function esc( s ) {

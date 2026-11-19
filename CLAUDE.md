@@ -10,7 +10,7 @@ gunsammo.club 未来站点的 FSE 块主题，**fork 自 osa-arsenal-theme @ mai
 - **商品卡**（inc/helpers.php `osa_render_product_card_compact`）多了三样：pa_manufacturer 品牌行、合规 chips、库存行（"1 left"/"N in stock"）。
 
 ## 本地验证
-- `php tests/run.php` — 纯本地测试,harness 抄自 OSA 主题(run.php + bootstrap.php,同名同用法):每个 tests/test-*.php 独立 PHP 进程跑,无需 WP 环境。目前只有 test-map-price.php(MAP 隐价:最近浏览 JSON + SOLD 条)。tests/ 不进 verify/deploy 的 rsync。
+- `php tests/run.php` — 纯本地测试,harness 抄自 OSA 主题(run.php + bootstrap.php,同名同用法):每个 tests/test-*.php 独立 PHP 进程跑,无需 WP 环境;区块渲染测试用 `tests/block-render-stubs.php` 的 `osa_render_block_file()`(样例 test-marquee-ticker.php)。tests/ 不进 verify/deploy 的 rsync。
 - `make verify` — rsync 当前工作树 → `~/Desktop/OSA/cga-local`（**:8093**）的 `themes/cga-arsenal`。副本非源码，别在副本里改。
 - cga-local 管理端：账号口令见 cga-local 仓的说明（仅本地）。
 - `make deploy` — 仅干净工作树(脏则拒绝)：先在 cga-prod 上把线上主题目录打包到 `~/deploy-backups/cga-arsenal/predeploy-<时间戳>.tar.gz`(留最近 10 个)，再 rsync → **cga-prod**（https://caligunsandammo.com），`--delete-excluded` 会清掉线上已有的排除项，结尾打印回滚命令；不清缓存(部署的人自己做)。prod 规矩：主会话、经用户确认、先 commit 再 deploy。

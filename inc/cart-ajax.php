@@ -46,9 +46,10 @@ add_action( 'wp_enqueue_scripts', function () {
 		true
 	);
 	wp_localize_script( 'osa-add-to-cart', 'osaCart', [
-		'ajaxUrl'   => home_url( '/?wc-ajax=add_to_cart' ),
-		'addedText' => __( 'In cart', 'osa-arsenal' ),
-		'cartText'  => __( 'View cart', 'osa-arsenal' ),
-		'cartUrl'   => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url( '/cart/' ),
+		'ajaxUrl'    => home_url( '/?wc-ajax=add_to_cart' ),
+		'addedText'  => __( 'In cart', 'osa-arsenal' ),
+		'addedLabel' => __( 'Added', 'osa-arsenal' ),
+		'cartText'   => __( 'View cart', 'osa-arsenal' ),
+		'cartUrl'    => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url( '/cart/' ),
 	] );
 }, 20 );
