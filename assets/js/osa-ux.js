@@ -276,7 +276,11 @@
 				return;
 			}
 			if ( ! link ) {
-				mark.classList.remove( 'is-on' );
+				// Write the class only when it changes: any write (even removing an
+				// absent token) is a mutation record the observer below would see.
+				if ( mark.classList.contains( 'is-on' ) ) {
+					mark.classList.remove( 'is-on' );
+				}
 				return;
 			}
 			const b = base.getBoundingClientRect();
